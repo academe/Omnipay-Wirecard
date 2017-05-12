@@ -17,6 +17,9 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     const TRANSACTION_IDENTIFIER_SINGLE = 'SINGLE';
     const TRANSACTION_IDENTIFIER_INITIAL = 'INITIAL';
 
+    const AUTO_DEPOSIT_YES = 'yes';
+    const AUTO_DEPOSIT_NO = 'no';
+
     /**
      * The Payment Type will default to SELECT if not set.
      * Permitted values are static::PAYMENT_TYPE_*
@@ -185,6 +188,58 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     public function getConsumerDriversLicenseCountry()
     {
         return $this->getParameter('consumerDriversLicenseCountry');
+    }
+
+    /**
+     * 
+     */
+    public function setAutoDeposit($value)
+    {
+        return $this->setParameter('autoDeposit', $value);
+    }
+
+    public function getAutoDeposit()
+    {
+        return $this->getParameter('autoDeposit');
+    }
+
+    /**
+     * 
+     */
+    public function setConfirmMail($value)
+    {
+        return $this->setParameter('confirmMail', $value);
+    }
+
+    public function getConfirmMail()
+    {
+        return $this->getParameter('confirmMail');
+    }
+
+    /**
+     * 
+     */
+    public function setRiskSuppress($value)
+    {
+        return $this->setParameter('riskSuppress', $value);
+    }
+
+    public function getRiskSuppress()
+    {
+        return $this->getParameter('riskSuppress');
+    }
+
+    /**
+     * 
+     */
+    public function setRiskConfigAlias($value)
+    {
+        return $this->setParameter('riskConfigAlias', $value);
+    }
+
+    public function getRiskConfigAlias()
+    {
+        return $this->getParameter('riskConfigAlias');
     }
 
     /**
@@ -413,54 +468,74 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
             if ($card->getShippingFax()) {
                 $data['consumerShippingFax'] = $card->getShippingFax();
             }
+        }
 
-            // Shopping basket items (with an extended basket for additional fields).
+        // Shopping basket items (with an extended basket for additional fields).
 
-            if ($items = $this->getItems()) {
-                // The count of items in the basket.
-                $data['basketItems'] = $items->count();
+        if ($items = $this->getItems()) {
+            // The count of items in the basket.
+            $data['basketItems'] = $items->count();
 
-                $item_number = 0;
-                foreach($items->getIterator() as $item) {
-                    $item_number++;
+            $item_number = 0;
+            foreach($items->getIterator() as $item) {
+                $item_number++;
 
-                    $prefix = 'basketItem' . $item_number;
+                $prefix = 'basketItem' . $item_number;
 
-                    $data[$prefix . 'Quantity'] = $item->getQuantity();
-                    $data[$prefix . 'Name'] = $item->getName();
-                    $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
+                $data[$prefix . 'Quantity'] = $item->getQuantity();
+                $data[$prefix . 'Name'] = $item->getName();
+                $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
 
-                    if ($item->getDescription()) {
-                        $data[$prefix . 'Description'] = $item->getDescription();
+                if ($item->getDescription()) {
+                    $data[$prefix . 'Description'] = $item->getDescription();
+                }
+
+                if ($item instanceof ItemInterface) {
+                    // THe extended item class supports additional fields.
+                    $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
+                    $data[$prefix . 'ArticleNumber'] = $item->getArticleNumber() ?: $item_number;
+                    $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
+                    $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
+
+                    if ($item->getImageUrl()) {
+                        $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
                     }
-
-                    if ($item instanceof ItemInterface) {
-                        // THe extended item class supports additional fields.
-                        $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
-                        $data[$prefix . 'ArticleNumber'] = $item->getArticleNumber() ?: $item_number;
-                        $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
-                        $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
-
-                        if ($item->getImageUrl()) {
-                            $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
-                        }
-                    } else {
-                        // These are defaulted for the standard Omnipay Item, as
-                        // they are all required.
-                        $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
-                        $data[$prefix . 'ArticleNumber'] = $item_number;
-                        $data[$prefix . 'UnitTaxAmount'] = 0;
-                        $data[$prefix . 'UnitTaxRate'] = 0;
-                    }
+                } else {
+                    // These are defaulted for the standard Omnipay Item, as
+                    // they are all required.
+                    $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
+                    $data[$prefix . 'ArticleNumber'] = $item_number;
+                    $data[$prefix . 'UnitTaxAmount'] = 0;
+                    $data[$prefix . 'UnitTaxRate'] = 0;
                 }
             }
-
-            // TODO: Feature specific parameters.
-
-            // TODO: Fraud protection suite.
-
-            // TODO: Custom fields (probably a collection of names and values).
         }
+
+        // Feature specific parameters.
+
+        if ($this->getAutoDeposit()) {
+            $data['autoDeposit'] = (
+                $this->getAutoDeposit()
+                ? static::AUTO_DEPOSIT_YES
+                : static::AUTO_DEPOSIT_NO
+            );
+        }
+
+        if ($this->getConfirmMail()) {
+            $data['confirmMail'] = $this->getConfirmMail();
+        }
+
+        // Fraud protection suite.
+
+        if ($this->getRiskSuppress()) {
+            $data['riskSuppress'] = $this->getRiskSuppress();
+        }
+
+        if ($this->getRiskConfigAlias()) {
+            $data['riskConfigAlias'] = $this->getRiskConfigAlias();
+        }
+
+        // TODO: Custom fields (probably a collection of names and values).
 
         return $data;
     }

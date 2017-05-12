@@ -119,6 +119,14 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
         $data['requestFingerprintOrder'] = $this->getRequestFingerprintOrder($data);
         $data['requestFingerprint'] = $this->getRequestFingerprint($data);
 
+        if ($this->getMaxRetries()) {
+            $data['maxRetries'] = $this->getMaxRetries();
+        }
+
+        if ($this->getPaymenttypeSortOrder()) {
+            $data['paymenttypeSortOrder'] = $this->getPaymenttypeSortOrder();
+        }
+
         return $data;
     }
 }
