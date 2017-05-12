@@ -3,10 +3,10 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * Purchase.
+ * Wirecard Checkout Page Purchase.
  */
 
-class CheckoutPagePurchaseRequest extends CheckoutPurchaseRequest
+class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
 {
     protected function createResponse($data)
     {
@@ -50,6 +50,32 @@ class CheckoutPagePurchaseRequest extends CheckoutPurchaseRequest
     public function getBackgroundColor()
     {
         return $this->getParameter('backgroundColor');
+    }
+
+    /**
+     * 
+     */
+    public function setMaxRetries($value)
+    {
+        return $this->setParameter('maxRetries', $value);
+    }
+
+    public function getMaxRetries()
+    {
+        return $this->getParameter('maxRetries');
+    }
+
+    /**
+     * 
+     */
+    public function setPaymenttypeSortOrder($value)
+    {
+        return $this->setParameter('paymenttypeSortOrder', $value);
+    }
+
+    public function getPaymenttypeSortOrder()
+    {
+        return $this->getParameter('paymenttypeSortOrder');
     }
 
     /**
