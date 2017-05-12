@@ -1,0 +1,35 @@
+{
+    "name": "academe/omnipay-wirecard",
+    "type": "library",
+    "description": "Wirecard payment gateway driver for the Omnipay 2.x payment processing library",
+    "keywords": [
+        "wirecard",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment"
+    ],
+    "homepage": "https://github.com/academe/omnipay-wirecard",
+    "license": "LGPLv3",
+    "authors": [
+        {
+            "name": "Jason Judge",
+            "email": "jason@academe.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Wirecard\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}
