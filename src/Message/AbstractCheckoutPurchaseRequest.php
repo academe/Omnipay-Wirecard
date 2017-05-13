@@ -263,18 +263,14 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
         $data['currency'] = $this->getCurrency();
 
         $data['orderDescription'] = $this->getDescription();
+
+        // All the different return state URLs are mandatory, so default
+        // any that have not beedn provided.
+
         $data['successUrl'] = $this->getReturnUrl();
-
-        if ($this->getCancelUrl()) {
-            $data['cancelUrl'] = $this->getCancelUrl();
-        }
-
-        /**
-         * Optional gateway-specific URL.
-         */
-        if ($this->getFailureUrl()) {
-            $data['failureUrl'] = $this->getFailureUrl();
-        }
+        $data['cancelUrl'] = $this->getCancelUrl() ?: $this->getReturnUrl();
+        $data['failureUrl'] = $this->getFailureUrl() ?: $this->getReturnUrl();
+        $data['pendingUrl'] = $this->getPendingUrl() ?: $this->getReturnUrl();
 
         /**
          * Optional gateway-specific URL.
@@ -298,10 +294,6 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
 
         if ($this->getTransactionId()) {
             $data['orderReference'] = $this->getTransactionId();
-        }
-
-        if ($this->getPendingUrl()) {
-            $data['pendingUrl'] = $this->getPendingUrl();
         }
 
         /**

@@ -71,6 +71,6 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function acceptNotification(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\Xxx', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServerRequest', $parameters);
     }
 }
