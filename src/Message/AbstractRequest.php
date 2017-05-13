@@ -195,40 +195,4 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->setParameter('pendingUrl', $value);
     }
-
-    /**
-     * Return the fingerprint order string, based on the field
-     * names (the keys) of the data to send.
-     *
-     * @param array $data The key/value data to send
-     * @return string Comma-separated list of field names
-     */
-    public function getRequestFingerprintOrder($data)
-    {
-        $order = implode(',', array_keys($data));
-
-        // Two additional fields will be included in the hash.
-        $order .= ',requestFingerprintOrder,secret';
-
-        return $order;
-    }
-
-    /**
-     * Calculates the fintgerprint hash of the data to send.
-     *
-     * @param array $data The key/value data to send
-     * @return string Fingerprint hash
-     */
-    function getRequestFingerprint($data)
-    {
-        $secret = $this->getSecret();
-
-        $fields = implode('', array_values($data));
-
-        // Add the secret to the string to hash, since it will
-        // never be sent with the data.
-        $fields .= $secret;
-
-        return hash_hmac('sha512', $fields, $secret);
-    }
 }

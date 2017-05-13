@@ -11,6 +11,9 @@ use Omnipay\Wirecard\Extend\ItemInterface;
 
 abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
 {
+    // For creating fingerprints.
+    use HasFingerprintTrait;
+
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
 
@@ -32,6 +35,22 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     public function getPaymentType()
     {
         return $this->getParameter('paymentType');
+    }
+
+    /**
+     * The orderReference is sent right through to the financial
+     * institution.
+     * It is not necessarily the same as the transactionId, which
+     * should only go as far as the gateway.
+     */
+    public function setOrderReference($value)
+    {
+        return $this->setParameter('orderReference', $value);
+    }
+
+    public function getOrderReference()
+    {
+        return $this->getParameter('orderReference');
     }
 
     /**
@@ -292,8 +311,14 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
             $data['customerStatement'] = $this->getCustomerStatement();
         }
 
-        if ($this->getTransactionId()) {
-            $data['orderReference'] = $this->getTransactionId();
+        // CHECKME: look at how this is handled. The orderReference is passed on to
+        // the financial institution for final payment matching. The problem with the
+        // transactionID is that (a) it may not be appropriate for the end systems;
+        // and (b) you may not want the transactionId exposed to the end user *at all*
+        // for security reasons.
+
+        if ($this->getOrderReference()) {
+            $data['orderReference'] = $this->getOrderReference();
         }
 
         /**
@@ -304,7 +329,11 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
             $data['noScriptInfoUrl'] = $this->getNoScriptInfoUrl();
         }
 
-        // CHECKME: numeric, up to 9 digits, but what exactly is it?
+        // Numeric, up to 9 digits, but what exactly is it?
+        // Must be unique and each value can only be used once, so be careful about
+        // tieing it back to merchant site order numbers that mat require more than
+        // one payment or payment *attempts*.
+
         if ($this->getOrderNumber()) {
             $data['orderNumber'] = $this->getOrderNumber();
         }
@@ -313,7 +342,7 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
             $data['windowName'] = $this->getWindowName();
         }
 
-        // Boolean text 'yes' or 'no'
+        // Boolean delivered as 'yes' or 'no'
         if ($this->getDuplicateRequestCheck()) {
             $data['duplicateRequestCheck'] = (
                 $this->getDuplicateRequestCheck()
@@ -528,6 +557,10 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
         }
 
         // TODO: Custom fields (probably a collection of names and values).
+        // It looks like custom fields are the only reliable way to tie back
+        // the back-channel notifications to the transaction in storage.
+        // We may need to create a predefined custom field for the
+        // transactionId, so the notification handler knows where to find it.
 
         return $data;
     }
