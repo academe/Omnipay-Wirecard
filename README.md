@@ -20,7 +20,8 @@ tests, but still no payments are taken.
 
 Demo mode is invoked by using these details:
 
-| ---------- | ------- |
+| Field | Value |
+| ----- | ----- |
 | customerId | D200001 |
 | secret | B8AKTPWBRMNBV455FG6M2DANE99WU2 |
 | shopId | *not used* |
