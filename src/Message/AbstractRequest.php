@@ -97,19 +97,6 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     }
 
     /**
-     * The secret for hashing.
-     */
-    public function setSecret($value)
-    {
-        return $this->setParameter('secret', $value);
-    }
-
-    public function getSecret()
-    {
-        return $this->getParameter('secret');
-    }
-
-    /**
      * The Language ID is ISO 2-char code.
      */
     public function setLanguage($value)

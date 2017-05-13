@@ -23,6 +23,9 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     const AUTO_DEPOSIT_YES = 'yes';
     const AUTO_DEPOSIT_NO = 'no';
 
+    // The name of the custom field the transacton ID will go into.
+    const CUSTOM_FIELD_NAME_TRANSACTION_ID = 'omnipay_transactionId';
+
     /**
      * The Payment Type will default to SELECT if not set.
      * Permitted values are static::PAYMENT_TYPE_*
@@ -561,6 +564,11 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
         // the back-channel notifications to the transaction in storage.
         // We may need to create a predefined custom field for the
         // transactionId, so the notification handler knows where to find it.
+
+        // Put the transaction ID into a custom field.
+        if ($this->getTransactionId()) {
+            $data[static::CUSTOM_FIELD_NAME_TRANSACTION_ID] = $this->getTransactionId();
+        }
 
         return $data;
     }

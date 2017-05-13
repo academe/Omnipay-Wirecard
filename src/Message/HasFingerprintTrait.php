@@ -93,4 +93,17 @@ trait HasFingerprintTrait
 
         return hash_hmac('sha512', $fields, $secret);
     }
+
+    /**
+     * The secret for hashing.
+     */
+    public function setSecret($value)
+    {
+        return $this->setParameter('secret', $value);
+    }
+
+    public function getSecret()
+    {
+        return $this->getParameter('secret');
+    }
 }
