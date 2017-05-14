@@ -53,17 +53,17 @@ class CheckoutPageGateway extends AbstractGateway
     /**
      * The complete authorization transaction (capturing data retuned with the user).
      */
-    public function completeAuthorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\XxxCompleteAuthorizeRequest', $parameters);
-    }
+    //public function completeAuthorize(array $parameters = array())
+    //{
+    //    return $this->createRequest('\Omnipay\Wirecard\Message\XxxCompleteAuthorizeRequest', $parameters);
+    //}
 
     /**
      * The complete purchase transaction (capturing data retuned with the user).
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\XxxCompleteAuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageCompletePurchaseRequest', $parameters);
     }
 
     /**

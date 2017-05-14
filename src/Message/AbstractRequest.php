@@ -10,6 +10,9 @@ use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 
 abstract class AbstractRequest extends OmnipayAbstractRequest
 {
+    // Access to the constants as lists.
+    use HasConstantListsTrait;
+
     /**
      * Supported payment types.
      */
@@ -132,6 +135,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->getParameter('failureUrl');
     }
+
     /**
      * Sets the request failure URL.
      *
@@ -152,6 +156,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->getParameter('serviceUrl');
     }
+
     /**
      * Sets the request service URL.
      *
@@ -172,6 +177,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->getParameter('pendingUrl');
     }
+
     /**
      * Sets the pending URL.
      *
@@ -181,5 +187,15 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     public function setPendingUrl($value)
     {
         return $this->setParameter('pendingUrl', $value);
+    }
+
+    /**
+     * Return teh full list of supported payment types.
+     *
+     * @return array API values keyed by the constant name.
+     */
+    public function getPaymentTypes()
+    {
+        return $this->constantList('PAYMENT_TYPE');
     }
 }

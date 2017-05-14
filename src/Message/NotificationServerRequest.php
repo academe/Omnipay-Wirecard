@@ -42,9 +42,6 @@ class NotificationServerRequest extends OmnipayAbstractRequest implements Notifi
 
     /**
      * Checks the fingerprint of the data is valid.
-     * TODO: this will be needed by the completeCheckoutPagePurchase class too,
-     * so the core of it needs to go somewhere shared. It could be a static method
-     * on the AbstractResponse that just checks a $data array passed in.
      *
      * @return bool True if the filngerprint is found and is valid.
      */
