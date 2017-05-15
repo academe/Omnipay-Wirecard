@@ -79,20 +79,6 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
     }
 
     /**
-     * 
-     */
-    public function setXXX($value)
-    {
-        return $this->setParameter('xxx', $value);
-    }
-
-    public function getXXX()
-    {
-        return $this->getParameter('xxx');
-    }
-
-
-    /**
      * Construct the request data to send.
      *
      * @return array

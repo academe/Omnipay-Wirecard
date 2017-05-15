@@ -17,6 +17,10 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
 
+    /**
+     * SINGLE - a single, one-off transaction.
+     * INITIAL - the first of a series of recurring transactions.
+     */
     const TRANSACTION_IDENTIFIER_SINGLE = 'SINGLE';
     const TRANSACTION_IDENTIFIER_INITIAL = 'INITIAL';
 

@@ -3,6 +3,8 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
+ * NOT USED - See CheckoutPageCompletePurchase instead
+ *
  * Complete a Wirecard Checkout Page purchase transaction on the
  * user returning to the merchant shop.
  * This will never redirect (TO CHECK) because the user has already
@@ -28,6 +30,7 @@ class CheckoutPageCompletePurchaseRequest extends AbstractRequest
 
     /**
      * The transaction result will be sent through POST parameters.
+     * As a consequence, the merchant site must be running SSL.
      */
     public function getData()
     {
@@ -39,6 +42,8 @@ class CheckoutPageCompletePurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        $data['fingerprintIsValid'] = $this->isValid();
+
         return $this->response = new CheckoutPageCompletePurchaseResponse($this, $data);
     }
 }

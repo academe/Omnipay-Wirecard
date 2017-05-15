@@ -190,12 +190,18 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     }
 
     /**
-     * Return teh full list of supported payment types.
+     * Return the full list of supported payment types.
+     * Not all these may be actuvated for the account.
      *
      * @return array API values keyed by the constant name.
      */
     public function getPaymentTypes()
     {
         return $this->constantList('PAYMENT_TYPE');
+    }
+
+    public function getPaymentMethods()
+    {
+        return $this->getPaymentTypes();
     }
 }

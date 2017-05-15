@@ -3,42 +3,40 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * Accept server request notifications from Wirecard.
- * This is named the "confirm" response in Wirecard documentation.
+ * NOT USED - See CheckoutPageCompletePurchase instead
+ *
  */
 
-use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+//use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\ResponseInterface as OmnipayResponseInterface;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\NotificationInterface;
 
-class NotificationServerRequest extends OmnipayAbstractRequest implements NotificationInterface, OmnipayResponseInterface
+class CheckoutPageCompletePurchaseResponse extends AbstractResponse
 {
-    // For checking the fingerprint.
-    use HasFingerprintTrait;
-
     // Helper functions for accessing the data values
     use HasDataTrait;
 
-    // Payment states can be found on AbstractResponse::PAYMENT_STATE_*
+    // The results will be signed, se we need to be able to
+    // validate the fingerprint.
+    //use HasFingerprintTrait;
 
-    public function getData()
+    /**
+     * Checks the fingerprint of the data is valid.
+     *
+     * @return bool True if the filngerprint is found and is valid.
+     */
+    public function isValid()
     {
-        if (isset($this->data)) {
-            return $this->data;
-        }
-
-        $data = $this->httpRequest->request->all();
-
-        return $data;
+        return $this->checkFingerprint($this->getData());
     }
 
     /**
-     * TBC
+     * The raw payment state.
+     *
+     * @return null|string Values as listed in AbstractResponse::PAYMENT_STATE_*
      */
-    public function getMessage()
+    public function getPaymentState()
     {
-        return null;
+        return $this->getDataValue('paymentState');
     }
 
     /**
@@ -50,7 +48,7 @@ class NotificationServerRequest extends OmnipayAbstractRequest implements Notifi
         // trusted, so just fail it.
         // TODO: we probably need a similar check when fetching the message.
 
-        if (! $this->isValid()) {
+        if ($this->getDataValue('fingerprintIsValid') !== true) {
             return static::STATUS_FAILED;
         }
 
@@ -69,38 +67,6 @@ class NotificationServerRequest extends OmnipayAbstractRequest implements Notifi
             default:
                 return static::STATUS_FAILED;
         }
-    }
-
-    /**
-     * TBC
-     */
-    public function sendData($data)
-    {
-        return $this;
-    }
-
-    /**
-     * We put the transaction ID into a custom field, which will be passed
-     * through by the gateway to the notification data.
-     */
-    public function getTransactionId()
-    {
-        return $this->getDataValue(AbstractCheckoutPurchaseRequest::CUSTOM_FIELD_NAME_TRANSACTION_ID);
-    }
-
-    public function getPaymentState()
-    {
-        return $this->getDataValue('paymentState');
-    }
-
-    public function getRequest()
-    {
-        return $this;
-    }
-
-    public function isRedirect()
-    {
-        return false;
     }
 
     /**
@@ -131,10 +97,12 @@ class NotificationServerRequest extends OmnipayAbstractRequest implements Notifi
     }
 
     /**
-     * There are no codes for Wirecard Checkout Page.
+     * Gateway Reference
+     *
+     * @inherit
      */
-    public function getCode()
+    public function getTransactionReference()
     {
-        return null;
+        return $this->getDataValue('gatewayReferenceNumber');
     }
 }

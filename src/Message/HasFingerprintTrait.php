@@ -106,4 +106,26 @@ trait HasFingerprintTrait
     {
         return $this->getParameter('secret');
     }
+
+    /**
+     * Checks the fingerprint of the incoming data is valid.
+     * Note that a fingerprint is not sent with a FAILURE ro CANCEL message,
+     * so those payment states are always considered valid.
+     *
+     * @return bool True if the filngerprint is found and is valid.
+     */
+    public function isValid()
+    {
+        $paymentState = $this->getDataValue('paymentState');
+
+        if (
+            $paymentState === AbstractResponse::PAYMENT_STATE_CANCEL
+            || $paymentState === AbstractResponse::PAYMENT_STATE_FAILURE
+        ) {
+            return true;
+        }
+
+        return $this->checkFingerprint($this->getData());
+    }
+
 }
