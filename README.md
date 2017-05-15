@@ -94,4 +94,5 @@ This driver does not look at the IP address.
 
 The notification handler does not need to respond to the notification
 in any special way other than by returning a HTTP 200 code.
+This driver leaves the merchant site to exit after procssing the result.
 
