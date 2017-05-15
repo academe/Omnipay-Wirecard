@@ -38,6 +38,32 @@ The list of demo credit cards that
 Test mode credentials and test cards
 [can be found here](https://guides.wirecard.at/wcp:test_mode).
 
+## purchase
+
+The purchase method returns an object to support a POST to the remote gateway form.
+The POST can be a form, or a JavaScript object.
+It can be invoked the user pressing a submit button or automatically using JavaScript.
+It can target the top window or an iframe.
+
+```php
+$gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
+
+// Demo mode, try credit card MC: 9500000000000002
+$gateway->setCustomerId('D200001');
+$gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
+$gateway->setLanguage('en');
+
+$request = $gateway->purchase([...normal purchase data...]);
+$result = $request->send();
+
+// Quick and dirty way to POST to the gateway, to get to the
+// remote hosted payment form.
+echo $result->getRedirectResponse();
+exit;
+
+```
+
+
 ## completePurchase
 
 This payment method will send the user off to the Wirecard site to authorise
@@ -91,6 +117,10 @@ This driver does not look at the IP address.
 * 195.93.244.97
 * 185.60.56.35
 * 185.60.56.36
+
+The notificatino handler will send the same data as the front-end returns
+to the merchant site with the user. It will include some additional
+security-sensitive details that cannot be exposed to the user.
 
 The notification handler does not need to respond to the notification
 in any special way other than by returning a HTTP 200 code.
