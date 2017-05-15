@@ -92,3 +92,6 @@ This driver does not look at the IP address.
 * 185.60.56.35
 * 185.60.56.36
 
+The notification handler does not need to respond to the notification
+in any special way other than by returning a HTTP 200 code.
+
