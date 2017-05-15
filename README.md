@@ -51,7 +51,6 @@ $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
 // Demo mode, try credit card MC: 9500000000000002
 $gateway->setCustomerId('D200001');
 $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
-$gateway->setLanguage('en');
 
 $request = $gateway->purchase([...normal purchase data...]);
 $result = $request->send();
