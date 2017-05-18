@@ -45,10 +45,12 @@ The POST can be a form, or a JavaScript object.
 It can be invoked the user pressing a submit button or automatically using JavaScript.
 It can target the top window or an iframe.
 
+Here is a minimal example:
+
 ```php
 $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
 
-// Demo mode, try credit card MC: 9500000000000002
+// This customer ID invokes demo mode. Try credit card MC: 9500000000000002
 $gateway->setCustomerId('D200001');
 $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 
