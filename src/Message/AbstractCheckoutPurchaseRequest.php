@@ -11,9 +11,6 @@ use Omnipay\Wirecard\Extend\ItemInterface;
 
 abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
 {
-    // For creating fingerprints.
-    use HasFingerprintTrait;
-
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
 
@@ -126,7 +123,7 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     }
 
     /**
-     *  TODO: validation (see constants)
+     *  Values : static::TRANSACTION_IDENTIFIER_SINGLE or static::TRANSACTION_IDENTIFIER_INITIA+L
      */
     public function setTransactionIdentifier($value)
     {
@@ -219,19 +216,6 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     /**
      * 
      */
-    public function setAutoDeposit($value)
-    {
-        return $this->setParameter('autoDeposit', $value);
-    }
-
-    public function getAutoDeposit()
-    {
-        return $this->getParameter('autoDeposit');
-    }
-
-    /**
-     * 
-     */
     public function setConfirmMail($value)
     {
         return $this->setParameter('confirmMail', $value);
@@ -266,6 +250,57 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     public function getRiskConfigAlias()
     {
         return $this->getParameter('riskConfigAlias');
+    }
+
+    /**
+     * Return the fingerprint order string, based on the field
+     * names (the keys) of the data to send.
+     *
+     * @param array $data The key/value data to send
+     * @return string Comma-separated list of field names
+     */
+    public function getRequestFingerprintOrder($data)
+    {
+        $order = implode(',', array_keys($data));
+
+        // Two additional fields will be included in the hash.
+        $order .= ',requestFingerprintOrder,secret';
+
+        return $order;
+    }
+
+    /**
+     * Calculates the fintgerprint hash of the data to send.
+     * It is assumed that the requestFingerprintOrder field has already
+     * been added to this data.
+     *
+     * @param array $data The key/value data to send
+     * @return string Fingerprint hash
+     */
+    function getRequestFingerprint($data)
+    {
+        $secret = $this->getSecret();
+
+        $fields = implode('', array_values($data));
+
+        // Add the secret to the string to hash, since it will
+        // never be sent with the data.
+        $fields .= $secret;
+
+        return hash_hmac('sha512', $fields, $secret);
+    }
+
+    /**
+     * The secret for hashing.
+     */
+    public function setSecret($value)
+    {
+        return $this->setParameter('secret', $value);
+    }
+
+    public function getSecret()
+    {
+        return $this->getParameter('secret');
     }
 
     /**
@@ -358,7 +393,7 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
             );
         }
 
-        // SINGLE or INITIA+L
+        // static::TRANSACTION_IDENTIFIER_SINGLE or static::TRANSACTION_IDENTIFIER_INITIA+L
         if ($this->getTransactionIdentifier()) {
             $data['transactionIdentifier'] = $this->getTransactionIdentifier();
         }
@@ -540,14 +575,6 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
         }
 
         // Feature specific parameters.
-
-        if ($this->getAutoDeposit()) {
-            $data['autoDeposit'] = (
-                $this->getAutoDeposit()
-                ? static::AUTO_DEPOSIT_YES
-                : static::AUTO_DEPOSIT_NO
-            );
-        }
 
         if ($this->getConfirmMail()) {
             $data['confirmMail'] = $this->getConfirmMail();

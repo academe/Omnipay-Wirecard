@@ -8,13 +8,19 @@ namespace Omnipay\Wirecard\Message;
 
 class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
 {
+    /**
+     * Automatically capture the authorised amount at the end of the day.
+     * This makes the transaction a purchase rather than an authorisation.
+     */
+    protected $autoDeposit = 'yes';
+
     protected function createResponse($data)
     {
         return $this->response = new CheckoutPagePurchaseResponse($this, $data);
     }
 
     /**
-     * 
+     * Merchant-specified text to appear on payment page.
      */
     public function setDisplayText($value)
     {
@@ -27,7 +33,7 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
     }
 
     /**
-     * 
+     * Merchant logo to appear on payment page.
      */
     public function setImageUrl($value)
     {
@@ -40,7 +46,7 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
     }
 
     /**
-     * 
+     * Background colour of the payment page.
      */
     public function setBackgroundColor($value)
     {
@@ -53,7 +59,8 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
     }
 
     /**
-     * 
+     * Maximum number of payment attempts for the same order.
+     * This applies to a unique order number.
      */
     public function setMaxRetries($value)
     {
@@ -66,7 +73,8 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
     }
 
     /**
-     * 
+     * Sort order of payment methods and sub-methods if your consumer
+     * uses SELECT as payment method.
      */
     public function setPaymenttypeSortOrder($value)
     {
@@ -99,11 +107,8 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
             $data['backgroundColor'] = $this->getBackgroundColor();
         }
 
-        // The fingerprint is calculated at the end.
-        // The fingerprint order field is included in both the order list and the fingerprint.
-
-        $data['requestFingerprintOrder'] = $this->getRequestFingerprintOrder($data);
-        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
+        // Whether to auto-capture the authorised amount at end of the day.
+        $data['autoDeposit'] = $this->autoDeposit;
 
         if ($this->getMaxRetries()) {
             $data['maxRetries'] = $this->getMaxRetries();
@@ -112,6 +117,12 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
         if ($this->getPaymenttypeSortOrder()) {
             $data['paymenttypeSortOrder'] = $this->getPaymenttypeSortOrder();
         }
+
+        // The fingerprint is calculated at the end.
+        // The fingerprint order field is included in both the order list and the fingerprint.
+
+        $data['requestFingerprintOrder'] = $this->getRequestFingerprintOrder($data);
+        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
 
         return $data;
     }

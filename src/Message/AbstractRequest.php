@@ -88,6 +88,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
     /**
      * The Shop ID.
+     * Leave empty if there is only one shop set up.
      */
     public function setShopId($value)
     {
@@ -100,7 +101,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     }
 
     /**
-     * The Language ID is ISO 2-char code.
+     * The Language ID is lower case ISO 2-char code.
      */
     public function setLanguage($value)
     {

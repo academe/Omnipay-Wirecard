@@ -16,9 +16,8 @@ class CheckoutPageGateway extends AbstractGateway
     protected $endpoint = 'https://checkout.wirecard.com/page/init.php';
 
     /**
-     * xxx.
+     * The common name for this gateway driver API.
      */
-
     public function getName()
     {
         return 'Wirecard Checkout Page Client';
@@ -71,6 +70,6 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function acceptNotification(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServerRequest', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
     }
 }
