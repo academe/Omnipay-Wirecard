@@ -6,7 +6,7 @@ namespace Omnipay\Wirecard\Message;
  * Wirecard Checkout Page Purchase.
  */
 
-class CheckoutPagePurchaseRequest extends AbstractCheckoutPurchaseRequest
+class CheckoutPagePurchaseRequest extends AbstractCheckoutRequest
 {
     /**
      * Automatically capture the authorised amount at the end of the day.

@@ -9,7 +9,7 @@ namespace Omnipay\Wirecard\Message;
 use Omnipay\Wirecard\AbstractShopGateway;
 use Omnipay\Wirecard\Extend\ItemInterface;
 
-abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
+abstract class AbstractCheckoutRequest extends AbstractRequest
 {
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
@@ -81,19 +81,6 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     public function getNoScriptInfoUrl()
     {
         return $this->getParameter('noScriptInfoUrl');
-    }
-
-    /**
-     * 
-     */
-    public function setOrderNumber($value)
-    {
-        return $this->setParameter('orderNumber', $value);
-    }
-
-    public function getOrderNumber()
-    {
-        return $this->getParameter('orderNumber');
     }
 
     /**
@@ -250,57 +237,6 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
     public function getRiskConfigAlias()
     {
         return $this->getParameter('riskConfigAlias');
-    }
-
-    /**
-     * Return the fingerprint order string, based on the field
-     * names (the keys) of the data to send.
-     *
-     * @param array $data The key/value data to send
-     * @return string Comma-separated list of field names
-     */
-    public function getRequestFingerprintOrder($data)
-    {
-        $order = implode(',', array_keys($data));
-
-        // Two additional fields will be included in the hash.
-        $order .= ',requestFingerprintOrder,secret';
-
-        return $order;
-    }
-
-    /**
-     * Calculates the fintgerprint hash of the data to send.
-     * It is assumed that the requestFingerprintOrder field has already
-     * been added to this data.
-     *
-     * @param array $data The key/value data to send
-     * @return string Fingerprint hash
-     */
-    function getRequestFingerprint($data)
-    {
-        $secret = $this->getSecret();
-
-        $fields = implode('', array_values($data));
-
-        // Add the secret to the string to hash, since it will
-        // never be sent with the data.
-        $fields .= $secret;
-
-        return hash_hmac('sha512', $fields, $secret);
-    }
-
-    /**
-     * The secret for hashing.
-     */
-    public function setSecret($value)
-    {
-        return $this->setParameter('secret', $value);
-    }
-
-    public function getSecret()
-    {
-        return $this->getParameter('secret');
     }
 
     /**
@@ -534,6 +470,8 @@ abstract class AbstractCheckoutPurchaseRequest extends AbstractRequest
         }
 
         // Shopping basket items (with an extended basket for additional fields).
+        // TODO: This should be moved out to a separate method so it can be used by
+        // the capture command.
 
         if ($items = $this->getItems()) {
             // The count of items in the basket.
