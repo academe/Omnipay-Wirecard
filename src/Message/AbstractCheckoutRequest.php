@@ -7,7 +7,6 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Wirecard\AbstractShopGateway;
-use Omnipay\Wirecard\Extend\ItemInterface;
 
 abstract class AbstractCheckoutRequest extends AbstractRequest
 {
@@ -470,46 +469,9 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
         }
 
         // Shopping basket items (with an extended basket for additional fields).
-        // TODO: This should be moved out to a separate method so it can be used by
-        // the capture command.
 
         if ($items = $this->getItems()) {
-            // The count of items in the basket.
-            $data['basketItems'] = $items->count();
-
-            $item_number = 0;
-            foreach($items->getIterator() as $item) {
-                $item_number++;
-
-                $prefix = 'basketItem' . $item_number;
-
-                $data[$prefix . 'Quantity'] = $item->getQuantity();
-                $data[$prefix . 'Name'] = $item->getName();
-                $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
-
-                if ($item->getDescription()) {
-                    $data[$prefix . 'Description'] = $item->getDescription();
-                }
-
-                if ($item instanceof ItemInterface) {
-                    // THe extended item class supports additional fields.
-                    $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
-                    $data[$prefix . 'ArticleNumber'] = $item->getArticleNumber() ?: $item_number;
-                    $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
-                    $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
-
-                    if ($item->getImageUrl()) {
-                        $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
-                    }
-                } else {
-                    // These are defaulted for the standard Omnipay Item, as
-                    // they are all required.
-                    $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
-                    $data[$prefix . 'ArticleNumber'] = $item_number;
-                    $data[$prefix . 'UnitTaxAmount'] = 0;
-                    $data[$prefix . 'UnitTaxRate'] = 0;
-                }
-            }
+            $data = array_merge($data, $this->itemsAsArray($items));
         }
 
         // Feature specific parameters.

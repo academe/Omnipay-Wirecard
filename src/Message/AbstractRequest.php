@@ -7,6 +7,8 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\Wirecard\Extend\ItemInterface;
+use Omnipay\Common\ItemBag;
 
 abstract class AbstractRequest extends OmnipayAbstractRequest
 {
@@ -257,6 +259,63 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     public function setServiceUrl($value)
     {
         return $this->setParameter('serviceUrl', $value);
+    }
+
+    /**
+     * Convert a collection of items to an array, as required to send to the gateway.
+     */
+    public function itemsAsArray(ItemBag $items)
+    {
+        $data = [];
+
+        // The count of items in the basket.
+        //$data['basketItems'] = $items->count();
+
+        $item_number = 0;
+        foreach($items->getIterator() as $item) {
+            // Each item is sequentially numbered with a 1-based index.
+            $item_number++;
+
+            $prefix = 'basketItem' . $item_number;
+
+            $data[$prefix . 'Quantity'] = $item->getQuantity();
+            $data[$prefix . 'Name'] = $item->getName();
+            $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
+
+            // The description is optional.
+            if ($item->getDescription()) {
+                $data[$prefix . 'Description'] = $item->getDescription();
+            }
+
+            if ($item instanceof ItemInterface) {
+                // The extended item class supports additional fields.
+                $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
+                $data[$prefix . 'ArticleNumber'] = $item->getArticleNumber() ?: $item_number;
+                $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
+                $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
+
+                // The image URL is is optional.
+                if ($item->getImageUrl()) {
+                    $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
+                }
+            } else {
+                // These are defaulted for the standard Omnipay Item, as
+                // they are all required.
+                $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
+                $data[$prefix . 'ArticleNumber'] = $item_number;
+                $data[$prefix . 'UnitTaxAmount'] = 0;
+                $data[$prefix . 'UnitTaxRate'] = 0;
+            }
+        }
+
+        // All keys are in alphanumeric order, except for the basket count,
+        // which is tagged onto the start.
+        // The backend functions require this strict order.
+
+        ksort($data);
+        $data = array_merge(['basketItems' => $items->count()], $data);
+
+        return $data;
     }
 
     /**
