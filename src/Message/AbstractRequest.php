@@ -288,15 +288,15 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
                     $data[$prefix . 'Description'] = $item->getDescription();
                 }
 
-                // The image URL is is optional.
-                // NOTE: the image URL does not seem to work at all in the backend commands,
-                // despite the documentation. Using it results in a fingerprint error, regardless
-                // of where the field is positioned.
+                $data[$prefix . 'Name'] = $item->getName();
+
+                // The image URL is is optional, and is positioned after the name for
+                // the signature, despite all documentation at this time giving other
+                // positions.
                 if ($item->getImageUrl()) {
                     $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
                 }
 
-                $data[$prefix . 'Name'] = $item->getName();
                 $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
                 $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
                 $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
