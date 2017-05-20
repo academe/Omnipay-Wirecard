@@ -45,16 +45,11 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
     }
 
     /**
-     * Redirect URL can be long GET or short POST.
-     * CHECKME: is GET actually supported? (I think not)
+     * Redirect URL will be POST.
      */
     public function getRedirectUrl()
     {
-        if ($this->getRedirectMethod() == 'GET') {
-            return $this->getEndpoint() . '?' . http_build_query($this->getRedirectData(), '', '&');
-        } else {
-            return $this->getEndpoint();
-        }
+        return $this->getEndpoint();
     }
 
     /**
@@ -63,23 +58,5 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
     public function getRedirectData()
     {
         return $this->getData();
-    }
-
-    public function setEndpoint($endpoint)
-    {
-        return $this->endpoint = $endpoint;
-    }
-
-    /**
-     *
-     */
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
-
-    public function setRedirectMethod($value)
-    {
-        $this->redirectMethod = $value;
     }
 }

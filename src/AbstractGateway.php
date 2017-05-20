@@ -12,11 +12,6 @@ use Omnipay\Common\AbstractGateway as OmnipayAbstractGateway;
 abstract class AbstractGateway extends OmnipayAbstractGateway
 {
     /**
-     * The default server endpoint.
-     */
-    protected $endpoint = '';
-
-    /**
      *
      */
     public function getDefaultParameters()
@@ -30,8 +25,6 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
             'secret' => '',
             // Required.
             'language' => 'en',
-            // For temporary changes to gateway.
-            'endpoint' => $this->endpoint,
         );
     }
 
@@ -84,19 +77,6 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
     public function getSecret()
     {
         return $this->getParameter('secret');
-    }
-
-    /**
-     * The Endpoint will only need to be changed if instructed.
-     */
-    public function setEndpoint($endpoint)
-    {
-        return $this->setParameter('endpoint', $endpoint);
-    }
-
-    public function getEndpoint()
-    {
-        return $this->getParameter('endpoint');
     }
 
     /**

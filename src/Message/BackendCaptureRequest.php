@@ -15,6 +15,8 @@ class BackendCaptureRequest extends AbstractRequest
      */
     protected $command = 'deposit';
 
+    protected $endpoint = 'https://checkout.wirecard.com/page/toolkit.php';
+
     /**
      * Collect the data together to send to the Gateway.
      */
@@ -70,12 +72,6 @@ class BackendCaptureRequest extends AbstractRequest
         $data['requestFingerprint'] = $this->getRequestFingerprint($fingerprint_data);
 
         return $data;
-    }
-
-    // TODO: Move this more central, operate it from properties, and allow an override.
-    public function getEndpoint()
-    {
-        return 'https://checkout.wirecard.com/page/toolkit.php';
     }
 
     /**

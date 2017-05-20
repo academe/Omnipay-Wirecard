@@ -11,11 +11,6 @@ use Omnipay\Common\Exception\InvalidRequestException;
 class CheckoutPageGateway extends AbstractGateway
 {
     /**
-     * The default server endpoint.
-     */
-    protected $endpoint = 'https://checkout.wirecard.com/page/init.php';
-
-    /**
      * The common name for this gateway driver API.
      */
     public function getName()

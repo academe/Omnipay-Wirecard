@@ -362,4 +362,12 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->getPaymentTypes();
     }
+
+    /**
+     * Get the redirect endpoint, if one is set.
+     */
+    public function getEndpoint()
+    {
+        return (property_exists($this, 'endpoint') ? $this->endpoint : null);
+    }
 }
