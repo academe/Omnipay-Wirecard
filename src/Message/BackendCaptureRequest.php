@@ -13,7 +13,7 @@ class BackendCaptureRequest extends AbstractRequest
     /**
      * The backend command to send.
      */
-    private $command = 'deposit';
+    protected $command = 'deposit';
 
     /**
      * Collect the data together to send to the Gateway.
@@ -42,8 +42,6 @@ class BackendCaptureRequest extends AbstractRequest
         $data['currency'] = $this->getCurrency();
 
         // Fields optional for the deposit command.
-        // CHECKME: is the shopId in the correct position? It'snot listed in the
-        // field list order, obtained from the backend demo application.
 
         if ($this->getMerchantReference()) {
             $data['merchantReference'] = $this->getMerchantReference();
@@ -70,20 +68,6 @@ class BackendCaptureRequest extends AbstractRequest
             array_slice($data, $secret_position)
         );
         $data['requestFingerprint'] = $this->getRequestFingerprint($fingerprint_data);
-
-        // The order of the fields for the signature. Note the secret comes after the toolkit password.
-        /*
-            $customerId, [$shopId,] $toolkitPassword,
-            $secret, $command,
-            $language, $orderNumber,
-            $amount, $currency,
-            // For each optional basket item:
-            $basketItems, $basketItem1ArticleNumber,
-            $basketItem1Quantity, $basketItem1Description,
-            $basketItem1Name, $basketItem1UnitGrossAmount,
-            $basketItem1UnitNetAmount, $basketItem1UnitTaxAmount,
-            $basketItem1UnitTaxRate
-        */
 
         return $data;
     }

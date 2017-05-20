@@ -263,6 +263,10 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
     /**
      * Convert a collection of items to an array, as required to send to the gateway.
+     * The fields are ordered for the signature generated when sending through
+     * the backend API. The backend API has a strict signature field order. The front
+     * end (Checkout Page and Seamless) don't care about the order, since they send the
+     * order list along with the signature.
      */
     public function itemsAsArray(ItemBag $items)
     {
@@ -290,9 +294,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
                 $data[$prefix . 'Name'] = $item->getName();
 
-                // The image URL is is optional, and is positioned after the name for
-                // the signature, despite all documentation at this time giving other
-                // positions.
+                // The image URL is is optional.
                 if ($item->getImageUrl()) {
                     $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
                 }

@@ -67,9 +67,8 @@ class BackendResponse extends AbstractResponse
 
     // TODO: an array of error details may be returned for Checkout Seamless
 
-    // Other returned data specific to the dposit command.
-
     /**
+     * Command: deposit
      * A new payment number is returned if a new payment object has been
      * created due to a split capture. 
      *
@@ -78,6 +77,17 @@ class BackendResponse extends AbstractResponse
     public function getPaymentNumber()
     {
         return $this->getDataValue('paymentNumber');
+    }
+
+    /**
+     * Command: refund
+     * Number of the credit note. 
+     *
+     * @return int Numeric with a variable length of up to 9 digits.
+     */
+    public function getCreditNumber()
+    {
+        return $this->getDataValue('creditNumber');
     }
 
     /**
