@@ -269,7 +269,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         $data = [];
 
         // The count of items in the basket.
-        //$data['basketItems'] = $items->count();
+        $data['basketItems'] = $items->count();
 
         $item_number = 0;
         foreach($items->getIterator() as $item) {
@@ -278,42 +278,48 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
             $prefix = 'basketItem' . $item_number;
 
-            $data[$prefix . 'Quantity'] = $item->getQuantity();
-            $data[$prefix . 'Name'] = $item->getName();
-            $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
-
-            // The description is optional.
-            if ($item->getDescription()) {
-                $data[$prefix . 'Description'] = $item->getDescription();
-            }
-
             if ($item instanceof ItemInterface) {
                 // The extended item class supports additional fields.
-                $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
                 $data[$prefix . 'ArticleNumber'] = $item->getArticleNumber() ?: $item_number;
-                $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
-                $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
+                $data[$prefix . 'Quantity'] = $item->getQuantity();
+
+                // The description is optional.
+                if ($item->getDescription()) {
+                    $data[$prefix . 'Description'] = $item->getDescription();
+                }
 
                 // The image URL is is optional.
+                // NOTE: the image URL does not seem to work at all in the backend commands,
+                // despite the documentation. Using it results in a fingerprint error, regardless
+                // of where the field is positioned.
                 if ($item->getImageUrl()) {
                     $data[$prefix . 'ImageUrl'] = $item->getImageUrl();
                 }
+
+                $data[$prefix . 'Name'] = $item->getName();
+                $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
+                $data[$prefix . 'UnitNetAmount'] = $item->getNetAmount() ?: $item->getPrice();
+                $data[$prefix . 'UnitTaxAmount'] = $item->getTaxAmount() ?: 0;
+                $data[$prefix . 'UnitTaxRate'] = $item->getTaxRate() ?: 0;
+
             } else {
                 // These are defaulted for the standard Omnipay Item, as
                 // they are all required.
-                $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
                 $data[$prefix . 'ArticleNumber'] = $item_number;
+                $data[$prefix . 'Quantity'] = $item->getQuantity();
+
+                // The description is optional.
+                if ($item->getDescription()) {
+                    $data[$prefix . 'Description'] = $item->getDescription();
+                }
+
+                $data[$prefix . 'Name'] = $item->getName();
+                $data[$prefix . 'UnitGrossAmount'] = $item->getPrice();
+                $data[$prefix . 'UnitNetAmount'] = $item->getPrice();
                 $data[$prefix . 'UnitTaxAmount'] = 0;
                 $data[$prefix . 'UnitTaxRate'] = 0;
             }
         }
-
-        // All keys are in alphanumeric order, except for the basket count,
-        // which is tagged onto the start.
-        // The backend functions require this strict order.
-
-        ksort($data);
-        $data = array_merge(['basketItems' => $items->count()], $data);
 
         return $data;
     }
