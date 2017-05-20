@@ -74,7 +74,6 @@ $basketItem1UnitTaxRate
      */
     protected function createResponse($data)
     {
-        var_dump($data); exit;
         return $this->response = new BackendResponse($this, $data);
     }
 
@@ -86,9 +85,10 @@ $basketItem1UnitTaxRate
         $headers = [];
         $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-parse_str((string)$httpResponse->getBody(), $z);
-var_dump($z);
-        //var_dump((string)$httpResponse->getBody());
-        //return $this->createResponse(foo);
+        // The response is a query string.
+        // Parse it into an array.
+        parse_str((string)$httpResponse->getBody(), $response_data);
+
+        return $this->createResponse($response_data);
     }
 }

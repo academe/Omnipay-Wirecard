@@ -11,7 +11,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
-     * The endpoint.
+     * The endpoint for the remote checkout page.
      */
     protected $endpoint = 'https://checkout.wirecard.com/page/init.php';
 
@@ -46,7 +46,7 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
 
     /**
      * Redirect URL can be long GET or short POST.
-     * CHECKME: is GET actually supported?
+     * CHECKME: is GET actually supported? (I think not)
      */
     public function getRedirectUrl()
     {
@@ -70,6 +70,9 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
         return $this->endpoint = $endpoint;
     }
 
+    /**
+     *
+     */
     public function getEndpoint()
     {
         return $this->endpoint;
