@@ -25,6 +25,8 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
             'secret' => '',
             // Required.
             'language' => 'en',
+            // For backend functions.
+            'toolkitPassword' => 'en',
         );
     }
 
@@ -90,5 +92,22 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
     public function getLanguage()
     {
         return $this->getParameter('language');
+    }
+
+    /**
+     * The toolkitPassword is needed for backend commands.
+     */
+    public function setToolkitPassword($toolkitPassword)
+    {
+        if (!is_string($toolkitPassword)) {
+            throw new InvalidRequestException('Toolkit Password must be a string.');
+        }
+
+        return $this->setParameter('toolkitPassword', $toolkitPassword);
+    }
+
+    public function getToolkitPassword()
+    {
+        return $this->getParameter('toolkitPassword');
     }
 }

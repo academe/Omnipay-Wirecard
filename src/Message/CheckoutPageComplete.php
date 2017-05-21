@@ -294,9 +294,9 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
             return false;
         }
 
-        // The order will be a list of fields with the secret added.
+        // The fingerprint order will be a list of fields with the secret added.
         // Note that the secret could be anywhere in the value string
-        // to hash, and not just at the end as in all the examples.
+        // to hash, and not just at the end as in most examples.
 
         $fields = explode(',', $data['responseFingerprintOrder']);
 
@@ -318,6 +318,7 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
             // defaulting it to an empty string, so we will do that.
         }
 
+        // Finally check the fingerprint hash against the secret.
         $fingerprint = hash_hmac('sha512', $hash_string, $secret);
 
         return ($fingerprint === $data['responseFingerprint']);
