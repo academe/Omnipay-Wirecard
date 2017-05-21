@@ -1,3 +1,8 @@
+[![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/academe/OmniPay-Wirecard/master/LICENSE.md)
+[![Packagist](https://img.shields.io/packagist/v/academe/omnipay-wirecard.svg?maxAge=2592000)](https://packagist.org/packages/academe/omnipay-wirecard)
+[![GitHub issues](https://img.shields.io/github/issues/academe/OmniPay-Wirecard.svg)](https://github.com/academe/OmniPay-Wirecard/issues)
+[![Travis](https://img.shields.io/travis/academe/OmniPay-Wirecard.svg?maxAge=2592000)](https://travis-ci.org/academe/OmniPay-Wirecard)
+
 # Omnipay-Wirecard
 
 Wirecard payment gateway driver for the Omnipay
