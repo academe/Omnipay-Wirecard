@@ -152,6 +152,10 @@ for example just 10 of the 20 cans of beans that have been authorised.
 
 More details on how partial capture works will be added in due course.
 
+## refund
+
+This is set up and used exactly the same as for `capture`.
+
 ## completePurchase/completeAuthorize
 
 This payment method will send the user off to the Wirecard site to authorise
