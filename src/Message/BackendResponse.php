@@ -70,7 +70,7 @@ class BackendResponse extends AbstractResponse
     /**
      * Command: deposit
      * A new payment number is returned if a new payment object has been
-     * created due to a split capture. 
+     * created due to a split capture.
      *
      * @return int Numeric with a variable length of up to 9 digits.
      */
@@ -81,13 +81,24 @@ class BackendResponse extends AbstractResponse
 
     /**
      * Command: refund
-     * Number of the credit note. 
+     * Number of the credit note.
      *
      * @return int Numeric with a variable length of up to 9 digits.
      */
     public function getCreditNumber()
     {
         return $this->getDataValue('creditNumber');
+    }
+
+    /**
+     * Command: deposit, refund
+     * The new or existing gateway transaction number.
+     *
+     * @return int Numeric with a variable length of up to 9 digits.
+     */
+    public function getTransactionReference()
+    {
+        return $this->getPaymentNumber ?: $this->getCreditNumber();
     }
 
     /**

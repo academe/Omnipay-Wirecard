@@ -39,7 +39,8 @@ class BackendCaptureRequest extends AbstractRequest
 
         // Fields mandatory for the deposit command.
 
-        $data['orderNumber'] = $this->getOrderNumber();
+        $data['orderNumber'] = $this->getOrderNumber() ?: $this->getTransactionReference();
+
         $data['amount'] = $this->getAmount();
         $data['currency'] = $this->getCurrency();
 

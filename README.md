@@ -95,9 +95,62 @@ By default, a Wirecard account will just support `authorize`.
 You may need to request that the `purchase` option be enabled for your account.
 It is known as "auto-deposit", and that is what you will need to ask for.
 
-### capture
+## capture
 
-TODO (most of the implementation is done, but needs some refactoring and examples.
+To capture an authorisation in full, you will need the toolkit password.
+This password gives you access to the backend API, which the capture uses.
+
+So set up the gateway first. These details are used to access the test instance:
+
+```php
+$gateway->setCustomerId('D200411');
+$gateway->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
+$gateway->setShopId('3D'); // Or leave not set if using the non-3D Secure test cards.
+$gateway->setToolkitPassword('2g4f9q2m');
+```
+
+You will need the original transaction reference from the `completeAuthorize`
+response or the `acceptNotification` server response:
+
+```php
+$transactionReference = $complete_response->getTransactionReference();
+
+// or
+
+$transactionReference = $server_response->getTransactionReference();
+```
+
+Then send the request for the original full amount:
+
+```php
+    $request = $gateway->capture([
+        'amount' => '1.00',
+        'currency' => 'EUR',
+        'orderNumber' => $transactionReference,
+        // or
+        'transactionReference' => $transactionReference,
+    ]);
+    $response = $request->send();
+
+    // If successfully captured you will get this response:
+
+    $response->isSuccessful(); // true
+
+    // If not successful, details will be available:
+
+    // Code and message from the gateway:
+    $response->getCode();
+    $response->getMessage();
+    // Message from the remote financial merchant, if available:
+    $response->getPaySysMessage();
+```
+
+If you wish to capture just a portion of the original authorisation,
+then an `ItemBag` can be passed in here with details of just those items
+being captured. That can include partial quantities of one or more items,
+for example just 10 of the 20 cans of beans that have been authorised.
+
+More details on how partial capture works will be added in due course.
 
 ## completePurchase/completeAuthorize
 
