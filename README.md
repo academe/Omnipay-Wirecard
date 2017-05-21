@@ -212,11 +212,11 @@ This driver does not look at the IP address.
 * 185.60.56.35
 * 185.60.56.36
 
-The notificatino handler will send the same data as the front-end returns
+The notification handler will send the same data as the front-end returns
 to the merchant site with the user. It will include some additional
 security-sensitive details that cannot be exposed to the user.
 
 The notification handler does not need to respond to the notification
 in any special way other than by returning a HTTP 200 code.
-This driver leaves the merchant site to exit after procssing the result.
+This driver leaves the merchant site to exit after processing the result.
 
