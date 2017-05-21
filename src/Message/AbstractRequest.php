@@ -160,7 +160,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
      * @param array $data The key/value data to send
      * @return string Fingerprint hash
      */
-    function getRequestFingerprint($data)
+    public function getRequestFingerprint($data)
     {
         $secret = $this->getSecret();
 
@@ -276,7 +276,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         $data['basketItems'] = $items->count();
 
         $item_number = 0;
-        foreach($items->getIterator() as $item) {
+        foreach ($items->getIterator() as $item) {
             // Each item is sequentially numbered with a 1-based index.
             $item_number++;
 

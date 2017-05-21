@@ -302,7 +302,7 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
 
         $hash_string = '';
 
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             if ($field === 'secret') {
                 // Append the secret to the hash string.
 

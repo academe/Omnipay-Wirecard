@@ -25,7 +25,7 @@ trait HasConstantListsTrait
         if (isset($prefix)) {
             $result = [];
             $prefix = strtoupper($prefix);
-            foreach($constants as $key => $value) {
+            foreach ($constants as $key => $value) {
                 if (strpos($key, $prefix) === 0) {
                     $result[$key] = $value;
                 }
@@ -47,6 +47,7 @@ trait HasConstantListsTrait
     public static function constantValue($prefix, $suffix)
     {
         $name = strtoupper($prefix . '_' . $suffix);
+
         if (defined("static::$name")) {
             return constant("static::$name");
         }

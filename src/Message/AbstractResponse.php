@@ -7,7 +7,7 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Common\Message\AbstractResponse as OmnipayAbstractResponse;
-//use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 abstract class AbstractResponse extends OmnipayAbstractResponse
 {
