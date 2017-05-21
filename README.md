@@ -1,7 +1,8 @@
 [![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/academe/OmniPay-Wirecard/master/LICENSE.md)
 [![Packagist](https://img.shields.io/packagist/v/academe/omnipay-wirecard.svg?maxAge=2592000)](https://packagist.org/packages/academe/omnipay-wirecard)
 [![GitHub issues](https://img.shields.io/github/issues/academe/OmniPay-Wirecard.svg)](https://github.com/academe/OmniPay-Wirecard/issues)
-[![Travis](https://img.shields.io/travis/academe/OmniPay-Wirecard.svg?maxAge=2592000)](https://travis-ci.org/academe/OmniPay-Wirecard)
+[![Travis](https://travis-ci.org/academe/Omnipay-Wirecard.svg?branch=master)](https://travis-ci.org/academe/Omnipay-Wirecard)
+[![GitHub forks](https://img.shields.io/github/forks/academe/Omnipay-Wirecard.svg)](https://github.com/academe/Omnipay-Wirecard/network)
 
 # Omnipay-Wirecard
 
