@@ -37,6 +37,7 @@ Demo mode is invoked by using these details:
 | customerId | D200001 |
 | secret | B8AKTPWBRMNBV455FG6M2DANE99WU2 |
 | shopId | *not used* |
+| toolkitPassword | jcv45z |
 
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
@@ -61,17 +62,44 @@ $gateway->setCustomerId('D200001');
 $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 
 $request = $gateway->purchase([...normal purchase data...]);
-$result = $request->send();
+$response = $request->send();
 
 // Quick and dirty way to POST to the gateway, to get to the
 // remote hosted payment form.
-echo $result->getRedirectResponse();
+// This is ignoring error checking, as detailed in the Omnipay documentation.
+echo $response->getRedirectResponse();
 exit;
-
 ```
 
+Alternatively put the data into a custom form that the user can submit:
 
-## completePurchase
+```php
+// This form could target an iframe.
+echo '<form action="' . $response->getRedirectUrl() . '" method="POST" accept-charset="UTF-8">';
+
+foreach($response->getRedirectData() as $name => $value) {
+    echo '<input type="hidden" name="'.htmlspecialchars($name).'" value="'.htmlspecialchars($value).'" />';
+}
+
+echo '<button type="submit">Pay Now</button>';
+echo "</form>";
+```
+
+## authorize
+
+While `payment` requests that the funds are automatically taken (usually at midnight of that day)
+and `authorize` will leave the funds to be captured at a later date.
+For most services you will have between 7 and 14 days to enact the capture.
+
+By default, a Wirecard account will just support `authorize`.
+You may need to request that the `purchase` option be enabled for your account.
+It is known as "auto-deposit", and that is what you will need to ask for.
+
+### capture
+
+TODO (most of the implementation is done, but needs some refactoring and examples.
+
+## completePurchase/completeAuthorize
 
 This payment method will send the user off to the Wirecard site to authorise
 a payment. The user will return with the result of the transaction, which
@@ -113,8 +141,10 @@ The merchant site will normally `send()` the `$complete_purchase_request`
 to get the final response object. In this case, you will just get the same
 object back - it acts as both request and response.
 
-    $complete_purchase_response = $complete_purchase_request->send();
-    // $complete_purchase_response == $complete_purchase_request // true
+```php
+$complete_purchase_response = $complete_purchase_request->send();
+// $complete_purchase_response == $complete_purchase_request // true
+```
 
 ## Notification ("confirm") Handler
 
