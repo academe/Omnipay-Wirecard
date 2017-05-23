@@ -68,15 +68,14 @@ $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 $request = $gateway->purchase([
     ...normal purchase data (TODO: examples)...
     //
-    // All these URLs are mandatory, but will default to the returnUrl
+    // These three URLs are mandatory, but will default to the returnUrl
     // where they are not set.
     'returnUrl' => 'https://example.com/complete',
-    //'errorUrl' => 'https://example.com/complete?status=error', // Error in the request
     //'cancelUrl' => 'https://example.com/complete?status=cancel', // User cancelled
     //'failureUrl' => 'https://example.com/complete?status=failure', // Failed to authorise
     //
     'notifyUrl' => 'https://example.com/acceptNotification',
-    'serviceUrl' => 'https://acadweb.co.uk/service_and_terms',
+    'serviceUrl' => 'https://example.com/terms_of_service_and_contact',
     'confirmMail' => 'shop.admin@example.com',
 
 ]);
