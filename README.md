@@ -36,8 +36,12 @@ Demo mode is invoked by using these details:
 |:----- |:----- |
 | customerId | D200001 |
 | secret | B8AKTPWBRMNBV455FG6M2DANE99WU2 |
-| shopId | *not used* |
+| shopId | *not used for the demo account* |
 | toolkitPassword | jcv45z |
+
+The `toolkitPassword` is only needed if you need to `capture` an authorisation
+or `refund` a payment (also `void` and a few additional backend commands when
+they are implemented).
 
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
@@ -61,7 +65,21 @@ $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
 $gateway->setCustomerId('D200001');
 $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 
-$request = $gateway->purchase([...normal purchase data...]);
+$request = $gateway->purchase([
+    ...normal purchase data (TODO: examples)...
+    //
+    // All these URLs are mandatory, but will default to the returnUrl
+    // where they are not set.
+    'returnUrl' => 'https://example.com/complete',
+    //'errorUrl' => 'https://example.com/complete?status=error', // Error in the request
+    //'cancelUrl' => 'https://example.com/complete?status=cancel', // User cancelled
+    //'failureUrl' => 'https://example.com/complete?status=failure', // Failed to authorise
+    //
+    'notifyUrl' => 'https://example.com/acceptNotification',
+    'serviceUrl' => 'https://acadweb.co.uk/service_and_terms',
+    'confirmMail' => 'shop.admin@example.com',
+
+]);
 $response = $request->send();
 
 // Quick and dirty way to POST to the gateway, to get to the
