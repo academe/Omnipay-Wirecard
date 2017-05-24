@@ -30,7 +30,7 @@ Demo mode does not involve the end merchant banks in any processng.
 Test mode does involve the end merchant banks, so can involve 3D Secure
 tests, but still no payments are taken.
 
-Demo mode is invoked by using these details:
+**Demo** mode is invoked by using these details:
 
 | Field | Value |
 |:----- |:----- |
@@ -45,6 +45,24 @@ they are implemented).
 
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
+
+**Test** mode is invoked by using these details for non-3D Secure tests:
+
+| Field | Value |
+|:----- |:----- |
+| customerId | D200411 |
+| secret | CHCSH7UGHVVX2P7EHDHSY4T2S4CGYK4QBE4M5YUUG2ND5BEZWNRZW5EJYVJQ |
+| shopId | *not used for the demo account* |
+| toolkitPassword | 2g4f9q2m |
+
+**Test** mode is invoked by using these details for 3D Secure tests:
+
+| Field | Value |
+|:----- |:----- |
+| customerId | D200411 |
+| secret | DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F |
+| shopId | 3D |
+| toolkitPassword | 2g4f9q2m |
 
 Test mode credentials and test cards
 [can be found here](https://guides.wirecard.at/wcp:test_mode).
@@ -65,8 +83,14 @@ $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
 $gateway->setCustomerId('D200001');
 $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 
+// Because failureUrl and serviceUrl are gateway-specific, they can also be set
+// as gateway configuration options:
+$gateway->setFailureUrl('https://example.com/complete?status=failure');
+$gateway->setServiceUrl('https://example.com/terms_of_service_and_contact');
+
 $request = $gateway->purchase([
     ...normal purchase data (TODO: examples)...
+    ...additional gateway-specific feature data (TODO: examples)...
     //
     // These three URLs are mandatory to the gateway, but will be defaulted to the
     // returnUrl where they are not set.
