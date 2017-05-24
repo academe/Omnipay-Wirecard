@@ -27,6 +27,10 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
             'language' => 'en',
             // For backend functions.
             'toolkitPassword' => 'en',
+            // Return URL after auth failure.
+            'failureUrl' => '',
+            // Link to terms of service.
+            'serviceUrl' => '',
         );
     }
 
@@ -109,5 +113,47 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
     public function getToolkitPassword()
     {
         return $this->getParameter('toolkitPassword');
+    }
+
+    /**
+     * Get the request failure URL.
+     *
+     * @return string
+     */
+    public function getFailureUrl()
+    {
+        return $this->getParameter('failureUrl');
+    }
+
+    /**
+     * Sets the request failure URL.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setFailureUrl($value)
+    {
+        return $this->setParameter('failureUrl', $value);
+    }
+
+    /**
+     * Get the request service URL.
+     *
+     * @return string
+     */
+    public function getServiceUrl()
+    {
+        return $this->getParameter('serviceUrl');
+    }
+
+    /**
+     * Sets the request service URL.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setServiceUrl($value)
+    {
+        return $this->setParameter('serviceUrl', $value);
     }
 }
