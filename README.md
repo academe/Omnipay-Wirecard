@@ -8,6 +8,33 @@
 
 Wirecard payment gateway driver for the Omnipay
 
+## Gateways APIs Supported
+
+Just Wirecard *Checkout Page* is supported for now,
+which includes most *Checkout Page Backend* operations to support the front end.
+
+This *Checkout Page* offers a payment page hosted by the gateway,
+can be partially customised, and that can either be shown in an iframe
+or navigated to as the top window.
+
+## Why This Package
+
+There are a few other Omnipay Wirecard drivers already,
+[which you should explore](https://packagist.org/search/?q=omnipay-wirecard)
+to see if any fit your needs.
+This package was created with a number of prerequitits:
+
+* It supports Omnipay 2.x following as many of the Omnipay standards/conventions
+  as possible. This is to help integration into multi-gateway systems and wrappers
+  with the least custom programming as possible.
+* It does not use the Wirecard SDK. Though very complete in terms of functionaluty
+  coverage, the SDK is locked onto HTTP clients that are not compatible with many
+  sites using Omnipay 2.x
+* It does not need an external serializer, that is an issue for some applications.
+
+As Omnipay 3.x goes into beta, the intentiion is to branch this package to support
+that version, but carry on maintaining the 2.x branch.
+
 ## Wirecard Checkout Page
 
 The *Wirecard Checkout Page* mode supports a remote checkout page that
