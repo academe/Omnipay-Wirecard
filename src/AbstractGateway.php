@@ -11,6 +11,9 @@ use Omnipay\Common\AbstractGateway as OmnipayAbstractGateway;
 
 abstract class AbstractGateway extends OmnipayAbstractGateway
 {
+    // Shared gateway/message properties.
+    use HasGatewayParametersTrait;
+
     /**
      *
      */
@@ -32,128 +35,5 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
             // Link to terms of service.
             'serviceUrl' => '',
         );
-    }
-
-    /**
-     * *** Global Settings ***
-     */
-
-    /**
-     * The Customer ID is always needed.
-     */
-    public function setCustomerId($customerId)
-    {
-        if (!is_string($customerId)) {
-            throw new InvalidRequestException('Customer ID must be a string.');
-        }
-
-        return $this->setParameter('customerId', $customerId);
-    }
-
-    public function getCustomerId()
-    {
-        return $this->getParameter('customerId');
-    }
-
-    /**
-     * The Shop ID is needed if there is more than one shop to access.
-     */
-    public function setShopId($shopId)
-    {
-        if (!is_string($shopId)) {
-            throw new InvalidRequestException('Shop ID must be a string.');
-        }
-
-        return $this->setParameter('shopId', $shopId);
-    }
-
-    public function getShopId()
-    {
-        return $this->getParameter('shopId');
-    }
-
-    /**
-     * The Secret is always needed.
-     */
-    public function setSecret($secret)
-    {
-        return $this->setParameter('secret', $secret);
-    }
-
-    public function getSecret()
-    {
-        return $this->getParameter('secret');
-    }
-
-    /**
-     * The language sets the language used in the customermessage results..
-     */
-    public function setLanguage($language)
-    {
-        return $this->setParameter('language', $language);
-    }
-
-    public function getLanguage()
-    {
-        return $this->getParameter('language');
-    }
-
-    /**
-     * The toolkitPassword is needed for backend commands.
-     */
-    public function setToolkitPassword($toolkitPassword)
-    {
-        if (!is_string($toolkitPassword)) {
-            throw new InvalidRequestException('Toolkit Password must be a string.');
-        }
-
-        return $this->setParameter('toolkitPassword', $toolkitPassword);
-    }
-
-    public function getToolkitPassword()
-    {
-        return $this->getParameter('toolkitPassword');
-    }
-
-    /**
-     * Get the request failure URL.
-     *
-     * @return string
-     */
-    public function getFailureUrl()
-    {
-        return $this->getParameter('failureUrl');
-    }
-
-    /**
-     * Sets the request failure URL.
-     *
-     * @param string $value
-     * @return AbstractRequest Provides a fluent interface
-     */
-    public function setFailureUrl($value)
-    {
-        return $this->setParameter('failureUrl', $value);
-    }
-
-    /**
-     * Get the request service URL.
-     *
-     * @return string
-     */
-    public function getServiceUrl()
-    {
-        return $this->getParameter('serviceUrl');
-    }
-
-    /**
-     * Sets the request service URL.
-     *
-     * @param string $value
-     * @return AbstractRequest Provides a fluent interface
-     */
-    public function setServiceUrl($value)
-    {
-        return $this->setParameter('serviceUrl', $value);
     }
 }
