@@ -56,7 +56,7 @@ And run composer to update your dependencies:
 
 Or combine the two steps into one with composer on the path::
 
-    $ composer require "academke/omnipay-wirecard: ~2.0"
+    $ composer require "academe/omnipay-wirecard: ~2.0"
 
 ## Wirecard Checkout Page
 
@@ -175,8 +175,14 @@ Here is a minimal example:
 
 ```php
 $request = $gateway->purchase([
-    ...normal purchase data (TODO: examples)...
-    ...additional gateway-specific feature data (TODO: examples)...
+    'transactionId' => $transactionId, // merchant site generated ID
+    'amount' => "9.00",
+    'currency' => 'EUR',
+    'invoiceId' => 'FOOOO',
+    'description' => 'An order',
+    'paymentType' => 'CCARD',
+    'card' => $card, // billing and shipping details
+    'items' => $items, // array or ItemBag of Omnipay\Common\Item or Omnipay\Wirecard\Extend\Item objects
     //
     // These three URLs are required to the gateway, but will be defaulted to the
     // returnUrl where they are not set.
@@ -211,6 +217,32 @@ foreach($response->getRedirectData() as $name => $value) {
 
 echo '<button type="submit">Pay Now</button>';
 echo "</form>";
+```
+
+### Extended ItemBag Items
+
+This driver will accept standard OmniPay items in the ItemBag.
+When these are supplied, some fields sent to the gateway will be defaulted:
+
+* `articleNumber` will be the sequential order of the item, starting at 1 for the first item.
+* `imageUrl` will be left blank.
+* `netAmount` and `grossAmount` will be the same as the `amount`.
+* `taxRate` will be zero.
+
+An extended Item is created like this example:
+
+```php
+$item = new Omnipay\Wirecard\Extend\Item([
+    'articleNumber' => 'SKU1',
+    'price' => '3.10',
+    'quantity' => '1',
+    'name' => 'Name One',
+    'imageUrl' => 'http://example.com',
+    'description' => 'FooBar',
+    'netAmount' => '3.00',
+    'taxAmount' => '27',
+    'taxRate' => '10',
+]);
 ```
 
 ## authorize request
