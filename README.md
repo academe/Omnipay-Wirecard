@@ -94,14 +94,9 @@ The list of demo credit cards that
 Test mode credentials and test cards
 [can be found here](https://guides.wirecard.at/wcp:test_mode).
 
-## purchase
+## The Checkout Page Gateway Class
 
-The purchase method returns an object to support a POST to the remote gateway form.
-The POST can be a form, or a JavaScript object.
-It can be invoked the user pressing a submit button or automatically using JavaScript.
-It can target the top window or an iframe.
-
-Here is a minimal example:
+This class is created qne configured like this:
 
 ```php
 $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
@@ -117,7 +112,45 @@ $gateway->setServiceUrl('https://example.com/terms_of_service_and_contact');
 
 // Most other gateway and API-specific parameters (i.e. those not recognised by
 // the Omnipay core) can be set at the gateway or the message level.
+```
 
+These are the parameters that can be set when instantiating the Checkout Page gateway:
+
+| Name | Type | Required | Notes |
+| ---- | ---- | -------- | ----- |
+| customerId | string | Yes | |
+| shopId | string | No | |
+| secret | string | Yes | |
+| language | string | No | ISO two-letter; defaults to "en" |
+| toolkitPassword | string | Yes for backend only | For server-to-server requests (void, capture, etc) |
+| failureUrl | string | Yes for new transactions | URL |
+| serviceUrl | string | Yes for new transactions | URL |
+| --- | --- | --- | --- |
+| noScriptInfoUrl | string | No | URL |
+| windowName | string | No | |
+| duplicateRequestCheck | boolean | No | Supplied value of whatever type will be cast to boolean |
+| transactionIdentifier | string | No | |
+| financialInstitution | string | No | |
+| cssUrl | string | No | URL |
+| --- | --- | --- | --- |
+| displayText | string | No | |
+| imageUrl | string | No | URL |
+| backgroundColor | string | No | Hex value e.g. "ffcc00" |
+| maxRetries | integer | No | |
+| paymenttypeSortOrder | string | No | |
+
+Documentation for these parameters can be found here: https://guides.wirecard.at/request_parameters
+
+## purchase request
+
+The purchase method returns an object to support a POST to the remote gateway form.
+The POST can be a form, or a JavaScript object.
+It can be invoked the user pressing a submit button or automatically using JavaScript.
+It can target the top window or an iframe.
+
+Here is a minimal example:
+
+```php
 $request = $gateway->purchase([
     ...normal purchase data (TODO: examples)...
     ...additional gateway-specific feature data (TODO: examples)...
@@ -157,7 +190,7 @@ echo '<button type="submit">Pay Now</button>';
 echo "</form>";
 ```
 
-## authorize
+## authorize request
 
 While `payment` requests that the funds are automatically taken (usually at midnight of that day)
 and `authorize` will leave the funds to be captured at a later date.
@@ -167,7 +200,7 @@ By default, a Wirecard account will just support `authorize`.
 You may need to request that the `purchase` option be enabled for your account.
 It is known as "auto-deposit", and that is what you will need to ask for.
 
-## capture
+## capture request
 
 To capture an authorisation in full, you will need the toolkit password.
 This password gives you access to the backend API, which the capture uses.
