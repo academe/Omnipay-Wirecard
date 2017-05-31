@@ -35,6 +35,29 @@ This package was created with a number of prerequitits:
 As Omnipay 3.x goes into beta, the intentiion is to branch this package to support
 that version, but carry on maintaining the 2.x branch.
 
+
+## Installation
+
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
+to your `composer.json` file:
+
+```json
+{
+    "require": {
+        "academke/omnipay-wirecard": "~2.0"
+    }
+}
+```
+
+And run composer to update your dependencies:
+
+    $ curl -s http://getcomposer.org/installer | php
+    $ php composer.phar update
+
+Or combine the two steps into one with composer on the path::
+
+    $ composer require "academke/omnipay-wirecard: ~2.0"
+
 ## Wirecard Checkout Page
 
 The *Wirecard Checkout Page* mode supports a remote checkout page that
