@@ -36,19 +36,23 @@ class CheckoutPageGateway extends AbstractGateway
         // Parameters for Checkout Page and Checkout Seamless APIs.
         // TODO: move these to an AbstractCheckoutGateway class once
         // Seamless is supported.
+        /*
         $params['noScriptInfoUrl'] = '';
         $params['windowName'] = '';
         $params['duplicateRequestCheck'] = true;
         $params['transactionIdentifier'] = '';
         $params['financialInstitution'] = '';
         $params['cssUrl'] = '';
+        */
 
         // Parameters specific to Checkout Page API.
+        /*
         $params['displayText'] = '';
         $params['imageUrl'] = '';
         $params['backgroundColor'] = '';
         $params['maxRetries'] = null;
         $params['paymenttypeSortOrder'] = '';
+        */
 
         return $params;
     }

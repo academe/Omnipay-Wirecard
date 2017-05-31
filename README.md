@@ -122,14 +122,16 @@ $request = $gateway->purchase([
     ...normal purchase data (TODO: examples)...
     ...additional gateway-specific feature data (TODO: examples)...
     //
-    // These three URLs are mandatory to the gateway, but will be defaulted to the
+    // These three URLs are required to the gateway, but will be defaulted to the
     // returnUrl where they are not set.
     'returnUrl' => 'https://example.com/complete',
     //'cancelUrl' => 'https://example.com/complete?status=cancel', // User cancelled
     //'failureUrl' => 'https://example.com/complete?status=failure', // Failed to authorise
     //
+    // These two URLs are required.
     'notifyUrl' => 'https://example.com/acceptNotification',
     'serviceUrl' => 'https://example.com/terms_of_service_and_contact',
+    //
     'confirmMail' => 'shop.admin@example.com',
 ]);
 $response = $request->send();
