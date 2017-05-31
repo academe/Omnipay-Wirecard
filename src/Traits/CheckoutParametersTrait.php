@@ -93,5 +93,4 @@ trait CheckoutParametersTrait
     {
         return $this->getParameter('cssUrl');
     }
-
 }

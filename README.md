@@ -115,6 +115,9 @@ $gateway->setSecret('B8AKTPWBRMNBV455FG6M2DANE99WU2');
 $gateway->setFailureUrl('https://example.com/complete?status=failure');
 $gateway->setServiceUrl('https://example.com/terms_of_service_and_contact');
 
+// Most other gateway and API-specific parameters (i.e. those not recognised by
+// the Omnipay core) can be set at the gateway or the message level.
+
 $request = $gateway->purchase([
     ...normal purchase data (TODO: examples)...
     ...additional gateway-specific feature data (TODO: examples)...
