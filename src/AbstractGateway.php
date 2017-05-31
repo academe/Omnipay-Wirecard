@@ -6,13 +6,14 @@ namespace Omnipay\Wirecard;
  * Wirecard (driver for Omnipay
  */
 
-use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\AbstractGateway as OmnipayAbstractGateway;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Wirecard\Traits\CommonParametersTrait;
 
 abstract class AbstractGateway extends OmnipayAbstractGateway
 {
     // Shared gateway/message properties.
-    use HasGatewayParametersTrait;
+    use CommonParametersTrait;
 
     /**
      *

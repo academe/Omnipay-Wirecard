@@ -6,10 +6,14 @@ namespace Omnipay\Wirecard\Message;
  * Purchase, shared methods for Checkout Page and Checkout Seamless.
  */
 
+use Omnipay\Wirecard\Traits\CheckoutParametersTrait;
 use Omnipay\Wirecard\AbstractShopGateway;
 
 abstract class AbstractCheckoutRequest extends AbstractRequest
 {
+    // Custom parameters implemented for the Checkout APIs.
+    use CheckoutParametersTrait;
+
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
 
@@ -67,84 +71,6 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     public function getPaymentMethod()
     {
         return $this->getPaymentType();
-    }
-
-    /**
-     * 
-     */
-    public function setNoScriptInfoUrl($value)
-    {
-        return $this->setParameter('noScriptInfoUrl', $value);
-    }
-
-    public function getNoScriptInfoUrl()
-    {
-        return $this->getParameter('noScriptInfoUrl');
-    }
-
-    /**
-     * 
-     */
-    public function setWindowName($value)
-    {
-        return $this->setParameter('windowName', $value);
-    }
-
-    public function getWindowName()
-    {
-        return $this->getParameter('windowName');
-    }
-
-    /**
-     * A boolean value.
-     */
-    public function setDuplicateRequestCheck($value)
-    {
-        return $this->setParameter('duplicateRequestCheck', $value);
-    }
-
-    public function getDuplicateRequestCheck()
-    {
-        return $this->getParameter('duplicateRequestCheck');
-    }
-
-    /**
-     *  Values : static::TRANSACTION_IDENTIFIER_SINGLE or static::TRANSACTION_IDENTIFIER_INITIA+L
-     */
-    public function setTransactionIdentifier($value)
-    {
-        return $this->setParameter('transactionIdentifier', $value);
-    }
-
-    public function getTransactionIdentifier()
-    {
-        return $this->getParameter('transactionIdentifier');
-    }
-
-    /**
-     * 
-     */
-    public function setFinancialInstitution($value)
-    {
-        return $this->setParameter('financialInstitution', $value);
-    }
-
-    public function getFinancialInstitution()
-    {
-        return $this->getParameter('financialInstitution');
-    }
-
-    /**
-     * 
-     */
-    public function setCssUrl($value)
-    {
-        return $this->setParameter('cssUrl', $value);
-    }
-
-    public function getCssUrl()
-    {
-        return $this->getParameter('cssUrl');
     }
 
     /**

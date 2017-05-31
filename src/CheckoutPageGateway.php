@@ -6,10 +6,18 @@ namespace Omnipay\Wirecard;
  * Wirecard Checkout Page driver for Omnipay
  */
 
+use Omnipay\Wirecard\Traits\CheckoutPageParametersTrait;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Wirecard\Traits\CheckoutParametersTrait;
 
 class CheckoutPageGateway extends AbstractGateway
 {
+    // Custom parameters implemented for the Checkout APIs.
+    use CheckoutParametersTrait;
+
+    // Custom parameters implemented for the Checkout Page API.
+    use CheckoutPageParametersTrait;
+
     /**
      * The common name for this gateway driver API.
      */
@@ -24,6 +32,9 @@ class CheckoutPageGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         $params = parent::getDefaultParameters();
+
+        //
+        $params['noScriptInfoUrl'] = '';
 
         return $params;
     }

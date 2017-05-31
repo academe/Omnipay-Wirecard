@@ -1,14 +1,16 @@
 <?php
 
-namespace Omnipay\Wirecard;
+namespace Omnipay\Wirecard\Traits;
 
 /**
- * Manage parameters shared betweem the gateway and the message levels.
+ * Manage common parameters shared betweem the gateway and the message levels.
+ * These cover authentication and other global parameters that apply to all
+ * gateways.
  */
 
 use Omnipay\Common\Exception\InvalidRequestException;
 
-trait HasGatewayParametersTrait
+trait CommonParametersTrait
 {
     /**
      * The Customer ID is the merchant account ID string.
