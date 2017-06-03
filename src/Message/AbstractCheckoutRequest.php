@@ -429,9 +429,4 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
 
         return $data;
     }
-
-    public function sendData($data)
-    {
-        return $this->createResponse($data);
-    }
 }

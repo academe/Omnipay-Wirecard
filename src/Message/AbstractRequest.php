@@ -265,4 +265,9 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return (property_exists($this, 'endpoint') ? $this->endpoint : null);
     }
+
+    public function sendData($data)
+    {
+        return $this->createResponse($data);
+    }
 }
