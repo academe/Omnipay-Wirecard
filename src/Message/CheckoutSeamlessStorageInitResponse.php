@@ -173,10 +173,10 @@ class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements Re
             // The demo site uses underscores as part separators.
             // We will use them interchangeably, trying underscores first.
 
-            for($i = 1; $i <= $error_count; $i++) {
+            for ($i = 1; $i <= $error_count; $i++) {
                 $error = [];
 
-                foreach(['errorCode', 'message', 'consumerMessage', 'paySysMessage'] as $part) {
+                foreach (['errorCode', 'message', 'consumerMessage', 'paySysMessage'] as $part) {
                     $error[$part] = $this->getDataValue(
                         'error_' . $i . '_' . $part,
                         $this->getDataValue('error.' . $i . '.' . $part)
