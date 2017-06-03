@@ -93,4 +93,3 @@ class CheckoutSeamlessStorageInitRequest extends AbstractRequest
         return $data;
     }
 }
-
