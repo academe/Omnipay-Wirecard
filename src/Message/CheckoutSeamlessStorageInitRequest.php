@@ -10,7 +10,7 @@ namespace Omnipay\Wirecard\Message;
 
 use Omnipay\Wirecard\Traits\CheckoutSeamlessParametersTrait;
 
-class CheckoutSeamlessPurchaseRequest extends AbstractRequest
+class CheckoutSeamlessStorageInitRequest extends AbstractRequest
 {
     // Custom parameters implemented for the Checkout Seamless API.
     use CheckoutSeamlessParametersTrait;
@@ -20,8 +20,7 @@ class CheckoutSeamlessPurchaseRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        return $data; // Temporary for testing.
-        return $this->response = new CheckoutSeamlessPurchaseResponse($this, $data);
+        return $this->response = new CheckoutSeamlessStorageInitResponse($this, $data);
     }
 
     /**
@@ -64,27 +63,9 @@ class CheckoutSeamlessPurchaseRequest extends AbstractRequest
             $response_data = [];
         }
 
-        // We need to pass in both the current data (not just the data
-        // used to create the secure data storage) and the results of data storage.
+        $storage_data['paymentMethod'] = $this->getPaymentMethod();
 
-        $data = $this->getAllData();
-        $data['storage_data'] = $storage_data;
-
-        return $this->createResponse($data);
-    }
-
-    /**
-     * Get all data needed for the response object.
-     * This data is available in the response $request object anyway, but
-     * using that makes some tests very difficult to run.
-     *
-     * @return array
-     */
-    public function getAllData()
-    {
-        return [
-            // TODO
-        ];
+        return $this->createResponse($storage_data);
     }
 
     /**

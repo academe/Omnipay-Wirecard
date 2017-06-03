@@ -214,11 +214,8 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
             $data['customerStatement'] = $this->getCustomerStatement();
         }
 
-        // CHECKME: look at how this is handled. The orderReference is passed on to
-        // the financial institution for final payment matching. The problem with the
-        // transactionID is that (a) it may not be appropriate for the end systems;
-        // and (b) you may not want the transactionId exposed to the end user *at all*
-        // for security reasons.
+        // The orderReference is passed on to the financial institution for final
+        // payment matching.
 
         if ($this->getOrderReference()) {
             $data['orderReference'] = $this->getOrderReference();
