@@ -51,10 +51,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
     /**
      * The authorization transaction.
      */
-    public function authorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest', $parameters);
-    }
+//    public function authorize(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest', $parameters);
+//    }
 
     /**
      * The purchase transaction.
@@ -67,40 +67,40 @@ class CheckoutSeamlessGateway extends AbstractGateway
     /**
      * The complete authorization transaction (capturing data retuned with the user).
      */
-    public function completeAuthorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessComplete', $parameters);
-    }
+//    public function completeAuthorize(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessComplete', $parameters);
+//    }
 
     /**
      * The complete purchase transaction (capturing data retuned with the user).
      */
-    public function completePurchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageComplete', $parameters);
-    }
+//    public function completePurchase(array $parameters = array())
+///    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageComplete', $parameters);
+//    }
 
     /**
      * The capture transaction.
      */
-    public function capture(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendCaptureRequest', $parameters);
-    }
+//    public function capture(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\BackendCaptureRequest', $parameters);
+//    }
 
     /**
      * The refund transaction.
      */
-    public function refund(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendRefundRequest', $parameters);
-    }
+//    public function refund(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\BackendRefundRequest', $parameters);
+//    }
 
     /**
      * Accept an incoming notification (a ServerRequest).
      */
-    public function acceptNotification(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
-    }
+//    public function acceptNotification(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
+//    }
 }

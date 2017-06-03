@@ -8,10 +8,13 @@ namespace Omnipay\Wirecard\Message;
  * Only a subset og payment methods require teh data storage to be initialised.
  */
 
-use Omnipay\Wirecard\Traits\CheckoutPageParametersTrait;
+use Omnipay\Wirecard\Traits\CheckoutSeamlessParametersTrait;
 
 class CheckoutSeamlessPurchaseRequest extends AbstractRequest
 {
+    // Custom parameters implemented for the Checkout Seamless API.
+    use CheckoutSeamlessParametersTrait;
+
     // The data storage initialisation endpoi8nt URL.
     protected $endpoint = 'https://checkout.wirecard.com/seamless/dataStorage/init';
 
@@ -56,17 +59,37 @@ class CheckoutSeamlessPurchaseRequest extends AbstractRequest
 
             // The response is a query string.
             // Parse it into an array.
-            parse_str((string)$httpResponse->getBody(), $response_data);
+            parse_str((string)$httpResponse->getBody(), $storage_data);
         } else {
             $response_data = [];
         }
 
-        return $this->createResponse($response_data);
+        // We need to pass in both the current data (not just the data
+        // used to create the secure data storage) and the results of data storage.
 
+        $data = $this->getAllData();
+        $data['storage_data'] = $storage_data;
+
+        return $this->createResponse($data);
     }
 
     /**
-     * Construct the request data to send.
+     * Get all data needed for the response object.
+     * This data is available in the response $request object anyway, but
+     * using that makes some tests very difficult to run.
+     *
+     * @return array
+     */
+    public function getAllData()
+    {
+        return [
+            // TODO
+        ];
+    }
+
+    /**
+     * Construct the request data to send to the gateway to get
+     * the secure data storage token.
      *
      * @return array
      */
@@ -74,13 +97,16 @@ class CheckoutSeamlessPurchaseRequest extends AbstractRequest
     {
         $data= [];
 
-        // TODO: the order is important for the fingerprint.
+        // The order is important for the fingerprint.
         $data['customerId'] = $this->getCustomerId();
-        $data['language'] = $this->getLanguage();
+        $data['shopId'] = $this->getShopId();
+        $data['orderIdent'] = $this->getTransactionId();
         $data['returnUrl'] = $this->getReturnUrl();
+        $data['language'] = $this->getLanguage();
+        $data['javascriptScriptVersion'] = $this->getJavascriptScriptVersion();
 
-        // TODO: orderIdent
-        // TODO: fingerprint
+        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
+
         // TODO: response object to handle [multiple] error messages
 
         return $data;
