@@ -125,11 +125,52 @@ class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements Re
         ],
     ];
 
+    /**
+     * The function name to store the credentials on the remote data storage.
+     */
+    protected $dataStorageStoreFunctionName = [
+        'CCARD' => 'storeCreditCardInformation',
+        'CCARD-MOTO' => 'storeCreditCardMotoInformation',
+        'MAESTRO' => 'storeMaestroInformation',
+        'SEPA-DD' => 'storeSepaDdInformation',
+        'PBX' => 'storePayboxInformation',
+        'GIROPAY' => 'storeGiropayInformation',
+        'VOUCHER' => 'storeVoucherInformation',
+    ];
+
+    public function getStorageFields()
+    {
+        if (isset($this->dataStorageFields[$this->getPaymentMethod()])) {
+            return $this->dataStorageFields[$this->getPaymentMethod()];
+        }
+
+        return [];
+    }
+
+    public function getStorageFieldsAnonymous()
+    {
+        if (isset($this->dataStorageFieldsAnonymous[$this->getPaymentMethod()])) {
+            return $this->dataStorageFieldsAnonymous[$this->getPaymentMethod()];
+        }
+
+        return [];
+    }
+
+    public function getDataStorageStoreFunctionName()
+    {
+        if (isset($this->dataStorageStoreFunctionName[$this->getPaymentMethod()])) {
+            return $this->dataStorageStoreFunctionName[$this->getPaymentMethod()];
+        }
+
+        return [];
+    }
+
     public function isSuccessful()
     {
         // If there is a storageId and we are not needing a redirect
         // then the request was successful.
         // Technically a redirect is a success, but the transaction is not yet complete.
+
         return (bool)$this->getStorageId() && ! $this->isRedirect();
     }
 
@@ -222,5 +263,13 @@ class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements Re
     public function isRedirect()
     {
         return (bool)$this->getRedirectUrl();
+    }
+
+    /**
+     *
+     */
+    public function getPaymentMethod()
+    {
+        return $this->getDataValue('paymentMethod');
     }
 }
