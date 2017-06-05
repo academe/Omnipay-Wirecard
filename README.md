@@ -4,6 +4,27 @@
 [![Travis](https://travis-ci.org/academe/Omnipay-Wirecard.svg?branch=master)](https://travis-ci.org/academe/Omnipay-Wirecard)
 [![GitHub forks](https://img.shields.io/github/forks/academe/Omnipay-Wirecard.svg)](https://github.com/academe/Omnipay-Wirecard/network)
 
+Table of Contents
+=================
+
+   * [Omnipay-Wirecard](#omnipay-wirecard)
+      * [Gateways APIs Supported](#gateways-apis-supported)
+      * [Why This Package](#why-this-package)
+      * [Installation](#installation)
+   * [API Details](#api-details)
+      * [Wirecard Checkout Page](#wirecard-checkout-page)
+         * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
+         * [The Checkout Page Gateway Class](#the-checkout-page-gateway-class)
+         * [purchase request](#purchase-request)
+         * [Extended ItemBag Items](#extended-itembag-items)
+         * [authorize request](#authorize-request)
+         * [capture request](#capture-request)
+         * [refund](#refund)
+         * [completePurchase/completeAuthorize](#completepurchasecompleteauthorize)
+         * [Notification ("confirm") Handler](#notification-confirm-handler)
+      * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
+         * [Initialise the Data Store](#initialise-the-data-store)
+
 # Omnipay-Wirecard
 
 Wirecard payment gateway driver for the Omnipay framework.
@@ -57,6 +78,8 @@ And run composer to update your dependencies:
 Or combine the two steps into one with composer on the path::
 
     $ composer require "academe/omnipay-wirecard: ~2.0"
+
+# API Details
 
 ## Wirecard Checkout Page
 
