@@ -7,6 +7,7 @@
 Table of Contents
 =================
 
+   * [Table of Contents](#table-of-contents)
    * [Omnipay-Wirecard](#omnipay-wirecard)
       * [Gateways APIs Supported](#gateways-apis-supported)
       * [Why This Package](#why-this-package)
@@ -16,14 +17,14 @@ Table of Contents
          * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
          * [The Checkout Page Gateway Class](#the-checkout-page-gateway-class)
          * [purchase request](#purchase-request)
-         * [Extended ItemBag Items](#extended-itembag-items)
          * [authorize request](#authorize-request)
          * [capture request](#capture-request)
-         * [refund](#refund)
+         * [refund request](#refund-request)
          * [completePurchase/completeAuthorize](#completepurchasecompleteauthorize)
          * [Notification ("confirm") Handler](#notification-confirm-handler)
       * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
          * [Initialise the Data Store](#initialise-the-data-store)
+      * [Extended ItemBag Items](#extended-itembag-items)
 
 # Omnipay-Wirecard
 
@@ -242,32 +243,6 @@ echo '<button type="submit">Pay Now</button>';
 echo "</form>";
 ```
 
-### Extended ItemBag Items
-
-This driver will accept standard OmniPay items in the ItemBag.
-When these are supplied, some fields sent to the gateway will be defaulted:
-
-* `articleNumber` will be the sequential order of the item, starting at 1 for the first item.
-* `imageUrl` will be left blank.
-* `netAmount` and `grossAmount` will be the same as the `amount`.
-* `taxRate` will be zero.
-
-An extended Item is created like this example:
-
-```php
-$item = new Omnipay\Wirecard\Extend\Item([
-    'articleNumber' => 'SKU1',
-    'price' => '3.10',
-    'quantity' => '1',
-    'name' => 'Name One',
-    'imageUrl' => 'http://example.com',
-    'description' => 'FooBar',
-    'netAmount' => '3.00',
-    'taxAmount' => '27',
-    'taxRate' => '10',
-]);
-```
-
 ### authorize request
 
 While `payment` requests that the funds are automatically taken (usually at midnight of that day)
@@ -335,7 +310,7 @@ for example just 10 of the 20 cans of beans that have been authorised.
 
 More details on how partial capture works will be added in due course.
 
-### refund
+### refund request
 
 This is set up and used exactly the same as for `capture`.
 
@@ -444,3 +419,30 @@ and to capture the back-channel notifications.
 ### Initialise the Data Store
 
 TODO details and example
+
+## Extended ItemBag Items
+
+This driver will accept standard OmniPay items in the ItemBag.
+When these are supplied, some fields sent to the gateway will be defaulted:
+
+* `articleNumber` will be the sequential order of the item, starting at 1 for the first item.
+* `imageUrl` will be left blank.
+* `netAmount` and `grossAmount` will be the same as the `amount`.
+* `taxRate` will be zero.
+
+An extended Item is created like this example:
+
+```php
+$item = new Omnipay\Wirecard\Extend\Item([
+    'articleNumber' => 'SKU1',
+    'price' => '3.10',
+    'quantity' => '1',
+    'name' => 'Name One',
+    'imageUrl' => 'http://example.com',
+    'description' => 'FooBar',
+    'netAmount' => '3.00',
+    'taxAmount' => '27',
+    'taxRate' => '10',
+]);
+```
+
