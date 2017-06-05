@@ -16,14 +16,14 @@ Table of Contents
       * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
       * [Wirecard Checkout Page](#wirecard-checkout-page)
          * [Demo Mode Credentials](#demo-mode-credentials)
-         * [Demo Mode Credentials](#demo-mode-credentials-1)
-         * [The Checkout Page Gateway Class](#the-checkout-page-gateway-class)
-         * [purchase request](#purchase-request)
-         * [authorize request](#authorize-request)
-         * [capture request](#capture-request)
-         * [refund request](#refund-request)
-         * [completePurchase/completeAuthorize](#completepurchasecompleteauthorize)
-         * [Notification ("confirm") Handler](#notification-confirm-handler)
+         * [Test Mode Credentials](#test-mode-credentials)
+         * [Initialise The Checkout Page Gateway](#initialise-the-checkout-page-gateway)
+         * [Purchase Request](#purchase-request)
+         * [Authorize Request](#authorize-request)
+         * [Capture Request](#capture-request)
+         * [Refund Request](#refund-request)
+         * [Complete Purchase/Authorize](#complete-purchaseauthorize)
+         * [Notification Handler](#notification-handler)
       * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
          * [Initialise the Data Store](#initialise-the-data-store)
       * [Extended ItemBag Items](#extended-itembag-items)
@@ -124,7 +124,7 @@ they are implemented).
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
 
-### Demo Mode Credentials
+### Test Mode Credentials
 
 Test mode is invoked by using these details for non-3D Secure tests:
 
@@ -147,7 +147,7 @@ Test mode is invoked by using these details for 3D Secure tests:
 Test mode credentials and test cards
 [can be found here](https://guides.wirecard.at/wcp:test_mode).
 
-### The Checkout Page Gateway Class
+### Initialise The Checkout Page Gateway
 
 This class is created qne configured like this:
 
@@ -194,7 +194,7 @@ These are the parameters that can be set when instantiating the Checkout Page ga
 
 Documentation for these parameters can be found here: https://guides.wirecard.at/request_parameters
 
-### purchase request
+### Purchase Request
 
 The purchase method returns an object to support a POST to the remote gateway form.
 The POST can be a form, or a JavaScript object.
@@ -249,7 +249,7 @@ echo '<button type="submit">Pay Now</button>';
 echo "</form>";
 ```
 
-### authorize request
+### Authorize Request
 
 While `payment` requests that the funds are automatically taken (usually at midnight of that day)
 and `authorize` will leave the funds to be captured at a later date.
@@ -259,7 +259,7 @@ By default, a Wirecard account will just support `authorize`.
 You may need to request that the `purchase` option be enabled for your account.
 It is known as "auto-deposit", and that is what you will need to ask for.
 
-### capture request
+### Capture Request
 
 To capture an authorisation in full, you will need the toolkit password.
 This password gives you access to the backend API, which the capture uses.
@@ -316,11 +316,11 @@ for example just 10 of the 20 cans of beans that have been authorised.
 
 More details on how partial capture works will be added in due course.
 
-### refund request
+### Refund Request
 
 This is set up and used exactly the same as for `capture`.
 
-### completePurchase/completeAuthorize
+### Complete Purchase/Authorize
 
 This payment method will send the user off to the Wirecard site to authorise
 a payment. The user will return with the result of the transaction, which
@@ -367,7 +367,10 @@ $complete_purchase_response = $complete_purchase_request->send();
 // $complete_purchase_response == $complete_purchase_request // true
 ```
 
-### Notification ("confirm") Handler
+### Notification Handler
+
+The back-channel notification handler is know as the "confirm" request in
+the Wirecard documentation.
 
 The notification URL will be accessed by the following IPv4 addresses.
 This driver does not look at the IP address.
