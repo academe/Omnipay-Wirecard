@@ -9,12 +9,14 @@ Table of Contents
 
    * [Table of Contents](#table-of-contents)
    * [Omnipay-Wirecard](#omnipay-wirecard)
-      * [Gateways APIs Supported](#gateways-apis-supported)
+      * [Gateway APIs Supported](#gateway-apis-supported)
       * [Why This Package](#why-this-package)
       * [Installation](#installation)
    * [API Details](#api-details)
+      * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
       * [Wirecard Checkout Page](#wirecard-checkout-page)
-         * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
+         * [Demo Mode Credentials](#demo-mode-credentials)
+         * [Demo Mode Credentials](#demo-mode-credentials-1)
          * [The Checkout Page Gateway Class](#the-checkout-page-gateway-class)
          * [purchase request](#purchase-request)
          * [authorize request](#authorize-request)
@@ -30,7 +32,7 @@ Table of Contents
 
 Wirecard payment gateway driver for the Omnipay framework.
 
-## Gateways APIs Supported
+## Gateway APIs Supported
 
 Just Wirecard *Checkout Page* is supported for now,
 which includes most *Checkout Page Backend* operations to support the front end.
@@ -82,6 +84,15 @@ Or combine the two steps into one with composer on the path::
 
 # API Details
 
+## Demo Mode and Test Mode
+
+There are no separate endpoints for running tests. Instead, customer IDs
+and secrets are published to trigger demo and test mode.
+
+Demo mode does not involve the end merchant banks in any processng.
+Test mode does involve the end merchant banks, so can involve 3D Secure
+tests, but still no payments are taken.
+
 ## Wirecard Checkout Page
 
 The *Wirecard Checkout Page* mode supports a remote checkout page that
@@ -95,16 +106,9 @@ The remote checkout page can be customised to an extent, and can run as
 the full page or in an iframe. The page is responsive, so will adapt to
 any iframe size set on the merchant site.
 
-### Demo Mode and Test Mode
+### Demo Mode Credentials
 
-There are no separate endpoints for running tests. Instead, customer IDs
-and secrets are published to trigger demo and test mode.
-
-Demo mode does not involve the end merchant banks in any processng.
-Test mode does involve the end merchant banks, so can involve 3D Secure
-tests, but still no payments are taken.
-
-**Demo** mode is invoked by using these details:
+Demo mode is invoked by using these details:
 
 | Field | Value |
 |:----- |:----- |
@@ -120,7 +124,9 @@ they are implemented).
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
 
-**Test** mode is invoked by using these details for non-3D Secure tests:
+### Demo Mode Credentials
+
+Test mode is invoked by using these details for non-3D Secure tests:
 
 | Field | Value |
 |:----- |:----- |
@@ -129,7 +135,7 @@ The list of demo credit cards that
 | shopId | *not used for the demo account* |
 | toolkitPassword | 2g4f9q2m |
 
-**Test** mode is invoked by using these details for 3D Secure tests:
+Test mode is invoked by using these details for 3D Secure tests:
 
 | Field | Value |
 |:----- |:----- |
