@@ -6,7 +6,7 @@
 
 # Omnipay-Wirecard
 
-Wirecard payment gateway driver for the Omnipay
+Wirecard payment gateway driver for the Omnipay framework.
 
 ## Gateways APIs Supported
 
@@ -117,7 +117,7 @@ The list of demo credit cards that
 Test mode credentials and test cards
 [can be found here](https://guides.wirecard.at/wcp:test_mode).
 
-## The Checkout Page Gateway Class
+### The Checkout Page Gateway Class
 
 This class is created qne configured like this:
 
@@ -164,7 +164,7 @@ These are the parameters that can be set when instantiating the Checkout Page ga
 
 Documentation for these parameters can be found here: https://guides.wirecard.at/request_parameters
 
-## purchase request
+### purchase request
 
 The purchase method returns an object to support a POST to the remote gateway form.
 The POST can be a form, or a JavaScript object.
@@ -245,7 +245,7 @@ $item = new Omnipay\Wirecard\Extend\Item([
 ]);
 ```
 
-## authorize request
+### authorize request
 
 While `payment` requests that the funds are automatically taken (usually at midnight of that day)
 and `authorize` will leave the funds to be captured at a later date.
@@ -255,7 +255,7 @@ By default, a Wirecard account will just support `authorize`.
 You may need to request that the `purchase` option be enabled for your account.
 It is known as "auto-deposit", and that is what you will need to ask for.
 
-## capture request
+### capture request
 
 To capture an authorisation in full, you will need the toolkit password.
 This password gives you access to the backend API, which the capture uses.
@@ -312,11 +312,11 @@ for example just 10 of the 20 cans of beans that have been authorised.
 
 More details on how partial capture works will be added in due course.
 
-## refund
+### refund
 
 This is set up and used exactly the same as for `capture`.
 
-## completePurchase/completeAuthorize
+### completePurchase/completeAuthorize
 
 This payment method will send the user off to the Wirecard site to authorise
 a payment. The user will return with the result of the transaction, which
@@ -363,7 +363,7 @@ $complete_purchase_response = $complete_purchase_request->send();
 // $complete_purchase_response == $complete_purchase_request // true
 ```
 
-## Notification ("confirm") Handler
+### Notification ("confirm") Handler
 
 The notification URL will be accessed by the following IPv4 addresses.
 This driver does not look at the IP address.
@@ -380,3 +380,44 @@ The notification handler does not need to respond to the notification
 in any special way other than by returning a HTTP 200 code.
 This driver leaves the merchant site to exit after processing the result.
 
+## Wirecard Checkout Seamless
+
+The *Wirecard Checkout Seamless* gateway is designed to keep the customer on
+the merchant site.
+It works like this:
+
+* A temporary data store is initialised on the remote gateway. The merchant site
+  is given a token to represent this storage, called the `storageId`.
+  This single-used data store will last for 30 minutes or until it is used.
+* A custom form is provided on the front end that captures authorisation details
+  for the payment. These details are not posted back to the merchant site.
+* JavaScript sends the authorisation details entered by the user to the data store
+  using AJAX.
+* Optioanlly, the data store JavaScript can provide anonymised versions of the data
+  entered, which can be posted back to the merchant site if required.
+* The merchant site then posts the authorisation or purchase transaction request to
+  the remote gateway, using the `storageId` in place of credit card details.
+* The response is handled by the merchant site, which may include a 3D Secure
+  redirect when a credit card payment method is used.
+
+Note that there are a dozen or so payment methods that can be used.
+Not all need to use the secure storage.
+Not all will involve a redirect; some will *always* require a redirect.
+
+If the data sent via AJAX is malformed or invalid, for example a past expiry date
+or a credit card number failing the luhn check, then a list of errors are returned
+for informing the end user.
+
+Each payment method will require a different set of fields to be sent to the
+data store (where the data store is used).
+This driver provides a list of the fields, but constructing the form, applying
+validation, handling the AJAX and reporting errors to the user in response to
+the AJAX result, is out of scope.
+
+This driver provides a method to initialise the data storage, to POST the
+transaction request, to handle the return from a redirect (3D Secure or otherwise)
+and to capture the back-channel notifications.
+
+### Initialise the Data Store
+
+TODO details and example
