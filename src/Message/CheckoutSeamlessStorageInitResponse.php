@@ -8,7 +8,7 @@ namespace Omnipay\Wirecard\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
-class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements RedirectResponseInterface
+class CheckoutSeamlessStorageInitResponse extends AbstractResponse
 {
     // Helper functions for accessing the data values
     use HasDataTrait;
@@ -161,17 +161,15 @@ class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements Re
         if (isset($this->dataStorageStoreFunctionName[$this->getPaymentMethod()])) {
             return $this->dataStorageStoreFunctionName[$this->getPaymentMethod()];
         }
-
-        return [];
     }
 
     public function isSuccessful()
     {
-        // If there is a storageId and we are not needing a redirect
-        // then the request was successful.
-        // Technically a redirect is a success, but the transaction is not yet complete.
+        // Successful if there are no errors.
+        // Some payment methods do not require secure storage, so we do not
+        // always expect a storageId to be present.
 
-        return (bool)$this->getStorageId() && ! $this->isRedirect();
+        return ! $this->getErrorCount();
     }
 
     /**
@@ -229,40 +227,6 @@ class CheckoutSeamlessStorageInitResponse extends AbstractResponse implements Re
         }
 
         return $errors;
-    }
-
-    /**
-     * The URL if a redirect is needed.
-     */
-    public function getRedirectUrl()
-    {
-        return $this->getDataValue('redirectUrl');
-    }
-
-    /**
-     * 
-     */
-    public function getRedirectMethod()
-    {
-        return 'GET';
-    }
-
-    /**
-     * 
-     */
-    public function getRedirectData()
-    {
-        return [];
-    }
-
-    /**
-     * Does the response require a redirect?
-     *
-     * @return boolean
-     */
-    public function isRedirect()
-    {
-        return (bool)$this->getRedirectUrl();
     }
 
     /**

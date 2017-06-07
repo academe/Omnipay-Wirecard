@@ -88,8 +88,6 @@ class CheckoutSeamlessStorageInitRequest extends AbstractRequest
 
         $data['requestFingerprint'] = $this->getRequestFingerprint($data);
 
-        // TODO: response object to handle [multiple] error messages
-
         return $data;
     }
 }

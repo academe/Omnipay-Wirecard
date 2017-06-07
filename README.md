@@ -41,6 +41,8 @@ This *Checkout Page* offers a payment page hosted by the gateway,
 can be partially customised, and that can either be shown in an iframe
 or navigated to as the top window.
 
+*Wirecard Checkout Seamless* is under development.
+
 ## Why This Package
 
 There are a few other Omnipay Wirecard drivers already,
