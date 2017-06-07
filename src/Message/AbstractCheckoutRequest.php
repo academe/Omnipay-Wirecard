@@ -165,6 +165,31 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     }
 
     /**
+     * Get the ISO 639-1 (two-letter) language code.
+     * This may need to be extracted from a longer supplied language code.
+     */
+    protected function getLanguageCode()
+    {
+        $code = $this->getLanguage();
+
+        // If the language contains more than two characters, then *assume* it
+        // is a longer ISO code, e.g. "en-GB" or "de-DE" (RFC 5646).
+        // We could add further validation at this stage, but we'll leave that
+        // for a future Omnipay if we can get a language object in to stadardise
+        // the language handling.
+
+        if (is_string($code)) {
+            if (strlen($code) > 2) {
+                $code = substr($code, 0, 2);
+            }
+
+            $code = strtolower($code);
+        }
+
+        return $code;
+    }
+
+    /**
      * Construct the request data to send.
      *
      * @return array
@@ -173,7 +198,7 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     {
         $data = array(
             'customerId' => $this->getCustomerId(),
-            'language' => $this->getLanguage(),
+            'language' => $this->getLanguageCode(),
             'shopId' => $this->getShopId(),
         );
 

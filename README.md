@@ -400,7 +400,7 @@ It works like this:
   for the payment. These details are not posted back to the merchant site.
 * JavaScript sends the authorisation details entered by the user to the data store
   using AJAX.
-* Optioanlly, the data store JavaScript can provide anonymised versions of the data
+* Optionally, the data store JavaScript can provide anonymised versions of the data
   entered, which can be posted back to the merchant site if required.
 * The merchant site then posts the authorisation or purchase transaction request to
   the remote gateway, using the `storageId` in place of credit card details.
