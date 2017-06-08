@@ -70,7 +70,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "academke/omnipay-wirecard": "~2.0"
+        "academe/omnipay-wirecard": "~2.0"
     }
 }
 ```
