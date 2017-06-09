@@ -80,6 +80,6 @@ class CheckoutSeamlessPurchaseRequest extends AbstractCheckoutRequest
      */
     protected function createResponse($data)
     {
-        return $this->response = new CheckoutSeamlessPurchaseResponse($this, $data);
+        return $this->response = new CheckoutSeamlessResponse($this, $data);
     }
 }

@@ -51,10 +51,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
     /**
      * The authorization transaction.
      */
-//    public function authorize(array $parameters = array())
-//    {
-//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest', $parameters);
-//    }
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest', $parameters);
+    }
 
     /**
      * The purchase transaction.

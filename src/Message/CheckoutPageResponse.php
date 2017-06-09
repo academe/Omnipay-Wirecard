@@ -3,15 +3,15 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * Payment Response.
+ * Checkout Page Purchase or Authorize Response.
  */
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
-class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectResponseInterface
+class CheckoutPageResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
-     * Endpoint location of the hosted payment page.
+     * Endpoint for the hosted payment page.
      */
     protected $endpoint = 'https://checkout.wirecard.com/page/init.php';
 
@@ -22,7 +22,6 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
 
     /**
      * Not yet "successful" as user needs to be sent to Wirecard site.
-     * TODO: this may be true.
      */
     public function isSuccessful()
     {
@@ -31,7 +30,6 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
 
     /**
      * A redirect goes to the offsite payment page.
-     * TODO: this may not always be a redirect.
      */
     public function isRedirect()
     {
@@ -48,7 +46,6 @@ class CheckoutPagePurchaseResponse extends AbstractResponse implements RedirectR
 
     /**
      * Redirect URL will be POST.
-     * TODO: not a fixed URL, but one that the gateway may have passed back.
      */
     public function getRedirectUrl()
     {

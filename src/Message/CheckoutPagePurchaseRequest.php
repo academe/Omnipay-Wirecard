@@ -24,7 +24,7 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutRequest
      */
     protected function createResponse($data)
     {
-        return $this->response = new CheckoutPagePurchaseResponse($this, $data);
+        return $this->response = new CheckoutPageResponse($this, $data);
     }
 
     /**

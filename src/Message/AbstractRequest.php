@@ -289,5 +289,5 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     /**
      * Create a new Response message given the raw data in the response.
      */
-    protected abstract function createResponse($data);
+    abstract protected function createResponse($data);
 }
