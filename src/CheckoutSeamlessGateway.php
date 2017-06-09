@@ -57,6 +57,14 @@ class CheckoutSeamlessGateway extends AbstractGateway
 //    }
 
     /**
+     * The purchase transaction.
+     */
+    public function purchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessPurchaseRequest', $parameters);
+    }
+
+    /**
      * Initialise secure data storage for a new Checkout Seamless transaction.
      */
     public function storageInit(array $parameters = array())

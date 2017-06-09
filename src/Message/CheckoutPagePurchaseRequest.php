@@ -19,6 +19,9 @@ class CheckoutPagePurchaseRequest extends AbstractCheckoutRequest
      */
     protected $autoDeposit = 'yes';
 
+    /**
+     * @inherit
+     */
     protected function createResponse($data)
     {
         return $this->response = new CheckoutPagePurchaseResponse($this, $data);

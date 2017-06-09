@@ -88,14 +88,7 @@ class BackendCaptureRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $headers = [];
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
-
-        // The response is a query string.
-        // Parse it into an array.
-        parse_str((string)$httpResponse->getBody(), $response_data);
-
-        return $this->createResponse($response_data);
+        return $this->createResponse($this->sendHttp($data));
     }
 
     /**

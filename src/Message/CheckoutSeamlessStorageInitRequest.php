@@ -53,14 +53,9 @@ class CheckoutSeamlessStorageInitRequest extends AbstractRequest
     public function sendData($data)
     {
         if ($this->dataStorageRequired()) {
-            $headers = [];
-            $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
-
-            // The response is a query string.
-            // Parse it into an array.
-            parse_str((string)$httpResponse->getBody(), $storage_data);
+            $storage_data = $this->sendHttp($data);
         } else {
-            $response_data = [];
+            $storage_data = [];
         }
 
         $storage_data['paymentMethod'] = $this->getPaymentMethod();

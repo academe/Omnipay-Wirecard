@@ -51,6 +51,11 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
         return $this;
     }
 
+    public function createResponse($data)
+    {
+        return $this;
+    }
+
     public function getPaymentState()
     {
         return $this->getDataValue('paymentState');

@@ -11,6 +11,8 @@ use Omnipay\Common\Exception\InvalidRequestException;
 
 trait CheckoutSeamlessParametersTrait
 {
+    // Data for setting up the front end.
+
     /**
      * Unique ID of order which has to be the same as used for initiating
      * the data storage.
@@ -52,5 +54,21 @@ trait CheckoutSeamlessParametersTrait
     public function getJavascriptScriptVersion()
     {
         return $this->getParameter('javascriptScriptVersion');
+    }
+
+    // Data to pass on through the backend.
+
+    /**
+     * User-agent of browser of consumer.
+     * Alphanumeric with special characters.
+     */
+    public function setConsumerUserAgent($value)
+    {
+        return $this->setParameter('consumerUserAgent', $value);
+    }
+
+    public function getConsumerUserAgent()
+    {
+        return $this->getParameter('consumerUserAgent');
     }
 }

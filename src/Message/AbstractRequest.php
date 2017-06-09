@@ -270,4 +270,24 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->createResponse($data);
     }
+
+    /**
+     * POST a HTTP message to the remote gateway.
+     */
+    public function sendHttp($data)
+    {
+        $headers = [];
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
+
+        // The response is a query string.
+        // Parse it into an array.
+        parse_str((string)$httpResponse->getBody(), $response_data);
+
+        return $response_data;
+    }
+
+    /**
+     * Create a new Response message given the raw data in the response.
+     */
+    protected abstract function createResponse($data);
 }
