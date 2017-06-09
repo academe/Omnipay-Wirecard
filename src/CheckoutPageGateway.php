@@ -98,6 +98,14 @@ class CheckoutPageGateway extends AbstractGateway
     }
 
     /**
+     * The void transaction.
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendVoidRequest', $parameters);
+    }
+
+    /**
      * The refund transaction.
      */
     public function refund(array $parameters = array())

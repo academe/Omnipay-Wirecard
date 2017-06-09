@@ -222,12 +222,14 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
      */
     public function isSuccessful()
     {
+        // The fingerprint must be valid to to sure it is sucessful.
         if (! $this->isValid()) {
             return false;
         }
 
         $paymentState = $this->getPaymentState();
 
+        // There are four payment states. Two are successful.
         return (
             $paymentState === AbstractResponse::PAYMENT_STATE_SUCCESS
             || $paymentState === AbstractResponse::PAYMENT_STATE_PENDING
