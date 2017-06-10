@@ -6,7 +6,7 @@ namespace Omnipay\Wirecard\Message;
  * Wirecard Refund Request.
  */
 
-class BackendRefundRequest extends BackendCaptureRequest
+class BackendPageRefundRequest extends BackendPageCaptureRequest
 {
     /**
      * The backend command to send.

@@ -110,7 +110,7 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendRefundRequest', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageRefundRequest', $parameters);
     }
 
     /**

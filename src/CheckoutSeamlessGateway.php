@@ -111,10 +111,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
     /**
      * The refund transaction.
      */
-//    public function refund(array $parameters = array())
-//    {
-//        return $this->createRequest('\Omnipay\Wirecard\Message\BackendRefundRequest', $parameters);
-//    }
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessRefundRequest', $parameters);
+    }
 
     /**
      * Accept an incoming notification (a ServerRequest).
