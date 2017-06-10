@@ -20,7 +20,7 @@ namespace Omnipay\Wirecard\Message;
 
 //use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 
-class BackendVoidRequest extends AbstractRequest
+class BackendVoidRequest extends AbstractBackendRequest
 {
     /**
      * The backend command to send.
@@ -34,41 +34,39 @@ class BackendVoidRequest extends AbstractRequest
      */
     public function getData()
     {
-        $data = [];
+        $data = $this->getBaseData();
 
-        // TODO: Need orderNumber and paymentNumber.
-        // TODO: fingerprint is needed too.
-
-        $data['customerId'] = $this->getCustomerId();
-
-        if ($this->getShopId()) {
-            $data['shopId'] = $this->getShopId();
-        }
-
-        $data['toolkitPassword'] = $this->getToolkitPassword();
-        $data['command'] = $this->command;
-        $data['language'] = $this->getLanguage();
-
-        // Fields mandatory for the deposit command.
+        // Fields mandatory for the depositReversal (void) command.
 
         $data['orderNumber'] = $this->getOrderNumber() ?: $this->getTransactionReference();
+        $data['paymentNumber'] = $this->getPaymentNumber();
+
+        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
+
+        // Remove the sectet now we have the fingerprint
+        unset($data['secret']);
 
         return $data;
     }
 
     /**
-     * Data is sent application/x-www-form-urlencoded
+     * Get the payment number.
+     *
+     * @return string
      */
-    public function sendData($data)
+    public function getPaymentNumber()
     {
-        return $this->createResponse($this->sendHttp($data));
+        return $this->getParameter('paymentNumber');
     }
 
     /**
-     * The response data will be an array here.
+     * Sets payment number.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
      */
-    protected function createResponse($data)
+    public function setPaymentNumber($value)
     {
-        return $this->response = new BackendResponse($this, $data);
+        return $this->setParameter('paymentNumber', $value);
     }
 }

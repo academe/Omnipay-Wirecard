@@ -8,7 +8,7 @@ namespace Omnipay\Wirecard\Message;
 
 //use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 
-class BackendCaptureRequest extends AbstractRequest
+class BackendCaptureRequest extends AbstractBackendRequest
 {
     /**
      * The backend command to send.
@@ -22,20 +22,7 @@ class BackendCaptureRequest extends AbstractRequest
      */
     public function getData()
     {
-        // The order of all fields is critical when creating the singnaturte.
-        // Fields common to all commands.
-
-        $data = [];
-
-        $data['customerId'] = $this->getCustomerId();
-
-        if ($this->getShopId()) {
-            $data['shopId'] = $this->getShopId();
-        }
-
-        $data['toolkitPassword'] = $this->getToolkitPassword();
-        $data['command'] = $this->command;
-        $data['language'] = $this->getLanguage();
+        $data = $this->getBaseData();
 
         // Fields mandatory for the deposit command.
 
@@ -62,33 +49,16 @@ class BackendCaptureRequest extends AbstractRequest
 
         // The fingerprint is calculated with the secret inserted as the element immediately
         // after the toolkitPassword, and that will depend on whether the shopId is supplied.
+        // FIXME: to be less complicated, put the secret in the data then remove it later.
 
         $secret_position = ($this->getShopId() ? 3 : 2);
 
-        $fingerprint_data = array_merge(
-            array_slice($data, 0, $secret_position),
-            ['secret' => $this->getSecret()],
-            array_slice($data, $secret_position)
-        );
-        $data['requestFingerprint'] = $this->getRequestFingerprint($fingerprint_data);
+        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
+
+        // Remove the sectet now we have the fingerprint
+        unset($data['secret']);
 
         return $data;
-    }
-
-    /**
-     * The response data will be an array here.
-     */
-    protected function createResponse($data)
-    {
-        return $this->response = new BackendResponse($this, $data);
-    }
-
-    /**
-     * Data is sent application/x-www-form-urlencoded
-     */
-    public function sendData($data)
-    {
-        return $this->createResponse($this->sendHttp($data));
     }
 
     /**
