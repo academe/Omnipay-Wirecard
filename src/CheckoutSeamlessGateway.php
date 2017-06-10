@@ -97,7 +97,7 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendCaptureRequest', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessCaptureRequest', $parameters);
     }
 
     /**
@@ -105,7 +105,7 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function void(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendVoidRequest', $parameters);
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessVoidRequest', $parameters);
     }
 
     /**

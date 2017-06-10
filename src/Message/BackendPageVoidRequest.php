@@ -20,14 +20,12 @@ namespace Omnipay\Wirecard\Message;
 
 //use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 
-class BackendVoidRequest extends AbstractBackendRequest
+class BackendPageVoidRequest extends AbstractBackendRequest
 {
     /**
      * The backend command to send.
      */
     protected $command = 'depositReversal';
-
-    protected $endpoint = 'https://checkout.wirecard.com/page/toolkit.php';
 
     /**
      * Collect the data together to send to the Gateway.

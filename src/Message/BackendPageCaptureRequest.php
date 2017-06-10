@@ -8,17 +8,15 @@ namespace Omnipay\Wirecard\Message;
 
 //use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 
-class BackendCaptureRequest extends AbstractBackendRequest
+class BackendPageCaptureRequest extends AbstractBackendRequest
 {
     /**
      * The backend command to send.
      */
     protected $command = 'deposit';
 
-    protected $endpoint = 'https://checkout.wirecard.com/page/toolkit.php';
-
     /**
-     * Collect the data together to send to the Gateway.
+     * Collect the data together to send to the Gateway for Checkout Page commands.
      */
     public function getData()
     {
@@ -46,12 +44,6 @@ class BackendCaptureRequest extends AbstractBackendRequest
         if ($items = $this->getItems()) {
             $data = array_merge($data, $this->itemsAsArray($items));
         }
-
-        // The fingerprint is calculated with the secret inserted as the element immediately
-        // after the toolkitPassword, and that will depend on whether the shopId is supplied.
-        // FIXME: to be less complicated, put the secret in the data then remove it later.
-
-        $secret_position = ($this->getShopId() ? 3 : 2);
 
         $data['requestFingerprint'] = $this->getRequestFingerprint($data);
 
