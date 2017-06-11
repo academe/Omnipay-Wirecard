@@ -84,6 +84,24 @@ trait CommonParametersTrait
     }
 
     /**
+     * The Backend Seamless Password.
+     * Used only for backend Seamless functions.
+     */
+    public function setPassword($password)
+    {
+        if (!is_string($password)) {
+            throw new InvalidRequestException('Password must be a string.');
+        }
+
+        return $this->setParameter('password', $password);
+    }
+
+    public function getPassword()
+    {
+        return $this->getParameter('password');
+    }
+
+    /**
      * Get the request failure URL.
      *
      * @return string

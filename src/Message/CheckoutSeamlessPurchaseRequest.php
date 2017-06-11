@@ -48,13 +48,13 @@ class CheckoutSeamlessPurchaseRequest extends AbstractCheckoutRequest
         // If you do not pass in the storageId, then on the demo gateway at least the
         // user will be redirected to a remotre hosted form to enter the details.
         // It looks like the form can be used in an iframe.
+
         if ($this->getStorageId()) {
             $data['storageId'] = $this->getStorageId();
         }
 
-        //if ($this->getOrderIdent()) {
-            $data['orderIdent'] = $this->getTransactionId();
-        //}
+        // The orderIdent must match that used when the secure data storage was created.
+        $data['orderIdent'] = $this->getTransactionId();
 
         // The fingerprint is calculated at the end.
         // The fingerprint order field is included in both the order list and the fingerprint.

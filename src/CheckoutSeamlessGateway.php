@@ -33,18 +33,6 @@ class CheckoutSeamlessGateway extends AbstractGateway
     {
         $params = parent::getDefaultParameters();
 
-        // Parameters for Checkout Page and Checkout Seamless APIs.
-        // TODO: move these to an AbstractCheckoutGateway class once
-        // Seamless is supported.
-        /*
-        $params['noScriptInfoUrl'] = '';
-        $params['windowName'] = '';
-        $params['duplicateRequestCheck'] = true;
-        $params['transactionIdentifier'] = '';
-        $params['financialInstitution'] = '';
-        $params['cssUrl'] = '';
-        */
-
         return $params;
     }
 
@@ -73,26 +61,6 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
-     * The purchase transaction.
-     */
-
-    /**
-     * The complete authorization transaction (capturing data retuned with the user).
-     */
-//    public function completeAuthorize(array $parameters = array())
-//    {
-//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessComplete', $parameters);
-//    }
-
-    /**
-     * The complete purchase transaction (capturing data retuned with the user).
-     */
-//    public function completePurchase(array $parameters = array())
-///    {
-//        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageComplete', $parameters);
-//    }
-
-    /**
      * The capture transaction.
      */
     public function capture(array $parameters = array())
@@ -119,8 +87,8 @@ class CheckoutSeamlessGateway extends AbstractGateway
     /**
      * Accept an incoming notification (a ServerRequest).
      */
-//    public function acceptNotification(array $parameters = array())
-//    {
-//        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
-//    }
+    public function acceptNotification(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
+    }
 }

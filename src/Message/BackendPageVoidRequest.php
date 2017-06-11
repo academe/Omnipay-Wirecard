@@ -24,6 +24,10 @@ class BackendPageVoidRequest extends AbstractBackendRequest
 {
     /**
      * The backend command to send.
+     * CHECKME: Not sure what relationship this has with approveReversal. It seems that
+     * depositReversal takes a captured transactgion back to the approval stage (but
+     * only before the end of the day), but does not void the transaction completely.
+     * So maybe a full voids needs to do both depositReversal then a approveReversal?
      */
     protected $command = 'depositReversal';
 

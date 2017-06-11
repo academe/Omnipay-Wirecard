@@ -15,8 +15,8 @@ Table of Contents
    * [API Details](#api-details)
       * [Demo Mode and Test Mode](#demo-mode-and-test-mode)
       * [Wirecard Checkout Page](#wirecard-checkout-page)
-         * [Demo Mode Credentials](#demo-mode-credentials)
-         * [Test Mode Credentials](#test-mode-credentials)
+         * [Page Demo Mode Credentials](#page-demo-mode-credentials)
+         * [Page Test Mode Credentials](#page-test-mode-credentials)
          * [Initialise The Checkout Page Gateway](#initialise-the-checkout-page-gateway)
          * [Purchase Request](#purchase-request)
          * [Authorize Request](#authorize-request)
@@ -25,6 +25,8 @@ Table of Contents
          * [Complete Purchase/Authorize](#complete-purchaseauthorize)
          * [Notification Handler](#notification-handler)
       * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
+         * [Seamless Demo Mode Credentials](#seamless-demo-mode-credentials)
+         * [Seamless Test Mode Credentials](#seamless-test-mode-credentials)
          * [Initialise the Data Store](#initialise-the-data-store)
       * [Extended ItemBag Items](#extended-itembag-items)
 
@@ -108,7 +110,7 @@ The remote checkout page can be customised to an extent, and can run as
 the full page or in an iframe. The page is responsive, so will adapt to
 any iframe size set on the merchant site.
 
-### Demo Mode Credentials
+### Page Demo Mode Credentials
 
 Demo mode is invoked by using these details:
 
@@ -126,7 +128,7 @@ they are implemented).
 The list of demo credit cards that 
 [can be found](https://guides.wirecard.at/wcp:demo_mode).
 
-### Test Mode Credentials
+### Page Test Mode Credentials
 
 Test mode is invoked by using these details for non-3D Secure tests:
 
@@ -426,6 +428,47 @@ the AJAX result, is out of scope.
 This driver provides a method to initialise the data storage, to POST the
 transaction request, to handle the return from a redirect (3D Secure or otherwise)
 and to capture the back-channel notifications.
+
+### Seamless Demo Mode Credentials
+
+Demo mode is invoked by using these details:
+
+| Field | Value |
+|:----- |:----- |
+| customerId | D200001 |
+| secret | B8AKTPWBRMNBV455FG6M2DANE99WU2 |
+| shopId | seamless |
+| password | jcv45z |
+
+The `toolkitPassword` is only needed if you need to `capture` an authorisation
+or `refund` a payment (also `void` and a few additional backend commands when
+they are implemented).
+
+Demo mode and test mode credentials
+[can be found here](https://guides.wirecard.at/demo:wcs_demo_and_test_mode?s[]=seamless3d).
+
+### Seamless Test Mode Credentials
+
+Test mode is invoked by using these details for non-3D Secure tests:
+
+| Field | Value |
+|:----- |:----- |
+| customerId | D200411 |
+| secret | CHCSH7UGHVVX2P7EHDHSY4T2S4CGYK4QBE4M5YUUG2ND5BEZWNRZW5EJYVJQ |
+| shopId | seamless |
+| password | 2g4f9q2m |
+
+Test mode is invoked by using these details for 3D Secure tests:
+
+| Field | Value |
+|:----- |:----- |
+| customerId | D200411 |
+| secret | DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F |
+| shopId | seamless3D |
+| toolkitPassword | 2g4f9q2m |
+
+Demo mode and test mode credentials
+[can be found here](https://guides.wirecard.at/demo:wcs_demo_and_test_mode?s[]=seamless3d).
 
 ### Initialise the Data Store
 

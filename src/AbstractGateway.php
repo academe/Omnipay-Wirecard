@@ -16,7 +16,7 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
     use CommonParametersTrait;
 
     /**
-     *
+     * 
      */
     public function getDefaultParameters()
     {
@@ -29,8 +29,10 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
             'secret' => '',
             // Required.
             'language' => 'en',
-            // For backend functions.
-            'toolkitPassword' => 'en',
+            // For backend Page functions.
+            'toolkitPassword' => '',
+            // For backend Seamless functions (will default to toolkitPassword).
+            'password' => '',
             // Return URL after auth failure.
             'failureUrl' => '',
             // Link to terms of service.

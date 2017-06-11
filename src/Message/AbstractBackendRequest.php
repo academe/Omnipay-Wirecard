@@ -44,7 +44,7 @@ abstract class AbstractBackendRequest extends AbstractRequest
         if ($this->command) {
             $data['toolkitPassword'] = $this->getToolkitPassword();
         } else {
-            $data['password'] = $this->getToolkitPassword();
+            $data['password'] = $this->getPassword() ?: $this->getToolkitPassword();
         }
 
         // The secret will be removed after the fingerprint is calculated.
