@@ -18,5 +18,3 @@ class BackendSeamlessFetchTransactionRequest extends BackendPageFetchTransaction
      */
     protected $command = '';
 }
-
-
