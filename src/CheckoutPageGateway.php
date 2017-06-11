@@ -107,4 +107,12 @@ class CheckoutPageGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageOrderNumberRequest', $parameters);
     }
+
+    /**
+     * Get the financial institutions for a payment type.
+     */
+    public function getFinancialInstitutions(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageFinancialInstitutionsRequest', $parameters);
+    }
 }

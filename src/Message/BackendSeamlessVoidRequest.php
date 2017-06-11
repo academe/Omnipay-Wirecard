@@ -3,7 +3,7 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * Wirecard Seamless Capture Request.
+ * Wirecard Seamless Void Request.
  */
 
 class BackendSeamlessVoidRequest extends BackendPageVoidRequest

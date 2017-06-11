@@ -99,4 +99,12 @@ class CheckoutSeamlessGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessOrderNumberRequest', $parameters);
     }
+
+    /**
+     * Get the financial institutions for a payment type.
+     */
+    public function getFinancialInstitutions(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessFinancialInstitutionsRequest', $parameters);
+    }
 }

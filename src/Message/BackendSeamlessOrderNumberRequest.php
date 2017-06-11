@@ -3,7 +3,7 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * Wirecard Seamless Capture Request.
+ * Wirecard Seamless Create Order Number Request.
  */
 
 class BackendSeamlessOrderNumberRequest extends BackendPageOrderNumberRequest
