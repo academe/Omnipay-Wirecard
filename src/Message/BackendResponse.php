@@ -110,4 +110,15 @@ class BackendResponse extends AbstractResponse
     {
         return ($this->getStatus() == static::STATUS_SUCCESS);
     }
+
+    /**
+     * Command: createOrderNumber
+     * The orderNumber reserved for a new transaction.
+     *
+     * @return int Numeric with a variable length of up to 9 digits.
+     */
+    public function getOrderNumber()
+    {
+        return $this->getDataValue('orderNumber');
+    }
 }

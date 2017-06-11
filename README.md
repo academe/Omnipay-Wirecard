@@ -18,10 +18,10 @@ Table of Contents
          * [Page Demo Mode Credentials](#page-demo-mode-credentials)
          * [Page Test Mode Credentials](#page-test-mode-credentials)
          * [Initialise The Checkout Page Gateway](#initialise-the-checkout-page-gateway)
-         * [Purchase Request](#purchase-request)
-         * [Authorize Request](#authorize-request)
-         * [Capture Request](#capture-request)
-         * [Refund Request](#refund-request)
+         * [Page Purchase Request](#page-purchase-request)
+         * [Page Authorize Request](#page-authorize-request)
+         * [Page Capture Request](#page-capture-request)
+         * [Page Refund Request](#page-refund-request)
          * [Complete Purchase/Authorize](#complete-purchaseauthorize)
          * [Notification Handler](#notification-handler)
       * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
@@ -55,13 +55,13 @@ This package was created with a number of prerequitits:
 * It supports Omnipay 2.x following as many of the Omnipay standards/conventions
   as possible. This is to help integration into multi-gateway systems and wrappers
   with the least custom programming as possible.
-* It does not use the Wirecard SDK. Though very complete in terms of functionaluty
+* It does not use the Wirecard SDK. Though very complete in terms of functionality
   coverage, the SDK is locked onto HTTP clients that are not compatible with many
   sites using Omnipay 2.x
 * It does not need an external serializer, that is an issue for some applications.
 
-As Omnipay 3.x goes into beta, the intentiion is to branch this package to support
-that version, but carry on maintaining the 2.x branch.
+As Omnipay 3.x goes into beta, the intention is to branch this package to support
+3.x, but carry on maintaining the 2.x branch while it is still in active use.
 
 
 ## Installation
@@ -198,11 +198,11 @@ These are the parameters that can be set when instantiating the Checkout Page ga
 
 Documentation for these parameters can be found here: https://guides.wirecard.at/request_parameters
 
-### Purchase Request
+### Page Purchase Request
 
 The purchase method returns an object to support a POST to the remote gateway form.
 The POST can be a form, or a JavaScript object.
-It can be invoked the user pressing a submit button or automatically using JavaScript.
+It can be invoked by the user pressing a submit button or automatically using JavaScript.
 It can target the top window or an iframe.
 
 Here is a minimal example:
@@ -253,7 +253,7 @@ echo '<button type="submit">Pay Now</button>';
 echo "</form>";
 ```
 
-### Authorize Request
+### Page Authorize Request
 
 While `payment` requests that the funds are automatically taken (usually at midnight of that day)
 and `authorize` will leave the funds to be captured at a later date.
@@ -263,7 +263,7 @@ By default, a Wirecard account will just support `authorize`.
 You may need to request that the `purchase` option be enabled for your account.
 It is known as "auto-deposit", and that is what you will need to ask for.
 
-### Capture Request
+### Page Capture Request
 
 To capture an authorisation in full, you will need the toolkit password.
 This password gives you access to the backend API, which the capture uses.
@@ -320,7 +320,7 @@ for example just 10 of the 20 cans of beans that have been authorised.
 
 More details on how partial capture works will be added in due course.
 
-### Refund Request
+### Page Refund Request
 
 This is set up and used exactly the same as for `capture`.
 

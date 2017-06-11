@@ -91,4 +91,12 @@ class CheckoutSeamlessGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
     }
+
+    /**
+     * Create a new order number in advance of assigning it to a new transaction.
+     */
+    public function createOrderNumber(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessOrderNumberRequest', $parameters);
+    }
 }
