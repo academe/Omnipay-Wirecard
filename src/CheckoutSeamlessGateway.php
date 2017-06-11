@@ -41,7 +41,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutSeamlessAuthorizeRequest',
+            $parameters
+        );
     }
 
     /**
@@ -49,7 +52,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessPurchaseRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutSeamlessPurchaseRequest',
+            $parameters
+        );
     }
 
     /**
@@ -57,7 +63,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function storageInit(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutSeamlessStorageInitRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutSeamlessStorageInitRequest',
+            $parameters
+        );
     }
 
     /**
@@ -65,7 +74,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessCaptureRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessCaptureRequest',
+            $parameters
+        );
     }
 
     /**
@@ -73,7 +85,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function void(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessVoidRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessVoidRequest',
+            $parameters
+        );
     }
 
     /**
@@ -81,7 +96,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessRefundRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessRefundRequest',
+            $parameters
+        );
     }
 
     /**
@@ -89,7 +107,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function acceptNotification(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\NotificationServer',
+            $parameters
+        );
     }
 
     /**
@@ -97,7 +118,10 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function createOrderNumber(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessOrderNumberRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessOrderNumberRequest',
+            $parameters
+        );
     }
 
     /**
@@ -105,6 +129,17 @@ class CheckoutSeamlessGateway extends AbstractGateway
      */
     public function getFinancialInstitutions(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessFinancialInstitutionsRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessFinancialInstitutionsRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * Fetch details for a transaction.
+     */
+    public function fetchTransaction(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendSeamlessFetchTransactionRequest', $parameters);
     }
 }

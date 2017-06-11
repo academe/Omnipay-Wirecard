@@ -254,13 +254,12 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
             $data['noScriptInfoUrl'] = $this->getNoScriptInfoUrl();
         }
 
-        // Numeric, up to 9 digits, but what exactly is it?
-        // Must be unique and each value can only be used once, so be careful about
-        // tieing it back to merchant site order numbers that mat require more than
-        // one payment or payment *attempts*.
+        // Numeric, up to 9 digits.
+        // Either leave it blank and a new one will be created, or reserve one using
+        // createOrderNumber and use that.
 
-        if ($this->getOrderNumber()) {
-            $data['orderNumber'] = $this->getOrderNumber();
+        if ($this->getOrderNumber() || $this->getTransactionReference()) {
+            $data['orderNumber'] = $this->getOrderNumber() ?: $this->getTransactionReference();
         }
 
         if ($this->getWindowName()) {

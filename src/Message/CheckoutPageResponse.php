@@ -21,6 +21,14 @@ class CheckoutPageResponse extends AbstractResponse implements RedirectResponseI
     protected $redirectMethod = 'POST';
 
     /**
+     * Get the redirect endpoint, if one is set.
+     */
+    public function getEndpoint()
+    {
+        return (property_exists($this, 'endpoint') ? $this->endpoint : null);
+    }
+
+    /**
      * Not yet "successful" as user needs to be sent to Wirecard site.
      */
     public function isSuccessful()

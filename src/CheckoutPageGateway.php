@@ -109,10 +109,26 @@ class CheckoutPageGateway extends AbstractGateway
     }
 
     /**
+     * An alias to createOrderNumber in more "Omnipay" parlance.
+     */
+    public function createTransactionReference(array $parameters = array())
+    {
+        return $this->createOrderNumber($parameters);
+    }
+
+    /**
      * Get the financial institutions for a payment type.
      */
     public function getFinancialInstitutions(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageFinancialInstitutionsRequest', $parameters);
+    }
+
+    /**
+     * Fetch details for a transaction.
+     */
+    public function fetchTransaction(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageFetchTransactionRequest', $parameters);
     }
 }

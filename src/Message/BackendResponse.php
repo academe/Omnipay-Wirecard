@@ -91,14 +91,18 @@ class BackendResponse extends AbstractResponse
     }
 
     /**
-     * Command: deposit, refund
+     * Command: deposit, refund, generateOrderNumber
      * The new or existing gateway transaction number.
      *
      * @return int Numeric with a variable length of up to 9 digits.
      */
     public function getTransactionReference()
     {
-        return $this->getPaymentNumber ?: $this->getCreditNumber();
+        // These are all equivalent. They are the number of the transaction
+        // created on the gateway.
+        return $this->getPaymentNumber()
+            ?: $this->getCreditNumber()
+            ?: $this->getOrderNumber();
     }
 
     /**
@@ -120,5 +124,72 @@ class BackendResponse extends AbstractResponse
     public function getOrderNumber()
     {
         return $this->getDataValue('orderNumber');
+    }
+
+    //
+    // The following for fetchTransaction only.
+    //
+
+    /**
+     * The count of orders.
+     *
+     * @return int The number of orders, zero if there are no orders.
+     */
+    public function getOrderCount()
+    {
+        return (int)$this->getDataValue('orders', 0);
+    }
+
+    /**
+     * The array of order details.
+     *
+     * @return array The array of order details.
+     */
+    public function getOrders()
+    {
+        $orders = [];
+
+        $orders_field_list = [
+            'merchantNumber',
+            'orderNumber',
+            'paymentType',
+            'amount',
+            'brand',
+            'currency',
+            'orderDescription',
+            'acquirer',
+            'contractNumber',
+            'operationsAllowed',
+            'orderReference',
+            'customerStatement',
+            'orderText',
+            'timeCreated',
+            'timeModified',
+            'state',
+            'sourceOrderNumber',
+        ];
+
+        if ($order_count = $this->getOrderCount()) {
+            // The documentation lists field names using full stops as part separators.
+            // The demo site uses underscores as part separators.
+            // We will use them interchangeably, trying underscores first.
+
+            for ($i = 1; $i <= $order_count; $i++) {
+                $order = [];
+
+                foreach ($orders_field_list as $part) {
+                    // TODO: we then have potential "payments" and "credit" sub-lists.
+
+                    $order[$part] = $this->getDataValue(
+                        'order_' . $i . '_' . $part,
+                        $this->getDataValue('order.' . $i . '.' . $part)
+                    );
+                }
+
+                $orders[] = $order;
+            }
+        }
+
+        return $orders;
     }
 }
