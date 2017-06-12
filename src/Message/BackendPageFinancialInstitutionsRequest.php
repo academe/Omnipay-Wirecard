@@ -14,20 +14,15 @@ class BackendPageFinancialInstitutionsRequest extends AbstractBackendRequest
     protected $command = 'getFinancialInstitutions';
 
     /**
-     * Collect the data together to send to the Gateway.
+     * Return fields specific to the command.
      */
-    public function getData()
+    public function getCommandData()
     {
-        $data = $this->getBaseData();
+        $data = [];
 
         $data['paymentType'] = $this->getPaymentType();
 
         // TODO: optional parameters bankCountry and transactionType
-
-        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
-
-        // Remove the secret now we have the fingerprint
-        unset($data['secret']);
 
         return $data;
     }

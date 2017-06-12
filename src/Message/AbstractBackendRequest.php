@@ -61,6 +61,34 @@ abstract class AbstractBackendRequest extends AbstractRequest
     }
 
     /**
+     * Collect the data together to send to the Gateway.
+     */
+    public function getData()
+    {
+        // Start with the common base data.
+        $data = $this->getBaseData();
+
+        // Add in command-specific data.
+        $data = array_merge($data, $this->getCommandData());
+
+        // Calculate the fingerprint with the secret in-situ and put it on the end.
+        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
+
+        // Remove the sectet now we have the fingerprint
+        unset($data['secret']);
+
+        return $data;
+    }
+
+    /**
+     * Return fields specific to the command.
+     */
+    public function getCommandData()
+    {
+        return [];
+    }
+
+    /**
      * Data is sent application/x-www-form-urlencoded
      */
     public function sendData($data)

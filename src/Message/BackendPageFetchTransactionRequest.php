@@ -14,20 +14,13 @@ class BackendPageFetchTransactionRequest extends AbstractBackendRequest
     protected $command = 'getOrderDetails';
 
     /**
-     * Collect the data together to send to the Gateway.
+     * Return fields specific to the command.
      */
-    public function getData()
+    public function getCommandData()
     {
-        $data = $this->getBaseData();
-
-        // Fields mandatory for the depositReversal (void) command.
+        $data = [];
 
         $data['orderNumber'] = $this->getOrderNumber() ?: $this->getTransactionReference();
-
-        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
-
-        // Remove the sectet now we have the fingerprint
-        unset($data['secret']);
 
         return $data;
     }

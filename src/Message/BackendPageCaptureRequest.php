@@ -16,13 +16,11 @@ class BackendPageCaptureRequest extends AbstractBackendRequest
     protected $command = 'deposit';
 
     /**
-     * Collect the data together to send to the Gateway for Checkout Page commands.
+     * Return fields specific to the command.
      */
-    public function getData()
+    public function getCommandData()
     {
-        $data = $this->getBaseData();
-
-        // Fields mandatory for the deposit command.
+        $data = [];
 
         $data['orderNumber'] = $this->getOrderNumber() ?: $this->getTransactionReference();
 
@@ -44,11 +42,6 @@ class BackendPageCaptureRequest extends AbstractBackendRequest
         if ($items = $this->getItems()) {
             $data = array_merge($data, $this->itemsAsArray($items));
         }
-
-        $data['requestFingerprint'] = $this->getRequestFingerprint($data);
-
-        // Remove the sectet now we have the fingerprint
-        unset($data['secret']);
 
         return $data;
     }
