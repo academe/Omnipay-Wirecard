@@ -68,6 +68,35 @@ class CheckoutPageCompleteTest extends TestCase
      */
     public function testTimeout()
     {
-        $this->assertTrue(true);
+        $httpRequest = $this->getHttpRequest();
+
+        $httpRequest->initialize(
+            array(), // GET
+            array( // POST
+                'consumerMessage' => 'QPAY-Session timed out after 30 minutes without activity.',
+                'message' => 'QPAY-Session timed out after 30 minutes without activity.',
+                'paymentState' => 'FAILURE',
+                'omnipay_transactionId' => 'WC96880138',
+            )
+        );
+
+        $request = new CheckoutPageComplete($this->getHttpClient(), $httpRequest);
+
+        // This secret is needed to validate the transaction.
+        // However, the timeout does not have a fingerprint.
+        // For CANCEL or FAILURE payment states, there will be no
+        // fingerprint, so it will not be checked.
+        $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
+
+        $this->assertTrue($request->isValid());
+        $this->assertFalse($request->isSuccessful());
+
+        // Sending the request will get the same object back, and so we will have the
+        // same success result.
+
+        $response = $request->send();
+
+        $this->assertTrue($request->isValid());
+        $this->assertFalse($request->isSuccessful());
     }
 }
