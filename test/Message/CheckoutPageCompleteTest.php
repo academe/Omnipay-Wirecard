@@ -10,7 +10,7 @@ class CheckoutPageCompleteTest extends TestCase
     /**
      *
      */
-    public function testTimeout()
+    public function testSuccesful()
     {
         // The incoming server request.
         $httpRequest = $this->getHttpRequest();
@@ -47,5 +47,14 @@ class CheckoutPageCompleteTest extends TestCase
 
         $this->assertTrue($request->isValid());
         $this->assertTrue($request->isSuccessful());
+    }
+
+    /**
+     * TODO: need some examples of failed transactions and *timed out* transactions
+     * which have been reported as having problems.
+     */
+    public function testTimeout()
+    {
+        $this->assertTrue(true);
     }
 }
