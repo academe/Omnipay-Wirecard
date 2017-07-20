@@ -13,10 +13,15 @@ class CheckoutPageCompleteTest extends TestCase
     public function testSuccesful()
     {
         // The incoming server request.
+        // I hope this request object is not intialising itself from local
+        // globals, because that could make the test a little sensitive to
+        // the environment.
+
         $httpRequest = $this->getHttpRequest();
+
         $httpRequest->initialize(
-            array(),
-            array(
+            array(), // GET
+            array( // POST
                 'amount' => '3.10',
                 'currency' => 'EUR',
                 'paymentType' => 'CCARD',
@@ -44,6 +49,14 @@ class CheckoutPageCompleteTest extends TestCase
 
         // With this data returned with the user, the result should be both valid (the
         // fingerprint) and successful (the paymentState).
+
+        $this->assertTrue($request->isValid());
+        $this->assertTrue($request->isSuccessful());
+
+        // Sending the request will get the same object back, and so we will have the
+        // same success result.
+
+        $response = $request->send();
 
         $this->assertTrue($request->isValid());
         $this->assertTrue($request->isSuccessful());
