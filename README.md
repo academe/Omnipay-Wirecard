@@ -43,7 +43,7 @@ This *Checkout Page* offers a payment page hosted by the gateway,
 can be partially customised, and that can either be shown in an iframe
 or navigated to as the top window.
 
-*Wirecard Checkout Seamless* is under development.
+*Wirecard Checkout Seamless* is as complete as *Checkout Page* but needs some documentation.
 
 ## Why This Package
 
@@ -62,7 +62,7 @@ This package was created with a number of prerequitits:
 
 As Omnipay 3.x goes into beta, the intention is to branch this package to support
 3.x, but carry on maintaining the 2.x branch while it is still in active use.
-
+The differences between the two should be very small and localised.
 
 ## Installation
 
