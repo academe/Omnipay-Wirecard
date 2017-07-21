@@ -229,10 +229,10 @@ class CheckoutPageComplete extends AbstractRequest implements OmnipayResponseInt
 
         $paymentState = $this->getPaymentState();
 
-        // There are four payment states. Two are successful.
+        // There are four payment states.
+        // Only "SUCCESS" indicates the transaction is successful AND complete.
         return (
             $paymentState === AbstractResponse::PAYMENT_STATE_SUCCESS
-            || $paymentState === AbstractResponse::PAYMENT_STATE_PENDING
         );
     }
 

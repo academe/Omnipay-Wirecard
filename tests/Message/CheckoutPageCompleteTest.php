@@ -99,4 +99,38 @@ class CheckoutPageCompleteTest extends TestCase
         $this->assertTrue($request->isValid());
         $this->assertFalse($request->isSuccessful());
     }
+
+    public function testPending()
+    {
+        $httpRequest = $this->getHttpRequest();
+
+        $httpRequest->initialize(
+            array(), // GET
+            array( // POST
+                'paymentType' => 'PAYPAL',
+                'financialInstitution' => 'PayPal',
+                'language' => 'de',
+                'paymentState' => 'PENDING',
+                'omnipay_transactionId' => '2147500162',
+                'responseFingerprintOrder' => 'paymentType,financialInstitution,language,paymentState,omnipay_transactionId,secret,responseFingerprintOrder',
+                'responseFingerprint' => 'ebf04ba2e87dd12c03eb889e523e453ae1db8ffd9fd3b5b6ca7c9f5c61763afc28f3eb318c009e0e193b2d3f5b655e3333247094ee86c0d531235f4661b19a51',
+            )
+        );
+
+        $request = new CheckoutPageComplete($this->getHttpClient(), $httpRequest);
+
+        // This secret is needed to validate the transaction.
+        $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
+
+        $this->assertTrue($request->isValid());
+        $this->assertFalse($request->isSuccessful());
+
+        // Sending the request will get the same object back, and so we will have the
+        // same success result.
+
+        $response = $request->send();
+
+        $this->assertTrue($request->isValid());
+        $this->assertFalse($request->isSuccessful());
+    }
 }
