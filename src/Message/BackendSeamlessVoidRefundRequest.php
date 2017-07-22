@@ -1,0 +1,20 @@
+<?php
+
+namespace Omnipay\Wirecard\Message;
+
+/**
+ * Wirecard Seamless Void Refund Request.
+ */
+
+class BackendSeamlessVoidRefundRequest extends BackendPageVoidRefundRequest
+{
+    /**
+     * Seamless uses the URL in place of a command parameter.
+     */
+    protected $endpoint = 'https://checkout.wirecard.com/seamless/backend/refundReversal';
+
+    /**
+     * No command for seamless; it's all in the URL.
+     */
+    protected $command = '';
+}

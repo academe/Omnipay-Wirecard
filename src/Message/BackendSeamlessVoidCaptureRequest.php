@@ -6,7 +6,7 @@ namespace Omnipay\Wirecard\Message;
  * Wirecard Seamless Void Request.
  */
 
-class BackendSeamlessVoidRequest extends BackendPageVoidRequest
+class BackendSeamlessVoidCaptureRequest extends BackendPageVoidCaptureRequest
 {
     /**
      * Seamless uses the URL in place of a command parameter.

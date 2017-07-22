@@ -43,7 +43,7 @@ This *Checkout Page* offers a payment page hosted by the gateway,
 can be partially customised, and that can either be shown in an iframe
 or navigated to as the top window.
 
-*Wirecard Checkout Seamless* is as complete as *Checkout Page* but needs some documentation.
+Wirecard *Checkout Seamless* is as complete as *Checkout Page* but needs some documentation.
 
 ## Why This Package
 
@@ -503,4 +503,23 @@ $item = new Omnipay\Wirecard\Extend\Item([
     'taxRate' => '10',
 ]);
 ```
+
+# TODO Backend Features
+
+This is the coplete list of transaction-based operations.
+As each is implemented, the details will bw added to the table.
+The backend feactures are all available for both the *Seamless* and the *Page* variations on
+the gateway, and both variations work the same way for the merchant site, just with a slight
+variation in endpoints and a single internal parameter.
+
+| Wirecard Operation | Omnipay Operation | Message Class (when complete) |
+| ------------------ | ----------------- | ----------------------------- |
+| [approveReversal](https://guides.wirecard.at/back-end_operations:transaction-based:approvereversal) | n/a | *VoidAuthorizeRequest |
+| [deposit](https://guides.wirecard.at/back-end_operations:transaction-based:deposit) | capture | *CaptureRequest |
+| [depositReversal](https://guides.wirecard.at/back-end_operations:transaction-based:depositreversal) | void | *VoidCaptureRequest |
+| [getOrderDetails](https://guides.wirecard.at/back-end_operations:transaction-based:getorderdetails) | n/a | *FetchTransactionRequest |
+| [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | n/a | --- |
+| [refund](https://guides.wirecard.at/back-end_operations:transaction-based:refund) | refund | *RefundRequest |
+| [refundReversal](https://guides.wirecard.at/back-end_operations:transaction-based:refundreversal) | n/a | *VoidRefundRequest |
+| [transferFund](https://guides.wirecard.at/back-end_operations:transaction-based:transferfund) | n/a | --- |
 

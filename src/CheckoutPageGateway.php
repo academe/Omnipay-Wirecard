@@ -41,7 +41,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageAuthorizeRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutPageAuthorizeRequest',
+            $parameters
+        );
     }
 
     /**
@@ -49,7 +52,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPagePurchaseRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutPagePurchaseRequest',
+            $parameters
+        );
     }
 
     /**
@@ -57,7 +63,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function completeAuthorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageComplete', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutPageComplete',
+            $parameters
+        );
     }
 
     /**
@@ -65,7 +74,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\CheckoutPageComplete', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\CheckoutPageComplete',
+            $parameters
+        );
     }
 
     /**
@@ -73,15 +85,32 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageCaptureRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageCaptureRequest',
+            $parameters
+        );
     }
 
     /**
-     * The void transaction.
+     * The void capture transaction.
      */
-    public function void(array $parameters = array())
+    public function voidCapture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageVoidRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageVoidCaptureRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void authorization transaction.
+     */
+    public function voidAuthorize(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageVoidAuthorizeRequest',
+            $parameters
+        );
     }
 
     /**
@@ -89,7 +118,35 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageRefundRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageRefundRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void refund transaction.
+     */
+    public function voidRefund(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageVoidRefundRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void transaction.
+     * This onlt voids the capture request right now. It should
+     * probably void the authorisation too, after checking the state
+     * of the transaction.
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageVoidCaptureRequest',
+            $parameters
+        );
     }
 
     /**
@@ -97,7 +154,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function acceptNotification(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\NotificationServer', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\NotificationServer',
+            $parameters
+        );
     }
 
     /**
@@ -105,7 +165,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function createOrderNumber(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageOrderNumberRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageOrderNumberRequest',
+            $parameters
+        );
     }
 
     /**
@@ -121,7 +184,10 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function getFinancialInstitutions(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageFinancialInstitutionsRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageFinancialInstitutionsRequest',
+            $parameters
+        );
     }
 
     /**
@@ -129,6 +195,9 @@ class CheckoutPageGateway extends AbstractGateway
      */
     public function fetchTransaction(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Wirecard\Message\BackendPageFetchTransactionRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendPageFetchTransactionRequest',
+            $parameters
+        );
     }
 }

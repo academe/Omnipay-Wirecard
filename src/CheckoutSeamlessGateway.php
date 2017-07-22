@@ -81,12 +81,23 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
-     * The void transaction.
+     * The void capture transaction.
      */
-    public function void(array $parameters = array())
+    public function voidCapture(array $parameters = array())
     {
         return $this->createRequest(
-            '\Omnipay\Wirecard\Message\BackendSeamlessVoidRequest',
+            '\Omnipay\Wirecard\Message\BackendSeamlessVoidCaptureRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void authorization transaction.
+     */
+    public function voidAuthorize(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessVoidAuthorizeRequest',
             $parameters
         );
     }
@@ -98,6 +109,30 @@ class CheckoutSeamlessGateway extends AbstractGateway
     {
         return $this->createRequest(
             '\Omnipay\Wirecard\Message\BackendSeamlessRefundRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void refund transaction.
+     */
+    public function voidRefund(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessVoidRefundRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The void transaction.
+     * Only voids the capture request at this time, leaving any authorisaion
+     * still active, until it expires (7-14 days) or is voided by voidAuthorize.
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessVoidCaptureRequest',
             $parameters
         );
     }
