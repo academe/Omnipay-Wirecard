@@ -61,6 +61,14 @@ abstract class AbstractBackendRequest extends AbstractRequest
     }
 
     /**
+     * Return fields specific to the command.
+     */
+    public function getCommandData()
+    {
+        return [];
+    }
+
+    /**
      * Collect the data together to send to the Gateway.
      */
     public function getData()
@@ -78,14 +86,6 @@ abstract class AbstractBackendRequest extends AbstractRequest
         unset($data['secret']);
 
         return $data;
-    }
-
-    /**
-     * Return fields specific to the command.
-     */
-    public function getCommandData()
-    {
-        return [];
     }
 
     /**

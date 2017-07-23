@@ -59,6 +59,17 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
+     * The recur purchase transaction.
+     */
+    public function recurPurchase(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\BackendSeamlessRecurPurchaseRequest',
+            $parameters
+        );
+    }
+
+    /**
      * Initialise secure data storage for a new Checkout Seamless transaction.
      */
     public function storageInit(array $parameters = array())
@@ -103,7 +114,7 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
-     * The refund transaction.
+     * The refund transaction (creates a credit note).
      */
     public function refund(array $parameters = array())
     {
@@ -114,7 +125,7 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
-     * The void refund transaction.
+     * The void refund (i.e. a credit note) transaction.
      */
     public function voidRefund(array $parameters = array())
     {

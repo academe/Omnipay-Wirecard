@@ -6,8 +6,6 @@ namespace Omnipay\Wirecard\Message;
  * Wirecard Capture Request.
  */
 
-//use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
-
 class BackendPageCaptureRequest extends AbstractBackendRequest
 {
     /**

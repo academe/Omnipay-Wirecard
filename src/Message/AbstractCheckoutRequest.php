@@ -20,9 +20,12 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     /**
      * SINGLE - a single, one-off transaction.
      * INITIAL - the first of a series of recurring transactions.
+     *
+     * Move to trait CheckoutParametersTrait?
      */
     const TRANSACTION_IDENTIFIER_SINGLE = 'SINGLE';
     const TRANSACTION_IDENTIFIER_INITIAL = 'INITIAL';
+    //const TRANSACTION_IDENTIFIER_RECUR = 'RECUR';
 
     const AUTO_DEPOSIT_YES = 'yes';
     const AUTO_DEPOSIT_NO = 'no';
@@ -45,22 +48,6 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     }
 
     /**
-     * The orderReference is sent right through to the financial
-     * institution.
-     * It is not necessarily the same as the transactionId, which
-     * should only go as far as the gateway.
-     */
-    public function setOrderReference($value)
-    {
-        return $this->setParameter('orderReference', $value);
-    }
-
-    public function getOrderReference()
-    {
-        return $this->getParameter('orderReference');
-    }
-
-    /**
      * This is the Omnipay way of setting the payment type.
      */
     public function setPaymentMethod($value)
@@ -71,58 +58,6 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
     public function getPaymentMethod()
     {
         return $this->getPaymentType();
-    }
-
-    /**
-     * 
-     */
-    public function setConsumerTaxIdentificationNumber($value)
-    {
-        return $this->setParameter('consumerTaxIdentificationNumber', $value);
-    }
-
-    public function getConsumerTaxIdentificationNumber()
-    {
-        return $this->getParameter('consumerTaxIdentificationNumber');
-    }
-
-    /**
-     * 
-     */
-    public function setConsumerDriversLicenseNumber($value)
-    {
-        return $this->setParameter('consumerDriversLicenseNumber', $value);
-    }
-
-    public function getConsumerDriversLicenseNumber()
-    {
-        return $this->getParameter('consumerDriversLicenseNumber');
-    }
-
-    /**
-     * 
-     */
-    public function setConsumerDriversLicenseState($value)
-    {
-        return $this->setParameter('consumerDriversLicenseState', $value);
-    }
-
-    public function getConsumerDriversLicenseState()
-    {
-        return $this->getParameter('consumerDriversLicenseState');
-    }
-
-    /**
-     * 
-     */
-    public function setConsumerDriversLicenseCountry($value)
-    {
-        return $this->setParameter('consumerDriversLicenseCountry', $value);
-    }
-
-    public function getConsumerDriversLicenseCountry()
-    {
-        return $this->getParameter('consumerDriversLicenseCountry');
     }
 
     /**
@@ -275,7 +210,7 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
             );
         }
 
-        // static::TRANSACTION_IDENTIFIER_SINGLE or static::TRANSACTION_IDENTIFIER_INITIA+L
+        // static::TRANSACTION_IDENTIFIER_SINGLE or static::TRANSACTION_IDENTIFIER_INITIAL
         if ($this->getTransactionIdentifier()) {
             $data['transactionIdentifier'] = $this->getTransactionIdentifier();
         }
@@ -291,129 +226,8 @@ abstract class AbstractCheckoutRequest extends AbstractRequest
             $data['cssUrl'] = $this->getCssUrl();
         }
 
-        /**
-         * Consumer details.
-         * Mainly optional, but may be required for some payment types.
-         */
-
-        if ($this->getConsumerTaxIdentificationNumber()) {
-            $data['consumerTaxIdentificationNumber'] = $this->getConsumerTaxIdentificationNumber();
-        }
-
-        if ($this->getConsumerDriversLicenseNumber()) {
-            $data['consumerDriversLicenseNumber'] = $this->getConsumerDriversLicenseNumber();
-        }
-
-        // Alphabetic with a fixed length of 2 for US and CA, otherwise up to 40.
-        if ($this->getConsumerDriversLicenseState()) {
-            $data['consumerDriversLicenseState'] = $this->getConsumerDriversLicenseState();
-        }
-
-        // ISO 2-letter
-        if ($this->getConsumerDriversLicenseCountry()) {
-            $data['consumerDriversLicenseCountry'] = $this->getConsumerDriversLicenseCountry();
-        }
-
-        if ($card = $this->getCard()) {
-            if ($card->getEmail()) {
-                $data['consumerEmail'] = $card->getEmail();
-            }
-
-            // Foxed format YYYY-MM-DD
-            if ($card->getBirthday()) {
-                $data['consumerBirthDate'] = $card->getgetBirthday('Y-m-d');
-            }
-
-            // Billing details.
-
-            if ($card->getBillingFirstName()) {
-                $data['consumerBillingFirstname'] = $card->getBillingFirstName();
-            }
-
-            if ($card->getBillingLastName()) {
-                $data['consumerBillingLastname'] = $card->getBillingLastName();
-            }
-
-            if ($card->getBillingAddress1()) {
-                $data['consumerBillingAddress1'] = $card->getBillingAddress1();
-            }
-
-            if ($card->getBillingAddress2()) {
-                $data['consumerBillingAddress2'] = $card->getBillingAddress2();
-            }
-
-            if ($card->getBillingCity()) {
-                $data['consumerBillingCity'] = $card->getBillingCity();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getBillingState()) {
-                $data['consumerBillingState'] = $card->getBillingState();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getBillingCountry()) {
-                $data['consumerBillingCountry'] = $card->getBillingCountry();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getBillingPostcode()) {
-                $data['consumerBillingZipCode'] = $card->getBillingPostcode();
-            }
-
-            if ($card->getBillingPhone()) {
-                $data['consumerBillingPhone'] = $card->getBillingPhone();
-            }
-
-            if ($card->getBillingFax()) {
-                $data['consumerBillingFax'] = $card->getBillingFax();
-            }
-
-            // Shipping details.
-
-            if ($card->getShippingFirstName()) {
-                $data['consumerShippingFirstname'] = $card->getShippingFirstName();
-            }
-
-            if ($card->getShippingLastName()) {
-                $data['consumerShippingLastname'] = $card->getShippingLastName();
-            }
-
-            if ($card->getShippingAddress1()) {
-                $data['consumerShippingAddress1'] = $card->getShippingAddress1();
-            }
-
-            if ($card->getShippingAddress2()) {
-                $data['consumerShippingAddress2'] = $card->getShippingAddress2();
-            }
-
-            if ($card->getShippingCity()) {
-                $data['consumerShippingCity'] = $card->getShippingCity();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getShippingState()) {
-                $data['consumerShippingState'] = $card->getShippingState();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getShippingCountry()) {
-                $data['consumerShippingCountry'] = $card->getShippingCountry();
-            }
-
-            // Fixed length 2-letter string. Possibly US-only?
-            if ($card->getShippingPostcode()) {
-                $data['consumerShippingZipCode'] = $card->getShippingPostcode();
-            }
-
-            if ($card->getShippingPhone()) {
-                $data['consumerShippingPhone'] = $card->getShippingPhone();
-            }
-
-            if ($card->getShippingFax()) {
-                $data['consumerShippingFax'] = $card->getShippingFax();
-            }
-        }
+        // Get details about the consumer, email, address etc.
+        $data = array_merge($data, $this->getConsumerData());
 
         // Shopping basket items (with an extended basket for additional fields).
 
