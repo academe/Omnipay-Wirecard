@@ -6,9 +6,9 @@ namespace Omnipay\Wirecard\Message\Backend;
  * Wirecard Abstract Backend Request.
  */
 
-use Omnipay\Wirecard\Message\AbstractRequest as CommonAbstractRequest;
+use Omnipay\Wirecard\Message\AbstractRequest as MessageAbstractRequest;
 
-abstract class AbstractRequest extends CommonAbstractRequest
+abstract class AbstractRequest extends MessageAbstractRequest
 {
     /**
      * The backend (Page) command to send.

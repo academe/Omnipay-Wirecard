@@ -20,6 +20,19 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     use HasConstantListsTrait;
 
     /**
+     * SINGLE - a single, one-off transaction, not recurring.
+     * INITIAL - the first of a series of recurring transactions.
+     * RECUR - the next in a series of recurring transactions.
+     * FINAL - the final of a series of recurring transactions.
+     *
+     * Note that FINAL is not yet supported, so use RECUR in its place.
+     */
+    const TRANSACTION_IDENTIFIER_SINGLE     = 'SINGLE';
+    const TRANSACTION_IDENTIFIER_INITIAL    = 'INITIAL';
+    const TRANSACTION_IDENTIFIER_RECUR      = 'RECUR';
+    const TRANSACTION_IDENTIFIER_FINAL      = 'FINAL';
+
+    /**
      * Supported payment types.
      */
 

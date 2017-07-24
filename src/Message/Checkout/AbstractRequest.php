@@ -18,16 +18,6 @@ abstract class AbstractRequest extends MessageAbstractRequest
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';
 
-    /**
-     * SINGLE - a single, one-off transaction.
-     * INITIAL - the first of a series of recurring transactions.
-     *
-     * Move to trait CheckoutParametersTrait?
-     */
-    const TRANSACTION_IDENTIFIER_SINGLE = 'SINGLE';
-    const TRANSACTION_IDENTIFIER_INITIAL = 'INITIAL';
-    //const TRANSACTION_IDENTIFIER_RECUR = 'RECUR';
-
     const AUTO_DEPOSIT_YES = 'yes';
     const AUTO_DEPOSIT_NO = 'no';
 
