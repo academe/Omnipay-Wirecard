@@ -33,4 +33,57 @@ class CheckoutPageGatewayTest extends GatewayTestCase
             'transactionReference' => '????',
         ];
     }
+
+    /**
+     * Make sure we can instantiate each type of request.
+     */
+    public function testInstantiateRequest()
+    {
+        $this->gateway->initialize($this->options);
+
+        $request = $this->gateway->authorize();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->purchase();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->completeAuthorize();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->completePurchase();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->capture();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->voidCapture();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->voidAuthorize();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->refund();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->voidRefund();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->void();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->acceptNotification();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->createOrderNumber();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->createTransactionReference();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->getFinancialInstitutions();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->fetchTransaction();
+        $this->assertSame('D200001', $request->getCustomerId());
+    }
 }

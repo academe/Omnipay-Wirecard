@@ -9,7 +9,7 @@ namespace Omnipay\Wirecard\Message\Backend\Page;
 
 use Omnipay\Wirecard\Message\Backend\AbstractRequest;
 
-class VoidAuthoriseRequest extends AbstractRequest
+class VoidAuthorizeRequest extends AbstractRequest
 {
     /**
      * The backend command to send.
