@@ -7,7 +7,6 @@ namespace Omnipay\Wirecard\Message\Backend;
  */
 
 use Omnipay\Wirecard\Message\AbstractRequest as CommonAbstractRequest;
-//use Omnipay\Wirecard\Message\BackendResponse;
 
 abstract class AbstractRequest extends CommonAbstractRequest
 {
