@@ -6,14 +6,13 @@ namespace Omnipay\Wirecard\Message\Checkout;
  * Purchase, shared methods for Checkout Page and Checkout Seamless.
  */
 
-use Omnipay\Wirecard\Traits\CheckoutParametersTrait;
 use Omnipay\Wirecard\AbstractShopGateway;
 use Omnipay\Wirecard\Message\AbstractRequest as MessageAbstractRequest;
 
 abstract class AbstractRequest extends MessageAbstractRequest
 {
     // Custom parameters implemented for the Checkout APIs.
-    use CheckoutParametersTrait;
+    use ParametersTrait;
 
     const DUPLICATE_REQUEST_CHECK_YES = 'yes';
     const DUPLICATE_REQUEST_CHECK_NO = 'no';

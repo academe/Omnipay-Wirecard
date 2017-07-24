@@ -6,13 +6,12 @@ namespace Omnipay\Wirecard\Message\Checkout\Page;
  * Wirecard Checkout Page Purchase.
  */
 
-use Omnipay\Wirecard\Traits\CheckoutPageParametersTrait;
 use Omnipay\Wirecard\Message\Checkout\AbstractRequest;
 
 class PurchaseRequest extends AbstractRequest
 {
     // Custom parameters implemented for the Checkout Page API.
-    use CheckoutPageParametersTrait;
+    use ParametersTrait;
 
     /**
      * Automatically capture the authorised amount at the end of the day.

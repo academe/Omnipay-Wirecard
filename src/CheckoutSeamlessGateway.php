@@ -6,17 +6,17 @@ namespace Omnipay\Wirecard;
  * Wirecard Checkout Seamless driver for Omnipay
  */
 
-use Omnipay\Wirecard\Traits\CheckoutSeamlessParametersTrait;
+use Omnipay\Wirecard\Message\Checkout\Seamless\ParametersTrait as SeamlessParametersTrait;
+use Omnipay\Wirecard\Message\Checkout\ParametersTrait;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Wirecard\Traits\CheckoutParametersTrait;
 
 class CheckoutSeamlessGateway extends AbstractGateway
 {
     // Custom parameters implemented for the Checkout APIs.
-    use CheckoutParametersTrait;
+    use ParametersTrait;
 
     // Custom parameters implemented for the Checkout Seamless API.
-    use CheckoutSeamlessParametersTrait;
+    use SeamlessParametersTrait;
 
     /**
      * The common name for this gateway driver API.

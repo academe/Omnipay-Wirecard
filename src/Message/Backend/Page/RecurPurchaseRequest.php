@@ -12,10 +12,10 @@ namespace Omnipay\Wirecard\Message\Backend\Page;
  * 2. A recuring authorisation can be taken up to 400 days after the initial auth.
  * 3. The intitial auth (or payment) must have a transactionIdentifier of INITIAL.
  * 4. This recur transaction can have a transactionIdentifier of SINGLE, INITIAL,
- *    RECUR or FINAL.
+ *    RECUR or FINAL.-
  * 5. The authorisation created this way must be captured for payment to be made, or
- *    the BackendPageRecurPurchaseRequest can be used to automatically request a
- *    capture at day-end clearing.
+ *    the RecurPurchaseRequest can be used to automatically request a capture at
+ *    day-end clearing.
  *
  * Although not affecting use, it should be noted that the signature must be created
  * by fields in a specific order. The front end and page transaction can use any order

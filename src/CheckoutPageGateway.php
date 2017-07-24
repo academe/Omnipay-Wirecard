@@ -6,17 +6,17 @@ namespace Omnipay\Wirecard;
  * Wirecard Checkout Page driver for Omnipay
  */
 
-use Omnipay\Wirecard\Traits\CheckoutPageParametersTrait;
+use Omnipay\Wirecard\Message\Checkout\Page\ParametersTrait as PageParametersTrait;
+use Omnipay\Wirecard\Message\Checkout\ParametersTrait;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Wirecard\Traits\CheckoutParametersTrait;
 
 class CheckoutPageGateway extends AbstractGateway
 {
     // Custom parameters implemented for the Checkout APIs.
-    use CheckoutParametersTrait;
+    use ParametersTrait;
 
     // Custom parameters implemented for the Checkout Page API.
-    use CheckoutPageParametersTrait;
+    use PageParametersTrait;
 
     /**
      * The common name for this gateway driver API.

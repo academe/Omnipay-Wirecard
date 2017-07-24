@@ -6,13 +6,12 @@ namespace Omnipay\Wirecard\Message\Checkout\Seamless;
  * Wirecard Checkout Seamless Purchase.
  */
 
-use Omnipay\Wirecard\Traits\CheckoutSeamlessParametersTrait;
 use Omnipay\Wirecard\Message\Checkout\AbstractRequest;
 
 class PurchaseRequest extends AbstractRequest
 {
     // Custom parameters implemented for the Checkout Seamless API.
-    use CheckoutSeamlessParametersTrait;
+    use ParametersTrait;
 
     /**
      *

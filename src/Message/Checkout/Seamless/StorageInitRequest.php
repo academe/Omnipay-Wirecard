@@ -8,13 +8,12 @@ namespace Omnipay\Wirecard\Message\Checkout\Seamless;
  * Only a subset og payment methods require the data storage to be initialised.
  */
 
-use Omnipay\Wirecard\Traits\CheckoutSeamlessParametersTrait;
 use Omnipay\Wirecard\Message\Checkout\AbstractRequest as CheckoutAbstractRequest;
 
 class StorageInitRequest extends CheckoutAbstractRequest
 {
     // Custom parameters implemented for the Checkout Seamless API.
-    use CheckoutSeamlessParametersTrait;
+    use ParametersTrait;
 
     // The data storage initialisation endpoi8nt URL.
     protected $endpoint = 'https://checkout.wirecard.com/seamless/dataStorage/init';

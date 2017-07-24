@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Wirecard\Traits;
+namespace Omnipay\Wirecard\Message\Checkout;
 
 /**
  * Manage parameters shared betweem the gateway and the message levels.
@@ -9,7 +9,7 @@ namespace Omnipay\Wirecard\Traits;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 
-trait CheckoutParametersTrait
+trait ParametersTrait
 {
     /**
      * URL of your online shop where your information page regarding
