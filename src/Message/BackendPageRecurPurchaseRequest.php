@@ -163,7 +163,7 @@ class BackendPageRecurPurchaseRequest extends AbstractBackendRequest
         $field_order = array_merge($this->base_fingerprint_field_order, $this->additional_fingerprint_field_order);
 
         $fingerprint_fields = [];
-        foreach($field_order as $field_name) {
+        foreach ($field_order as $field_name) {
             if (array_key_exists($field_name, $data)) {
                 $fingerprint_fields[$field_name] = $data[$field_name];
             }
