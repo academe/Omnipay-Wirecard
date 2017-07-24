@@ -23,12 +23,14 @@ Table of Contents
          * [Page Capture Request](#page-capture-request)
          * [Page Refund Request](#page-refund-request)
          * [Complete Purchase/Authorize](#complete-purchaseauthorize)
+         * [Page Recur Authorize/Purchase Request](#page-recur-authorizepurchase-request)
          * [Notification Handler](#notification-handler)
       * [Wirecard Checkout Seamless](#wirecard-checkout-seamless)
          * [Seamless Demo Mode Credentials](#seamless-demo-mode-credentials)
          * [Seamless Test Mode Credentials](#seamless-test-mode-credentials)
          * [Initialise the Data Store](#initialise-the-data-store)
       * [Extended ItemBag Items](#extended-itembag-items)
+   * [TODO Backend Features](#todo-backend-features)
 
 # Omnipay-Wirecard
 
