@@ -1,16 +1,16 @@
 <?php
 
-namespace Omnipay\Wirecard\Message;
+namespace Omnipay\Wirecard\Message\Checkout\Page;
 
 use Omnipay\Tests\TestCase;
 
-class CheckoutPageAuthorizeRequestTest extends TestCase
+class PurchaseRequestTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->request = new CheckoutPageAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
         $this->request->initialize(
             array(

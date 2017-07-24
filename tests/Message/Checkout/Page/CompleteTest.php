@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\Wirecard\Message;
+namespace Omnipay\Wirecard\Message\Checkout\Page;
 
 use Omnipay\Tests\TestCase;
 use Mockery;
 
-class CheckoutPageCompleteTest extends TestCase
+class CompleteTest extends TestCase
 {
     /**
      *
@@ -42,7 +42,7 @@ class CheckoutPageCompleteTest extends TestCase
             )
         );
 
-        $request = new CheckoutPageComplete($this->getHttpClient(), $httpRequest);
+        $request = new Complete($this->getHttpClient(), $httpRequest);
 
         // This secret is needed to validate the transaction.
         $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
@@ -80,7 +80,7 @@ class CheckoutPageCompleteTest extends TestCase
             )
         );
 
-        $request = new CheckoutPageComplete($this->getHttpClient(), $httpRequest);
+        $request = new Complete($this->getHttpClient(), $httpRequest);
 
         // This secret is needed to validate the transaction.
         // However, the timeout does not have a fingerprint.
@@ -117,7 +117,7 @@ class CheckoutPageCompleteTest extends TestCase
             )
         );
 
-        $request = new CheckoutPageComplete($this->getHttpClient(), $httpRequest);
+        $request = new Complete($this->getHttpClient(), $httpRequest);
 
         // This secret is needed to validate the transaction.
         $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
