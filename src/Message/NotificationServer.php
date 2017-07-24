@@ -18,8 +18,9 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\Wirecard\Message\Checkout\Page\Complete;
 
-class NotificationServer extends CheckoutPageComplete implements NotificationInterface
+class NotificationServer extends Complete implements NotificationInterface
 {
     /**
      * Translate the Wirecard status values to OmniPay status values.
