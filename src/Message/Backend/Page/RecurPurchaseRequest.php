@@ -129,22 +129,28 @@ class RecurPurchaseRequest extends AbstractRequest
         $data = array_merge($data, $this->getConsumerData());
 
         // Source orders based on SEPA Direct Debit
-        //mandateId mandateSignatureDate transactionIdentifier
+        if ($mandateId = $this->getMandateId()) {
+            $data['mandateId'] = $mandateId;
+        }
+        if ($mandateSignatureDate = $this->getMandateSignatureDate()) {
+            $data['mandateSignatureDate'] = $mandateSignatureDate;
+        }
         if ($transactionIdentifier = $this->getTransactionIdentifier()) {
             $data['transactionIdentifier'] = $transactionIdentifier;
         }
 
         // Only for Wirecard Bank as acquirer
-        // creditorId dueDate
-
-        // Source orders based on PayPal
-        // transactionIdentifier
+        if ($creditorId = $this->getCreditorId()) {
+            $data['creditorId'] = $creditorId;
+        }
+        if ($dueDate = $this->getDueDate()) {
+            $data['dueDate'] = $dueDate;
+        }
 
         // SEPA Direct Debit for source orders based on SOFORT
-        // useIbanBic transactionIdentifier
-
-        // For Computop as acquirer
-        // transactionIdentifier
+        if ($useIbanBic = $this->getUseIbanBic()) {
+            $data['useIbanBic'] = $useIbanBic;
+        }
 
         return $data;
     }
@@ -192,6 +198,8 @@ class RecurPurchaseRequest extends AbstractRequest
     }
 
     /**
+     * Source orders based on PayPal, or SEPA Direct Debit for source orders
+     * based on SOFORT or for Computop as acquirer
      * Values: AbstractCheckoutRequest::TRANSACTION_IDENTIFIER_SINGLE
      * or AbstractCheckoutRequest::TRANSACTION_IDENTIFIER_INITIAL
      */
@@ -203,5 +211,89 @@ class RecurPurchaseRequest extends AbstractRequest
     public function getTransactionIdentifier()
     {
         return $this->getParameter('transactionIdentifier');
+    }
+
+    /**
+     * Source orders based on SEPA Direct Debit (all acquirers)
+     * Identifier of mandate.
+     * Alphanumeric with a variable length of up to 35 characters.
+     */
+    public function setMandateId($value)
+    {
+        return $this->setParameter('mandateId', $value);
+    }
+
+    public function getMandateId()
+    {
+        return $this->getParameter('mandateId');
+    }
+
+    /**
+     * Source orders based on SEPA Direct Debit (all acquirers)
+     * Date when mandate was signed by the consumer.
+     * Date as DD.MM.YYYY
+     */
+    public function setMandateSignatureDate($value)
+    {
+        return $this->setParameter('mandateSignatureDate', $value);
+    }
+
+    public function getMandateSignatureDate()
+    {
+        return $this->getParameter('mandateSignatureDate');
+    }
+
+    /**
+     * Source orders based on SEPA Direct Debit (Only for Wirecard Bank as acquirer)
+     * Unique identifier of creditor.
+     * Alphanumeric with a variable length of up to 35 characters.
+     */
+    public function setCreditorId($value)
+    {
+        return $this->setParameter('creditorId', $value);
+    }
+
+    public function getCreditorId()
+    {
+        return $this->getParameter('creditorId');
+    }
+
+    /**
+     * Source orders based on SEPA Direct Debit (Only for Wirecard Bank as acquirer)
+     * Date when payment is debited from consumer's bank account.
+     * Date as DD.MM.YYYY
+     */
+    public function setDueDate($value)
+    {
+        return $this->setParameter('dueDate', $value);
+    }
+
+    public function getDueDate()
+    {
+        return $this->getParameter('dueDate');
+    }
+
+    /**
+     * Source orders based on SEPA Direct Debit (Only for Wirecard Bank as acquirer)
+     * Possible values are Yes or No.
+     */
+    public function setUseIbanBic($value)
+    {
+        return $this->setParameter('useIbanBic', $value);
+    }
+
+    public function getUseIbanBic()
+    {
+        $useIbanBic = $this->getParameter('useIbanBic');
+
+        if ($useIbanBic == null) {
+            return $useIbanBic;
+        }
+
+        if (is_string($useIbanBic)) {
+            return strtolower($useIbanBic) == 'yes' ? 'yes' : 'no';
+        }
+
+        return (bool)$useIbanBic ? 'yes' : 'no';
     }
 }

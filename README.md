@@ -371,6 +371,30 @@ $complete_purchase_response = $complete_purchase_request->send();
 // $complete_purchase_response == $complete_purchase_request // true
 ```
 
+### Page Recur Authorize/Purchase Request
+
+A new authorisation or purchase can be created from an existing order.
+
+```php
+$request = $gateway->recurPurchase([
+    'amount' => 3.10,
+    'currency' => 'GBP',
+    'description' => 'A recuring payment',
+    'sourceOrderNumber' => $originalTransactionReference,
+]);
+
+$response = $request->send();
+
+$new_order_number = $response->getOrderReference();
+```
+
+This is a backend operation, though takes many parameters that are otherwise
+only available to the front end authorise or purchase, for example billing and
+shipping details.
+See the
+[Wirecard documentation](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment)
+for details on other parameters that can be used and are available in the response.
+
 ### Notification Handler
 
 The back-channel notification handler is know as the "confirm" request in

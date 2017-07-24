@@ -216,14 +216,49 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Command: createOrderNumber
-     * The orderNumber reserved for a new transaction.
+     * Command: createOrderNumber, recurPayment
+     * The orderNumber reserved for a new transaction, or the order number
+     * for a recurring payment.
      *
      * @return int Numeric with a variable length of up to 9 digits.
      */
     public function getOrderNumber()
     {
         return $this->getDataValue('orderNumber');
+    }
+
+    //
+    // The following three parameters for SEPA Direct Debit only.
+    //
+
+    /**
+     * Command: recurPayment
+     *
+     * @return string Date when payment is debited from consumer's bank account, "DD.MM.YYYY" format.
+     */
+    public function getDueDate()
+    {
+        return $this->getDataValue('dueDate');
+    }
+
+    /**
+     * Command: recurPayment
+     *
+     * @return string Identifier of displayed mandate. Alphanumeric with a variable length of up to 35 characters.
+     */
+    public function getMandateId()
+    {
+        return $this->getDataValue('mandateId');
+    }
+
+    /**
+     * Command: recurPayment
+     *
+     * @return string Date when the mandate was signed by the consumer, "DD.MM.YYYY" format.
+     */
+    public function getMandateSignatureDate()
+    {
+        return $this->getDataValue('mandateSignatureDate');
     }
 
     //
