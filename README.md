@@ -376,6 +376,7 @@ $complete_purchase_response = $complete_purchase_request->send();
 A new authorisation or purchase can be created from an existing order.
 
 ```php
+// or $gateway->recurAuthorize([...])
 $request = $gateway->recurPurchase([
     'amount' => 3.10,
     'currency' => 'GBP',
@@ -385,6 +386,7 @@ $request = $gateway->recurPurchase([
 
 $response = $request->send();
 
+// The order reference is needed to capture the pament if just authorizing.
 $new_order_number = $response->getOrderReference();
 ```
 
