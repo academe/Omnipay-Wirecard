@@ -11,8 +11,8 @@ namespace Omnipay\Wirecard\Message\Backend\Page;
  *    account or card. Use voidAuthorise on the original authorisation to do this.
  * 2. A recuring authorisation can be taken up to 400 days after the initial auth.
  * 3. The intitial auth (or payment) must have a transactionIdentifier of INITIAL.
- * 4. This recur transactino can have a transactionIdentifier of INITIAL, SINGLE or
- *    RECUR.
+ * 4. This recur transaction can have a transactionIdentifier of SINGLE, INITIAL,
+ *    RECUR or FINAL.
  * 5. The authorisation created this way must be captured for payment to be made, or
  *    the BackendPageRecurPurchaseRequest can be used to automatically request a
  *    capture at day-end clearing.
@@ -200,8 +200,7 @@ class RecurPurchaseRequest extends AbstractRequest
     /**
      * Source orders based on PayPal, or SEPA Direct Debit for source orders
      * based on SOFORT or for Computop as acquirer
-     * Values: AbstractCheckoutRequest::TRANSACTION_IDENTIFIER_SINGLE
-     * or AbstractCheckoutRequest::TRANSACTION_IDENTIFIER_INITIAL
+     * Values: static::TRANSACTION_IDENTIFIER_*
      */
     public function setTransactionIdentifier($value)
     {
