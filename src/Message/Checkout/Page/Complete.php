@@ -15,9 +15,11 @@ namespace Omnipay\Wirecard\Message\Checkout\Page;
  */
 
 use Omnipay\Common\Message\ResponseInterface as OmnipayResponseInterface;
-use Omnipay\Wirecard\Message\AbstractRequest as MessageAbstractRequest;
+use Omnipay\Wirecard\Message\Checkout\AbstractRequest;
+use Omnipay\Wirecard\Message\AbstractResponse;
+use Omnipay\Wirecard\Message\HasDataTrait;
 
-class Complete extends MessageAbstractRequest implements OmnipayResponseInterface
+class Complete extends AbstractRequest implements OmnipayResponseInterface
 {
     // Helper functions for accessing the data values
     use HasDataTrait;
@@ -80,7 +82,7 @@ class Complete extends MessageAbstractRequest implements OmnipayResponseInterfac
      */
     public function getTransactionId()
     {
-        return $this->getDataValue(AbstractCheckoutRequest::CUSTOM_FIELD_NAME_TRANSACTION_ID);
+        return $this->getDataValue(AbstractRequest::CUSTOM_FIELD_NAME_TRANSACTION_ID);
     }
 
     /**
