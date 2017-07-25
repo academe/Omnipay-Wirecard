@@ -29,8 +29,9 @@ Table of Contents
          * [Seamless Demo Mode Credentials](#seamless-demo-mode-credentials)
          * [Seamless Test Mode Credentials](#seamless-test-mode-credentials)
          * [Initialise the Data Store](#initialise-the-data-store)
+      * [Note About Order Numbers](#note-about-order-numbers)
       * [Extended ItemBag Items](#extended-itembag-items)
-   * [TODO Backend Features](#todo-backend-features)
+   * [Backend Features Implemented](#backend-features-implemented)
 
 # Omnipay-Wirecard
 
@@ -38,14 +39,15 @@ Wirecard payment gateway driver for the Omnipay framework.
 
 ## Gateway APIs Supported
 
-Just Wirecard *Checkout Page* is supported for now,
-which includes most *Checkout Page Backend* operations to support the front end.
+Both Wirecard *Checkout Page* and *Checkout Seamless* is supported.
 
-This *Checkout Page* offers a payment page hosted by the gateway,
+The *Checkout Page* offers a payment page hosted by the gateway, that
 can be partially customised, and that can either be shown in an iframe
 or navigated to as the top window.
 
-Wirecard *Checkout Seamless* is as complete as *Checkout Page* but needs some documentation.
+Wirecard *Checkout Seamless* allows a site to use its own form, but avoid
+having the credit card details sent to the site by using AJAX to send them
+directly to the gateway.
 
 ## Why This Package
 
@@ -444,7 +446,7 @@ It works like this:
 
 Note that there are a dozen or so payment methods that can be used,
 and not all need to use the secure storage.
-All will involve a redieect, either to a third-party financial service, or to the
+All will involve a redirect, either to a third-party financial service, or to the
 Wirecard gateway.
 
 If the data sent via AJAX is malformed or invalid, for example a past expiry date
@@ -504,7 +506,161 @@ Demo mode and test mode credentials
 
 ### Initialise the Data Store
 
-TODO details and example
+*Checkout Seamless* works by providing a temporary store for credit card details
+at the gateway. The details entered by the user are sent directly to that store
+and do not reach the merchant site.
+
+The process for using *Checkout Seamless* is described below.
+
+First a store for teh credit card details must be initialised. The store will
+have a unique ID and will be available for up to 30 minutes before it expires.
+
+```php
+$gateway = Omnipay\Omnipay::create('Wirecard_CheckoutSeamless');
+
+$gateway->intitialize([
+    'customerId' => 'D200411',
+    'shopId' => 'seamless',
+    'secret' => 'CHCSH7UGHVVX2P7EHDHSY4T2S4CGYK4QBE4M5YUUG2ND5BEZWNRZW5EJYVJQ',
+    'toolkitPassword' => '2g4f9q2m',
+    ...
+]);
+
+$request = $gateway->storageInit([
+    'paymentMethod' => 'CCARD',
+    'returnUrl' => $returnUrl,
+    'transactionId' => $merchantTransactionId,
+]);
+
+$response = $request->send();
+
+// The storageId will be needed by the front end JS library, and also
+// when submitting the order at the back end.
+$response->getStorageId();
+```
+
+Note that not all payment methods require the use of remove storage.
+Those that do not, will not return a storageId.
+
+This is the initialising JavaScript needed in the page:
+
+```javascript
+<script src="{url}" type="text/javascript"></script>
+<script type="text/javascript">
+    var dataStorage = new WirecardCEE_DataStorage();
+    var paymentInformation = {};
+</script>
+```
+
+Where {url} is given by `$response->getJavascriptUrl()`
+
+This is where the credit card details need to be copied to:
+
+```javascript
+<script type="text/javascript">
+    paymentInformation.pan = '5500000000000012';
+    paymentInformation.expirationMonth = '01';
+    paymentInformation.expirationYear = '2019';
+    paymentInformation.cardholdername = 'John Doe';
+    paymentInformation.cardverifycode = '012';
+</script>
+```
+
+The above are the gatewat test credit card details. How you get these details from
+your credit form into this object is up to you.
+
+The callback function to store the credit card details will look something like below.
+This will be invoked when the credit card details are sent to storage, after the user
+submits their payment form. It can be used to capture anonymised details for the
+credit card, or a list of errors that may have occurred while trying to save.
+
+```javascript
+callbackFunction = function(aResponse) {
+    // checks if response status is without errors
+    if (aResponse.getStatus() == 0) {
+        // Gets all anonymized payment information to a JavaScript object
+        var info = aResponse.getAnonymizedPaymentInformation();
+
+        // Each anonymised field is in info.{name}
+        // where a list of {name} strings is supplied by
+        // $response->getStorageFieldsAnonymous(), a list which will vary
+        // depending on the payment type.
+    } else {
+        // Collects all occurred errors and add them to the result string
+        var errors = aResponse.getErrors();
+        for (e in errors) {
+            // Here you have errors[e].errorCode, errors[e].message and
+            // errors[e].consumerMessage to display to the user and/or send
+            / back to the merchant site.
+        }
+    }
+}
+```
+
+When the payment form is submitted, and the card details are copied to
+the `paymentInformation` object, store the details like this:
+
+```javascript
+dataStorage.{storageFunction}(paymentInformation, callbackFunction);
+```
+
+Where {storageFunction} is given by `$response->getDataStorageStoreFunctionName()`.
+
+On final submission to the merchant site, the site checks if the storage returned
+anonymised card details or a list of errors.
+
+You can then make the payment in the usual way:
+
+```php
+$request = $gateway->purchase([
+    'paymentMethod' => 'CCARD',
+    'transactionId' => $merchantTransactionId,
+    'amount' => 3.10,
+    'currency' => 'EUR',
+    'description' => 'A required description',
+    'returnUrl' => $merchantSiteReturnUrl,
+    'notifyUrl' => $merchantSiteNotifyUrl,
+    'storageId' => $storageId, // This is the key to where the CC details are stored.
+    ...
+]);
+
+$response = $request->send();
+```
+
+The response is then handled in the same way as described in the *Checkout Page*
+instructions, which may or may not involve a 3D Secure redirect.
+
+## Note About Order Numbers
+
+A transaction on the gateway is uniquely identified *within an account* by a numeric
+seven-digit value. The order number will be generated on the creation of a transaction,
+or it can be generated in advance if that helps the merchant site processes.
+
+To generate, i.e. reservce in advance, an order number, use this method:
+
+```php
+$response = $gateway->createOrderNumber()->send();
+$orderNumber = $response->getOrderNumber();
+
+// This is aliased in more Omnipay terms:
+$transactionReference = $response->getTransactionReference();
+```
+
+Then when creating an authorisation or payment, send this order number (or
+transactionReference) with the transaction request:
+
+```php
+$request = $gateway->purchase([
+    'transactionReference' => $transactionReference,
+    ...
+]);
+```
+
+So you give the gateway the `transactionReference` to use, but it must be one
+you have already reserved with the gateway. Each can only be used once, may or
+may not be sequential, and are unique to your account (customerId) only.
+The order number range is shared with credit notes (refunds) and payment numbers.
+Once reserved, there is no specified expiry time for an orderNumber.
 
 ## Extended ItemBag Items
 
@@ -532,7 +688,7 @@ $item = new Omnipay\Wirecard\Extend\Item([
 ]);
 ```
 
-# TODO Backend Features
+# Backend Features Implemented
 
 This is the coplete list of transaction-based operations.
 As each is implemented, the details will bw added to the table.
@@ -546,7 +702,7 @@ variation in endpoints and a single internal parameter.
 | [deposit](https://guides.wirecard.at/back-end_operations:transaction-based:deposit) | capture | *CaptureRequest |
 | [depositReversal](https://guides.wirecard.at/back-end_operations:transaction-based:depositreversal) | void | *VoidCaptureRequest |
 | [getOrderDetails](https://guides.wirecard.at/back-end_operations:transaction-based:getorderdetails) | n/a | *FetchTransactionRequest |
-| [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | n/a | --- |
+| [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | n/a | *RecurAuthorizeRequest |
 | [refund](https://guides.wirecard.at/back-end_operations:transaction-based:refund) | refund | *RefundRequest |
 | [refundReversal](https://guides.wirecard.at/back-end_operations:transaction-based:refundreversal) | n/a | *VoidRefundRequest |
 | [transferFund](https://guides.wirecard.at/back-end_operations:transaction-based:transferfund) | n/a | --- |

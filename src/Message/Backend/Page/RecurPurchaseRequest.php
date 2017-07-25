@@ -168,7 +168,14 @@ class RecurPurchaseRequest extends AbstractRequest
 
         // Calculate and add the fingerprint, calculated using the specific
         // fields in the specific order.
-        $field_order = array_merge($this->base_fingerprint_field_order, $this->additional_fingerprint_field_order);
+        // Unlike other backend functions, this one does not include ALL the
+        // fields in the fingerprint - only a subset. The subset varies depending on
+        // whether this is a Page or Seamless API being used.
+
+        $field_order = array_merge(
+            $this->base_fingerprint_field_order,
+            $this->additional_fingerprint_field_order
+        );
 
         $fingerprint_fields = [];
         foreach ($field_order as $field_name) {
