@@ -566,15 +566,18 @@ This is where the credit card details need to be copied to:
 </script>
 ```
 
-The above are the gatewat test credit card details. How you get these details from
-your credit form into this object is up to you.
+Shown above are the gateway test credit card details. How you get these details from
+your credit form into this object is up to you, but will involve JavaScript of
+some sort.
 
-The callback function to store the credit card details will look something like below.
+The callback function get the result from storing the credit card details will look
+something like show below.
 This will be invoked when the credit card details are sent to storage, after the user
 submits their payment form. It can be used to capture anonymised details for the
-credit card, or a list of errors that may have occurred while trying to save.
+credit card, or a list of errors that may have occurred while trying to store.
 
 ```javascript
+<script type="text/javascript">
 callbackFunction = function(aResponse) {
     // checks if response status is without errors
     if (aResponse.getStatus() == 0) {
@@ -595,13 +598,16 @@ callbackFunction = function(aResponse) {
         }
     }
 }
+</script>
 ```
 
 When the payment form is submitted, and the card details are copied to
 the `paymentInformation` object, store the details like this:
 
 ```javascript
+<script type="text/javascript">
 dataStorage.{storageFunction}(paymentInformation, callbackFunction);
+</script>
 ```
 
 Where {storageFunction} is given by `$response->getDataStorageStoreFunctionName()`.
@@ -690,8 +696,7 @@ $item = new Omnipay\Wirecard\Extend\Item([
 
 # Backend Features Implemented
 
-This is the coplete list of transaction-based operations.
-As each is implemented, the details will bw added to the table.
+This is the complete list of transaction-based operations.
 The backend feactures are all available for both the *Seamless* and the *Page* variations on
 the gateway, and both variations work the same way for the merchant site, just with a slight
 variation in endpoints and a single internal parameter.
@@ -705,5 +710,5 @@ variation in endpoints and a single internal parameter.
 | [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | n/a | *RecurAuthorizeRequest |
 | [refund](https://guides.wirecard.at/back-end_operations:transaction-based:refund) | refund | *RefundRequest |
 | [refundReversal](https://guides.wirecard.at/back-end_operations:transaction-based:refundreversal) | n/a | *VoidRefundRequest |
-| [transferFund](https://guides.wirecard.at/back-end_operations:transaction-based:transferfund) | n/a | --- |
+| [transferFund](https://guides.wirecard.at/back-end_operations:transaction-based:transferfund) | n/a | TODO |
 
