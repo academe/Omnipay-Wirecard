@@ -48,12 +48,34 @@ class CheckoutPageGateway extends AbstractGateway
     }
 
     /**
+     * The recur authorize transaction.
+     */
+    public function recurAuthorize(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\Backend\Page\RecurAuthorizeRequest',
+            $parameters
+        );
+    }
+
+    /**
      * The purchase transaction.
      */
     public function purchase(array $parameters = array())
     {
         return $this->createRequest(
             '\Omnipay\Wirecard\Message\Checkout\Page\PurchaseRequest',
+            $parameters
+        );
+    }
+
+    /**
+     * The recur purchase transaction.
+     */
+    public function recurPurchase(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\Backend\Page\RecurPurchaseRequest',
             $parameters
         );
     }

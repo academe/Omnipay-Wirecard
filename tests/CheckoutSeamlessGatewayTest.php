@@ -85,5 +85,11 @@ class CheckoutSeamlessGatewayTest extends GatewayTestCase
 
         $request = $this->gateway->fetchTransaction();
         $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->recurPurchase();
+        $this->assertSame('D200001', $request->getCustomerId());
+
+        $request = $this->gateway->recurAuthorize();
+        $this->assertSame('D200001', $request->getCustomerId());
     }
 }

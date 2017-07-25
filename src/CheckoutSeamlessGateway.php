@@ -48,6 +48,17 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
+     * The recur authorize transaction.
+     */
+    public function recurAuthorize(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\Wirecard\Message\Backend\Seamless\RecurAuthorizeRequest',
+            $parameters
+        );
+    }
+
+    /**
      * The purchase transaction.
      */
     public function purchase(array $parameters = array())

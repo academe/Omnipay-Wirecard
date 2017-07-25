@@ -4,7 +4,6 @@ namespace Omnipay\Wirecard\Message\Backend\Seamless;
 
 /**
  * Wirecard Seamless Recur Payment Request.
- * Cancel an authorised payment completely.
  */
 
 use Omnipay\Wirecard\Message\Backend\Page\RecurPurchaseRequest as PageRecurPurchaseRequest;
