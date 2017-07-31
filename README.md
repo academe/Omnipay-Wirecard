@@ -640,9 +640,9 @@ instructions, which may or may not involve a 3D Secure redirect.
 
 A transaction on the gateway is uniquely identified *within an account* by a numeric
 seven-digit value. The order number will be generated on the creation of a transaction,
-or it can be generated in advance if that helps the merchant site processes.
+or it can be generated in advance if that helps the merchant site workflow.
 
-To generate, i.e. reservce in advance, an order number, use this method:
+To generate, i.e. reserve in advance, an order number, use this method:
 
 ```php
 $response = $gateway->createOrderNumber()->send();

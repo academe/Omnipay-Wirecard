@@ -7,13 +7,14 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\Wirecard\CommonParametersTrait;
 use Omnipay\Wirecard\Extend\ItemInterface;
 use Omnipay\Common\ItemBag;
 
 abstract class AbstractRequest extends OmnipayAbstractRequest
 {
     // Shared gateway/message properties.
-    use ParametersTrait;
+    use CommonParametersTrait;
 
     // Access to the constants as lists.
     use HasConstantListsTrait;

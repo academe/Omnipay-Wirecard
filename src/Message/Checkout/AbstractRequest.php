@@ -20,7 +20,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
     const AUTO_DEPOSIT_YES = 'yes';
     const AUTO_DEPOSIT_NO = 'no';
 
-    // The name of the custom field the transacton ID will go into.
+    // The name of the custom field the transaction ID will go into.
     const CUSTOM_FIELD_NAME_TRANSACTION_ID = 'omnipay_transactionId';
 
     /**
@@ -87,6 +87,23 @@ abstract class AbstractRequest extends MessageAbstractRequest
     public function getRiskConfigAlias()
     {
         return $this->getParameter('riskConfigAlias');
+    }
+
+    /**
+     * Set all custom parameters.
+     * There are no checks on the validity or format of the custom parameter
+     * names or values here. Just use as needed.
+     *
+     * @param array $value All custom parameters as key/value pairs.
+     */
+    public function setCustomParameters(array $value)
+    {
+        return $this->setParameter('customParameters', $value);
+    }
+
+    public function getCustomParameters()
+    {
+        return $this->getParameter('customParameters');
     }
 
     /**
@@ -241,15 +258,19 @@ abstract class AbstractRequest extends MessageAbstractRequest
             $data['riskConfigAlias'] = $this->getRiskConfigAlias();
         }
 
-        // TODO: Custom fields (probably a collection of names and values).
-        // It looks like custom fields are the only reliable way to tie back
-        // the back-channel notifications to the transaction in storage.
-        // We may need to create a predefined custom field for the
-        // transactionId, so the notification handler knows where to find it.
-
+        // It looks like custom fields are the only reliable way to tie
+        // the notifications in the back-channel to the transaction in storage.
         // Put the transaction ID into a custom field.
+
         if ($this->getTransactionId()) {
             $data[static::CUSTOM_FIELD_NAME_TRANSACTION_ID] = $this->getTransactionId();
+        }
+
+        // Additional custom parameters have been provided.
+        if ($customParameters = $this->getCustomParameters()) {
+            foreach($customParameters as $name => $value) {
+                $data[$name] = $value;
+            }
         }
 
         return $data;
