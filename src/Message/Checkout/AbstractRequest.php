@@ -268,7 +268,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
 
         // Additional custom parameters have been provided.
         if ($customParameters = $this->getCustomParameters()) {
-            foreach($customParameters as $name => $value) {
+            foreach ($customParameters as $name => $value) {
                 $data[$name] = $value;
             }
         }
