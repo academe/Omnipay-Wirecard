@@ -536,7 +536,7 @@ $response = $request->send();
 
 // The storageId will be needed by the front end JS library, and also
 // when submitting the order at the back end.
-$response->getStorageId();
+$storageId = $response->getStorageId();
 ```
 
 Note that not all payment methods require the use of remove storage.
@@ -552,9 +552,11 @@ This is the initialising JavaScript needed in the page:
 </script>
 ```
 
-Where {url} is given by `$response->getJavascriptUrl()`
+Where {url} is given by `$response->getJavascriptUrl()`. Note that the storageId will
+be encoded into this URL, so does not need to be listed as a parameter anywhere else
+in the JavaScript code.
 
-This is where the credit card details need to be copied to:
+This is where the credit card details need to be copied to in the front end:
 
 ```javascript
 <script type="text/javascript">
@@ -567,7 +569,7 @@ This is where the credit card details need to be copied to:
 ```
 
 Shown above are the gateway test credit card details. How you get these details from
-your credit form into this object is up to you, but will involve JavaScript of
+your credit card form into this object is up to you, but will involve JavaScript of
 some sort.
 
 The callback function get the result from storing the credit card details will look
