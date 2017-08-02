@@ -54,7 +54,7 @@ directly to the gateway.
 There are a few other Omnipay Wirecard drivers already,
 [which you should explore](https://packagist.org/search/?q=omnipay-wirecard)
 to see if any fit your needs.
-This package was created with a number of prerequitits:
+This package was created with a number of prerequisites:
 
 * It supports Omnipay 2.x following as many of the Omnipay standards/conventions
   as possible. This is to help integration into multi-gateway systems and wrappers
@@ -97,7 +97,7 @@ Or combine the two steps into one with composer on the path::
 There are no separate endpoints for running tests. Instead, customer IDs
 and secrets are published to trigger demo and test mode.
 
-Demo mode does not involve the end merchant banks in any processng.
+Demo mode does not involve the end merchant banks in any processing.
 Test mode does involve the end merchant banks, so can involve 3D Secure
 tests, but still no payments are taken.
 
@@ -157,7 +157,7 @@ Test mode credentials and test cards
 
 ### Initialise The Checkout Page Gateway
 
-This class is created qne configured like this:
+This class is created and configured like this:
 
 ```php
 $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutPage');
@@ -336,7 +336,7 @@ is parsed by the `completePurchase` object.
 
     $complete_purchase_request = $gateway->completePurchase();
 
-The message will be signed to check for alteration enroute, so the gateway
+The message will be signed to check for alteration en route, so the gateway
 needs to be given the `secret` when instantiating it.
 
 Here `$complete_purchase_request` will contain all the data needed to parse the
@@ -384,13 +384,13 @@ A new authorisation or purchase can be created from an existing order.
 $request = $gateway->recurPurchase([
     'amount' => 3.10,
     'currency' => 'GBP',
-    'description' => 'A recuring payment',
+    'description' => 'A recurring payment',
     'sourceOrderNumber' => $originalTransactionReference,
 ]);
 
 $response = $request->send();
 
-// The order reference is needed to capture the pament if just authorizing.
+// The order reference is needed to capture the payment if just authorizing.
 $new_order_number = $response->getOrderReference();
 ```
 
@@ -440,7 +440,7 @@ It works like this:
   the remote gateway, using the `storageId` in place of credit card details.
 * The response is handled by the merchant site, which may include a 3D Secure
   redirect when a credit card payment method is used. Even without 3D Secure, the
-  gateway will always redirect the user to a site to enact the authorisarion.
+  gateway will always redirect the user to a site to enact the authorisation.
 * On return to the merchant site, the transaction result can be retrieved from the
   details stored by the notification handler.
 
@@ -512,13 +512,13 @@ and do not reach the merchant site.
 
 The process for using *Checkout Seamless* is described below.
 
-First a store for teh credit card details must be initialised. The store will
+First a store for the credit card details must be initialised. The store will
 have a unique ID and will be available for up to 30 minutes before it expires.
 
 ```php
 $gateway = Omnipay\Omnipay::create('Wirecard_CheckoutSeamless');
 
-$gateway->intitialize([
+$gateway->initialize([
     'customerId' => 'D200411',
     'shopId' => 'seamless',
     'secret' => 'CHCSH7UGHVVX2P7EHDHSY4T2S4CGYK4QBE4M5YUUG2ND5BEZWNRZW5EJYVJQ',
@@ -552,7 +552,7 @@ This is the initialising JavaScript needed in the page:
 </script>
 ```
 
-Where {url} is given by `$response->getJavascriptUrl()`. Note that the storageId will
+Where {url} is given by `$response->getJavascriptUrl()`. Note that the `storageId` will
 be encoded into this URL, so does not need to be listed as a parameter anywhere else
 in the JavaScript code.
 
@@ -583,7 +583,7 @@ credit card, or a list of errors that may have occurred while trying to store.
 callbackFunction = function(aResponse) {
     // checks if response status is without errors
     if (aResponse.getStatus() == 0) {
-        // Gets all anonymized payment information to a JavaScript object
+        // Gets all anonymised payment information to a JavaScript object
         var info = aResponse.getAnonymizedPaymentInformation();
 
         // Each anonymised field is in info.{name}
@@ -672,7 +672,7 @@ Once reserved, there is no specified expiry time for an orderNumber.
 
 ## Extended ItemBag Items
 
-This driver will accept standard OmniPay items in the ItemBag.
+This driver will accept standard Omnipay items in the ItemBag.
 When these are supplied, some fields sent to the gateway will be defaulted:
 
 * `articleNumber` will be the sequential order of the item, starting at 1 for the first item.
@@ -699,7 +699,7 @@ $item = new Omnipay\Wirecard\Extend\Item([
 # Backend Features Implemented
 
 This is the complete list of transaction-based operations.
-The backend feactures are all available for both the *Seamless* and the *Page* variations on
+The backend features are all available for both the *Seamless* and the *Page* variations on
 the gateway, and both variations work the same way for the merchant site, just with a slight
 variation in endpoints and a single internal parameter.
 
