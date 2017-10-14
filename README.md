@@ -428,7 +428,7 @@ the merchant site.
 It works like this:
 
 * A temporary data store is initialised on the remote gateway. The merchant site
-  is given a token to represent this storage, called the `storageId`.
+  is given a key to represent this storage, called the `storageId`.
   This single-used data store will last for 30 minutes or until it is used.
 * A custom form is provided on the front end that captures authorisation details
   for the payment. These details are not posted back to the merchant site.
@@ -572,8 +572,8 @@ Shown above are the gateway test credit card details. How you get these details 
 your credit card form into this object is up to you, but will involve JavaScript of
 some sort.
 
-The callback function get the result from storing the credit card details will look
-something like show below.
+The callback function get the result from storing the credit card.
+Details will look something like show below.
 This will be invoked when the credit card details are sent to storage, after the user
 submits their payment form. It can be used to capture anonymised details for the
 credit card, or a list of errors that may have occurred while trying to store.
@@ -699,18 +699,20 @@ $item = new Omnipay\Wirecard\Extend\Item([
 # Backend Features Implemented
 
 This is the complete list of transaction-based operations.
-The backend features are all available for both the *Seamless* and the *Page* variations on
+The backend features are all available for both the *Seamless* and the *Page* variations of
 the gateway, and both variations work the same way for the merchant site, just with a slight
 variation in endpoints and a single internal parameter.
 
-| Wirecard Operation | Omnipay Operation | Message Class (when complete) |
-| ------------------ | ----------------- | ----------------------------- |
-| [approveReversal](https://guides.wirecard.at/back-end_operations:transaction-based:approvereversal) | n/a | *VoidAuthorizeRequest |
+| Wirecard Operation | Omnipay Operation | Message Class |
+| ------------------ | ----------------- | ------------- |
+| [approveReversal](https://guides.wirecard.at/back-end_operations:transaction-based:approvereversal) | (voidAuthorize) | *VoidAuthorizeRequest |
 | [deposit](https://guides.wirecard.at/back-end_operations:transaction-based:deposit) | capture | *CaptureRequest |
 | [depositReversal](https://guides.wirecard.at/back-end_operations:transaction-based:depositreversal) | void | *VoidCaptureRequest |
-| [getOrderDetails](https://guides.wirecard.at/back-end_operations:transaction-based:getorderdetails) | n/a | *FetchTransactionRequest |
-| [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | n/a | *RecurAuthorizeRequest |
+| [getOrderDetails](https://guides.wirecard.at/back-end_operations:transaction-based:getorderdetails) | (fetchTransaction) | *FetchTransactionRequest |
+| [recurPayment](https://guides.wirecard.at/back-end_operations:transaction-based:recurpayment) | (recurAuthorize/recurPurchase) | *RecurAuthorizeRequest |
 | [refund](https://guides.wirecard.at/back-end_operations:transaction-based:refund) | refund | *RefundRequest |
-| [refundReversal](https://guides.wirecard.at/back-end_operations:transaction-based:refundreversal) | n/a | *VoidRefundRequest |
+| [refundReversal](https://guides.wirecard.at/back-end_operations:transaction-based:refundreversal) | (voidRefund) | *VoidRefundRequest |
 | [transferFund](https://guides.wirecard.at/back-end_operations:transaction-based:transferfund) | n/a | TODO |
 
+The *Omnipay Operations* in brackets are implemented by this driver for completeness,
+but are are not core supported opertatios of Omnipay.
