@@ -1,8 +1,10 @@
-[![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/academe/OmniPay-Wirecard/master/LICENSE.md)
-[![Packagist](https://img.shields.io/packagist/v/academe/omnipay-wirecard.svg?maxAge=2592000)](https://packagist.org/packages/academe/omnipay-wirecard)
+[![License](https://poser.pugx.org/academe/omnipay-wirecard/license)](https://packagist.org/packages/academe/omnipay-wirecard)
+[![Latest Stable Version](https://poser.pugx.org/academe/omnipay-wirecard/v/stable)](https://packagist.org/packages/academe/omnipay-wirecard)
+[![Latest Unstable Version](https://poser.pugx.org/academe/omnipay-wirecard/v/unstable)](https://packagist.org/packages/academe/omnipay-wirecard)
+[![Total Downloads](https://poser.pugx.org/academe/omnipay-wirecard/downloads)](https://packagist.org/packages/academe/omnipay-wirecard)
 [![GitHub issues](https://img.shields.io/github/issues/academe/OmniPay-Wirecard.svg)](https://github.com/academe/OmniPay-Wirecard/issues)
 [![Travis](https://travis-ci.org/academe/Omnipay-Wirecard.svg?branch=master)](https://travis-ci.org/academe/Omnipay-Wirecard)
-[![GitHub forks](https://img.shields.io/github/forks/academe/Omnipay-Wirecard.svg)](https://github.com/academe/Omnipay-Wirecard/network)
+
 
 Table of Contents
 =================
@@ -56,17 +58,13 @@ There are a few other Omnipay Wirecard drivers already,
 to see if any fit your needs.
 This package was created with a number of prerequisites:
 
-* It supports Omnipay 2.x following as many of the Omnipay standards/conventions
+* It supports Omnipay 3.x following as many of the Omnipay standards/conventions
   as possible. This is to help integration into multi-gateway systems and wrappers
   with the least custom programming as possible.
 * It does not use the Wirecard SDK. Though very complete in terms of functionality
   coverage, the SDK is locked onto HTTP clients that are not compatible with many
   sites using Omnipay 2.x
 * It does not need an external serializer, that is an issue for some applications.
-
-As Omnipay 3.x goes into beta, the intention is to branch this package to support
-3.x, but carry on maintaining the 2.x branch while it is still in active use.
-The differences between the two should be very small and localised.
 
 ## Installation
 
@@ -76,7 +74,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "academe/omnipay-wirecard": "~2.0"
+        "academe/omnipay-wirecard": "~3.0"
     }
 }
 ```
