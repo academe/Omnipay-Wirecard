@@ -51,7 +51,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
     }
 
     /**
-     * 
+     *
      */
     public function setConfirmMail($value)
     {
@@ -64,7 +64,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
     }
 
     /**
-     * 
+     *
      */
     public function setRiskSuppress($value)
     {
@@ -77,7 +77,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
     }
 
     /**
-     * 
+     *
      */
     public function setRiskConfigAlias($value)
     {

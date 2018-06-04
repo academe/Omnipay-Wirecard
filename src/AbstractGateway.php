@@ -15,7 +15,7 @@ abstract class AbstractGateway extends OmnipayAbstractGateway
     use CommonParametersTrait;
 
     /**
-     * 
+     *
      */
     public function getDefaultParameters()
     {

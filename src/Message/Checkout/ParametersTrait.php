@@ -39,7 +39,7 @@ trait ParametersTrait
     }
 
     /**
-     * Check for duplicate requests done by your consumer. 
+     * Check for duplicate requests done by your consumer.
      * Treated as a boolean value.
      */
     public function setDuplicateRequestCheck($value)

@@ -27,7 +27,7 @@ class CheckoutSeamlessGateway extends AbstractGateway
     }
 
     /**
-     * 
+     *
      */
     public function getDefaultParameters()
     {

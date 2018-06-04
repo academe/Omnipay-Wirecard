@@ -112,7 +112,7 @@ class Complete extends AbstractRequest implements OmnipayResponseInterface
 
         // The documentation states uppercase "NO" and the demo client
         // returns mixed case "No", so normalise it.
-        switch(strtoupper($value)) {
+        switch (strtoupper($value)) {
             case 'YES':
                 return true;
             case 'NO':
@@ -221,7 +221,7 @@ class Complete extends AbstractRequest implements OmnipayResponseInterface
     }
 
     /**
-     * 
+     *
      */
     public function isSuccessful()
     {
@@ -345,8 +345,7 @@ class Complete extends AbstractRequest implements OmnipayResponseInterface
     {
         $paymentState = $this->getDataValue('paymentState');
 
-        if (
-            $paymentState === AbstractResponse::PAYMENT_STATE_CANCEL
+        if ($paymentState === AbstractResponse::PAYMENT_STATE_CANCEL
             || $paymentState === AbstractResponse::PAYMENT_STATE_FAILURE
         ) {
             return true;

@@ -25,7 +25,7 @@ class Response extends AbstractResponse
      *  1 Error during request parameter verification.
      *  2 Execution of operation denied.
      *  3 Error within external financial institution.
-     *  4 Internal error. 
+     *  4 Internal error.
      */
 
     const STATUS_SUCCESS        = 0;

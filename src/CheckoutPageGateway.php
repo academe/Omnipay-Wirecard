@@ -27,7 +27,7 @@ class CheckoutPageGateway extends AbstractGateway
     }
 
     /**
-     * 
+     *
      */
     public function getDefaultParameters()
     {

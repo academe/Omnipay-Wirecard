@@ -3,7 +3,7 @@
 namespace Omnipay\Wirecard\Message;
 
 /**
- * 
+ *
  */
 
 trait HasDataTrait

@@ -12,7 +12,7 @@ use Omnipay\Common\Exception\InvalidRequestException;
 trait ParametersTrait
 {
     /**
-     * Text displayed to your consumer during the payment process. 
+     * Text displayed to your consumer during the payment process.
      */
     public function setDisplayText($value)
     {
