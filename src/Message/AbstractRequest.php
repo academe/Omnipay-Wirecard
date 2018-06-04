@@ -305,10 +305,17 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     public function sendHttp($data)
     {
         $headers = [];
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
+        $httpResponse = $this->httpClient->request(
+            'POST',
+            $this->getEndpoint(),
+            [
+                'headers' => $headers,
+            ]
+            $data);
 
         // The response is a query string.
         // Parse it into an array.
+
         parse_str((string)$httpResponse->getBody(), $response_data);
 
         return $response_data;
