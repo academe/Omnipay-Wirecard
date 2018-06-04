@@ -11,7 +11,7 @@
         "payment"
     ],
     "homepage": "https://github.com/academe/omnipay-wirecard",
-    "license": "LGPLv3",
+    "license": "LGPL-3.0-only",
     "authors": [
         {
             "name": "Jason Judge",
