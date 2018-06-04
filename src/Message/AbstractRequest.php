@@ -309,7 +309,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
             $this->getEndpoint(),
             [
                 'headers' => $headers,
-            ]
+            ],
             $data
         );
 
