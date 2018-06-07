@@ -303,14 +303,15 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
      */
     public function sendHttp($data)
     {
-        $headers = [];
+        $headers = [
+            "Content-Type" => "application/x-www-form-urlencoded",
+        ];
+
         $httpResponse = $this->httpClient->request(
             'POST',
             $this->getEndpoint(),
-            [
-                'headers' => $headers,
-            ],
-            $data
+            $headers,
+            http_build_query($data)
         );
 
         // The response is a query string.
