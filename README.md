@@ -37,7 +37,7 @@ Table of Contents
 
 # Omnipay-Wirecard
 
-Wirecard payment gateway driver for the Omnipay framework.
+Wirecard payment gateway driver for the Omnipay 3.x framework.
 
 ## Gateway APIs Supported
 
@@ -61,12 +61,12 @@ This package was created with a number of prerequisites:
 * It supports Omnipay 3.x following as many of the Omnipay standards/conventions
   as possible. This is to help integration into multi-gateway systems and wrappers
   with the least custom programming as possible.
-* It does not use the Wirecard SDK. Though very complete in terms of functionality
-  coverage, the SDK is locked onto HTTP clients that are not compatible with many
-  sites using Omnipay 2.x
 * It does not need an external serializer, that is an issue for some applications.
 
 ## Installation
+
+*For the legacy 2.x version (Omnipay 2.5, PHP 5.4+),
+[please see the 2.x branch](https://github.com/academe/Omnipay-Wirecard/tree/2.x)*
 
 Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
 to your `composer.json` file:
@@ -86,7 +86,7 @@ And run composer to update your dependencies:
 
 Or combine the two steps into one with composer on the path::
 
-    $ composer require "academe/omnipay-wirecard: ~2.0"
+    $ composer require "academe/omnipay-wirecard: ~3.0"
 
 # API Details
 
