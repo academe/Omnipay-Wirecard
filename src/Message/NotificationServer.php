@@ -18,10 +18,31 @@ namespace Omnipay\Wirecard\Message;
  */
 
 use Omnipay\Common\Message\NotificationInterface;
-use Omnipay\Wirecard\Message\Checkout\Page\Complete;
+use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\Wirecard\Message\Checkout\Page\CompleteRequest;
+use Omnipay\Wirecard\CommonParametersTrait;
 
-class NotificationServer extends Complete implements NotificationInterface
+class NotificationServer extends OmnipayAbstractRequest implements NotificationInterface
 {
+    use CommonParametersTrait;
+    use HasDataTrait;
+    use HandlesNotificationTrait;
+
+    protected $transactionIdCheckEnabled = false;
+
+    /**
+     * @inheric
+     */
+    public function getData()
+    {
+        return $this->httpRequest->request->all();
+    }
+
+    public function sendData($data)
+    {
+        return $this;
+    }
+
     /**
      * Translate the Wirecard status values to OmniPay status values.
      */
@@ -49,5 +70,13 @@ class NotificationServer extends Complete implements NotificationInterface
             default:
                 return static::STATUS_FAILED;
         }
+    }
+
+    /**
+     * @inherit
+     */
+    public function isExpectedTransactionId()
+    {
+        return true;
     }
 }
