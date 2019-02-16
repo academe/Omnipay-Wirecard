@@ -63,15 +63,6 @@ class CompleteResponse extends OmnipayAbstractResponse
     }
 
     /**
-     * We put the transaction ID into a custom field, which will be passed
-     * through by the gateway to the notification data.
-     */
-    public function getTransactionId()
-    {
-        return $this->getDataValue(AbstractRequest::CUSTOM_FIELD_NAME_TRANSACTION_ID);
-    }
-
-    /**
      * @inherit
      */
     public function isExpectedTransactionId()

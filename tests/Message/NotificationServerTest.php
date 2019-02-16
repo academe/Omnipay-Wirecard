@@ -50,12 +50,12 @@ class NotificationServerTest extends TestCase
         // This secret is needed to validate the transaction.
         $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
 
-        $request->setTransactionId('WC92281976');
+        // Will be successful and valid even without an expected transactionId set
+        // since this is an unsolicited notification and not a complete* message.
 
-        //$response = $request->send();
-
-        //var_dump($response->getMessage());
         $this->assertTrue($request->isValid());
         $this->assertTrue($request->isSuccessful());
+
+        $this->assertSame('WC92281976', $request->getTransactionId());
     }
 }

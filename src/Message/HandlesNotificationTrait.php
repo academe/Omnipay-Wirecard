@@ -6,6 +6,8 @@ namespace Omnipay\Wirecard\Message;
  *
  */
 
+use Omnipay\Wirecard\Message\Checkout\AbstractRequest as MessageAbstractRequest;
+
 trait HandlesNotificationTrait
 {
     /**
@@ -293,6 +295,15 @@ trait HandlesNotificationTrait
     public function getCode()
     {
         return null;
+    }
+
+    /**
+     * We put the transaction ID into a custom field, which will be passed
+     * through by the gateway to the notification data.
+     */
+    public function getTransactionId()
+    {
+        return $this->getDataValue(MessageAbstractRequest::CUSTOM_FIELD_NAME_TRANSACTION_ID);
     }
 
     /**
