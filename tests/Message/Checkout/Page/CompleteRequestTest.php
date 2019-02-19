@@ -57,12 +57,16 @@ class CompleteRequestTest extends TestCase
         //$this->assertTrue($request->isValid());
         //$this->assertTrue($request->isSuccessful());
 
-        // Sending the request will get the same object back, and so we will have the
-        // same success result.
-
         //var_dump($response->getMessage());
         $this->assertTrue($response->isValid());
         $this->assertTrue($response->isSuccessful());
+
+        $this->assertSame(
+            'DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F',
+            $response->getSecret()
+        );
+        $this->assertSame('WC92281976', $response->getTransactionId());
+        $this->assertSame('WC92281976', $response->getOriginalTransactionId());
     }
 
     /**
@@ -96,9 +100,6 @@ class CompleteRequestTest extends TestCase
         //$this->assertTrue($request->isValid());
         //$this->assertFalse($request->isSuccessful());
 
-        // Sending the request will get the same object back, and so we will have the
-        // same success result.
-
         $response = $request->send();
 
         $this->assertTrue($response->isValid());
@@ -131,9 +132,6 @@ class CompleteRequestTest extends TestCase
 
         //$this->assertTrue($request->isValid());
         //$this->assertFalse($request->isSuccessful());
-
-        // Sending the request will get the same object back, and so we will have the
-        // same success result.
 
         $response = $request->send();
 
@@ -185,5 +183,61 @@ class CompleteRequestTest extends TestCase
 
         $this->assertFalse($response->isValid());
         $this->assertFalse($response->isSuccessful());
+
+        $this->assertSame(
+            'DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F',
+            $response->getSecret()
+        );
+        $this->assertSame('WC92281976', $response->getTransactionId());
+        $this->assertSame('WC92281976', $response->getOriginalTransactionId());
+    }
+
+    public function testReplayAttack()
+    {
+        $httpRequest = $this->getHttpRequest();
+
+        $httpRequest->initialize(
+            array(), // GET
+            array( // POST
+                'amount' => '3.10',
+                'currency' => 'EUR',
+                'paymentType' => 'CCARD',
+                'financialInstitution' => 'Visa',
+                'language' => 'en',
+                'orderNumber' => '40933885',
+                'paymentState' => 'SUCCESS',
+                'omnipayTransactionId' => 'WC92281976',
+                'authenticated' => 'No',
+                'anonymousPan' => '1003',
+                'expiry' => '12/2024',
+                'cardholder' => 'asdasdasdsad',
+                'maskedPan' => '401200******1003',
+                'gatewayReferenceNumber' => 'C729587150057104103101',
+                'gatewayContractNumber' => '70003',
+                'responseFingerprintOrder' => 'amount,currency,paymentType,financialInstitution,language,orderNumber,paymentState,omnipayTransactionId,authenticated,anonymousPan,expiry,cardholder,maskedPan,gatewayReferenceNumber,gatewayContractNumber,secret,responseFingerprintOrder',
+                'responseFingerprint' => '54fc6dd8f29ffc0240db737e275361622d0338ca813e758e0f334e04284c425b05bc17d74d49a2ee5ad69c45dac59432723ec968d1f49c528730fdfb0516b783'
+            )
+        );
+
+        $request = new CompleteRequest($this->getHttpClient(), $httpRequest);
+
+        // This secret is needed to validate the transaction.
+        $request->setSecret('DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F');
+
+        // Everything is valid except the transaction ID we get is
+        // not the one we are expecting.
+        $request->setTransactionId('WC92281999');
+
+        $response = $request->send();
+
+        $this->assertTrue($response->isValid());
+        $this->assertFalse($response->isSuccessful());
+
+        $this->assertSame(
+            'DP4TMTPQQWFJW34647RM798E9A5X7E8ATP462Z4VGZK53YEJ3JWXS98B9P4F',
+            $response->getSecret()
+        );
+        $this->assertSame('WC92281976', $response->getTransactionId());
+        $this->assertSame('WC92281999', $response->getOriginalTransactionId());
     }
 }

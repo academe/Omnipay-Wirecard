@@ -36,21 +36,32 @@ class CompleteResponse extends OmnipayAbstractResponse
     }
 
     /**
-     * The secret for hashing.
+     * The secret for hashing to check the signature.
+     * Overrides the secret in the request.
+     *
+     * @return $this
      */
     public function setSecret($value)
     {
-        return $this->secret = $value;
+        $this->secret = $value;
+        return $this;
     }
 
+    /**
+     * Use the override secret if set, otherwise attempt to get the
+     * secret from the request, if the request supports the secret.
+     *
+     * @return string|null
+     */
     public function getSecret()
     {
-        if (method_exists($this->getRequest(), 'getSecret')) {
-            return $this->getRequest()->getSecret()
-                ?? $this->secret;
+        if ($this->secret) {
+            return $this->secret;
         }
 
-        return $this->secret;
+        if (method_exists($this->getRequest(), 'getSecret')) {
+            return $this->getRequest()->getSecret();
+        }
     }
 
     /**
@@ -64,8 +75,8 @@ class CompleteResponse extends OmnipayAbstractResponse
 
     public function getOriginalTransactionId()
     {
-        return $this->getRequest()->getTransactionId()
-            ?? $this->originalTransactionId;
+        return $this->originalTransactionId
+            ?? $this->getRequest()->getTransactionId();
     }
 
     /**
