@@ -45,7 +45,8 @@ class CompleteResponse extends OmnipayAbstractResponse
 
     public function getSecret()
     {
-        return $this->secret;
+        return $this->getRequest()->getSecret()
+            ?? $this->secret;
     }
 
     /**
@@ -59,7 +60,8 @@ class CompleteResponse extends OmnipayAbstractResponse
 
     public function getOriginalTransactionId()
     {
-        return $this->originalTransactionId;
+        return $this->getRequest()->getTransactionId()
+            ?? $this->originalTransactionId;
     }
 
     /**

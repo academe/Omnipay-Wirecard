@@ -43,8 +43,8 @@ class CompleteRequest extends AbstractRequest
         // Set the original transactionId and the secret, both for
         // validating the response.
 
-        $this->response->setOriginalTransactionId($this->getTransactionId());
-        $this->response->setSecret($this->getSecret());
+        //$this->response->setOriginalTransactionId($this->getTransactionId());
+        //$this->response->setSecret($this->getSecret());
 
         return $this->response;
     }
