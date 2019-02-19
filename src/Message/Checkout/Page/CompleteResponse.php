@@ -45,8 +45,12 @@ class CompleteResponse extends OmnipayAbstractResponse
 
     public function getSecret()
     {
-        return $this->getRequest()->getSecret()
-            ?? $this->secret;
+        if (method_exists($this->getRequest(), 'getSecret')) {
+            return $this->getRequest()->getSecret()
+                ?? $this->secret;
+        }
+
+        return $this->secret;
     }
 
     /**
