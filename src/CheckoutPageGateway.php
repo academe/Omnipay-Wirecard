@@ -86,7 +86,7 @@ class CheckoutPageGateway extends AbstractGateway
     public function completeAuthorize(array $parameters = array())
     {
         return $this->createRequest(
-            '\Omnipay\Wirecard\Message\Checkout\Page\Complete',
+            '\Omnipay\Wirecard\Message\Checkout\Page\CompleteRequest',
             $parameters
         );
     }
@@ -97,7 +97,7 @@ class CheckoutPageGateway extends AbstractGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest(
-            '\Omnipay\Wirecard\Message\Checkout\Page\Complete',
+            '\Omnipay\Wirecard\Message\Checkout\Page\CompleteRequest',
             $parameters
         );
     }

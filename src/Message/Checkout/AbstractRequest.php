@@ -21,7 +21,7 @@ abstract class AbstractRequest extends MessageAbstractRequest
     const AUTO_DEPOSIT_NO = 'no';
 
     // The name of the custom field the transaction ID will go into.
-    const CUSTOM_FIELD_NAME_TRANSACTION_ID = 'omnipay_transactionId';
+    const CUSTOM_FIELD_NAME_TRANSACTION_ID = 'omnipayTransactionId';
 
     /**
      * The Payment Type will default to SELECT if not set.
