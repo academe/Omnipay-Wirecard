@@ -34,6 +34,11 @@ class PurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
+        // Mandatory for seamless, as this webhook is the only way to receive
+        // the result.
+
+        $this->validate('notifyUrl');
+
         $data = $this->getBaseData();
 
         $data['confirmUrl'] = $this->getNotifyUrl();

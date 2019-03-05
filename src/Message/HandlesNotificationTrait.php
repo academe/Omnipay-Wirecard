@@ -43,10 +43,10 @@ trait HandlesNotificationTrait
         // The transactionID check is performed only for the complete* responses
         // and not for the back-end notification handler.
         // In the former case we know what we are expecting, and any deviation
-        // could be a reply-hack. In the latter case, the notifications are
-        // unsolicited.
+        // could be a replay attack. In the latter case, the notifications can
+        // arrive in any order.
 
-        if ($this->isExpectedTransactionId()) {
+        if (! $this->isExpectedTransactionId()) {
             return 'Incorrect or missing transactionId';
         }
 
